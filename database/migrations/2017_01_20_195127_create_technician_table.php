@@ -19,7 +19,9 @@ class CreateTechnicianTable extends Migration
             $table->string('techFirst');
             $table->string('techMiddle');
             $table->string('techLast');
-            $table->text('techAddress');
+            $table->text('techStreet');
+            $table->text('techBrgy');
+            $table->text('techCity');
             $table->string('techEmail');
             $table->string('techContact');
             $table->string('techPic');

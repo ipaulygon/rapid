@@ -79,12 +79,12 @@
 						<td>{{ $category->categoryName }}</td>
 						<td>{{ $category->categoryDesc }}</td>
 						<td>
-							<button class="ui green basic button" name="edit{{ $category->categoryId }}" onclick="modal(this.name)"><i class="write icon"></i>Edit</button>
-							<button class="ui red basic button" name="del{{ $category->categoryId }}" onclick="modal(this.name)"><i class="trash icon"></i>Delete</button>
+							<button class="ui green basic circular icon button" data-tooltip="Update Data" data-inverted="" name="edit{{ $category->categoryId }}" onclick="modal(this.name)"><i class="write icon"></i></button>
+							<button class="ui red basic circular icon button" data-tooltip="Deactivate Data" data-inverted="" name="del{{ $category->categoryId }}" onclick="modal(this.name)"><i class="trash icon"></i></button>
 						</td>
-						<!--Modal for Edit-->
+						<!--Modal for Update-->
 						<div class="ui small modal" id="edit{{ $category->categoryId }}">
-							<div class="header">Edit Service</div>
+							<div class="header">Update Service</div>
 							{!! Form::open(['action' => 'ServiceCategoryController@update']) !!}	
 								<div class="content">
 									<div class="description">
@@ -118,11 +118,11 @@
 		        				</div>
 	        				{!! Form::close() !!}
 						</div>
-						<!--Modal for Delete-->
+						<!--Modal for Deactivate-->
 						<div class="ui small basic modal" id="del{{ $category->categoryId }}" style="text-align:center">
 							<div class="ui icon header">
 								<i class="trash icon"></i>
-								Delete
+								Deactivate
 							</div>
 							{!! Form::open(['action' => 'ServiceCategoryController@destroy']) !!}
 								<div class="content">
@@ -135,7 +135,7 @@
 									</div>
 								</div>
 								<div class="actions">
-			        				<button type="submit" class="ui negative button"><i class="trash icon"></i>Delete</button>
+			        				<button type="submit" class="ui negative button"><i class="trash icon"></i>Deactivate</button>
 			        				<button type="reset" class="ui positive button"><i class="plane icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}

@@ -14,8 +14,10 @@ class Technician extends Model
 								'techFirst',
 								'techMiddle',
 								'techLast',
-								'techAddress',
-								'techEmail'
+								'techStreet',
+								'techBrgy',
+								'techCity',
+								'techEmail',
 								'techContact',
 								'techPic',
 								'techIsActive'
