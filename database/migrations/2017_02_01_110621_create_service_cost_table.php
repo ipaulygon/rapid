@@ -18,7 +18,7 @@ class CreateServiceCostTable extends Migration
             $table->string('scId');
             $table->float('scCost',8,2);
             $table->timestamps();
-            $table->primary('scId');
+            $table->primary(['scId','scCost','created_at']);
             $table->foreign('scId')
                   ->references('serviceId')->on('service')
                   ->onUpdate('cascade')

@@ -22,7 +22,7 @@ class TechSeeder extends Seeder
 				'techCity' => 'San Juan City',
 				'techContact' => '09054090523',
 				'techEmail' => 'paulandrei@ymail.com',
-				'techPic' => 'steve1.jpg',
+				'techPic' => 'pics/steve1.jpg',
 				'techIsActive' => 1,
             ),
         );

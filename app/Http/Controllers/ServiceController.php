@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Http\Requests\ServiceRequest;
 use App\Service;
+use App\ServiceCost;
 use App\ServiceCategory;
 
 use Illuminate\Http\Request;
@@ -38,6 +39,11 @@ class ServiceController extends Controller
             'serviceIsActive' => 1
             ));
         $serv->save();
+        $servCost = ServiceCost::create(array(
+            'scId' => $request->input('serviceId'),
+            'scCost' => trim($request->input('servicePrice'))
+        ));
+        $servCost->save();
         \Session::flash('flash_message','Service successfully added.');
         return redirect('maintenance/service');
     }
@@ -58,6 +64,13 @@ class ServiceController extends Controller
             $serv->serviceCategoryId = $request->input('editServiceCategoryId');
             $serv->servicePrice = trim($request->input('editServicePrice'));
             $serv->save();
+            if($serv->servicePrice!=$request->input('currentServicePrice')){
+                $servCost = ServiceCost::create(array(
+                    'scId' => $request->input('editServiceId'),
+                    'scCost' => trim($request->input('editServicePrice'))
+                ));
+                $servCost->save();
+            }
             \Session::flash('flash_message','Service successfully updated.');
         }else{
             \Session::flash('error_message','Service already exists. Update failed.');

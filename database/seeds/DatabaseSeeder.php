@@ -22,5 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call(InspectItemSeeder::class);
         $this->call(DiscountSeeder::class);
         $this->call(TechSeeder::class);
+        $this->call(ServiceCostSeeder::class);
     }
 }
