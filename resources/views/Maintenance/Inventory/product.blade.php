@@ -64,13 +64,14 @@
 	<hr><br>
 	<button class="ui positive button" name="modalCreate" onclick="modal(this.name)"><i class="plus icon"></i>Add Product</button>
 	<br><br>
-	<table id="list" class="ui celled four column table">
+	<table id="list" class="ui celled five column table">
 		<thead>
 			<tr>
 				<th>Brand</th>
 				<th>Product</th>
 				<th>Description</th>
 				<th>Type</th>
+				<th>Variances</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
@@ -81,6 +82,7 @@
 						<td>{{ $product->brand->brandName }}</td>
 						<td>{{ $product->productName }}</td>
 						<td>{{ $product->productDesc }}</td>
+						<td></td>
 						<td>{{ $product->types->typeName }}</td>
 						<td>
 							<button class="ui green basic circular icon button" data-tooltip="Update Data" data-inverted="" name="edit{{ $product->productId }}" onclick="modal(this.name)"><i class="write icon"></i></button>
@@ -93,7 +95,7 @@
 	</table>
 	
 	<!--Create Modal-->
-	<div class="ui modal" id="modalCreate">
+	<div class="ui small modal" id="modalCreate">
 		<div class="header">Create Product</div>
 		<div class="content">
 			<div class="description">
@@ -146,24 +148,38 @@
 	    				</div>
 	    				<div class="inline fields">
 	    					<div class="two wide field">
+	    						<label>Description</label>
+	    					</div>
+	    					<div class="fourteen wide field">
+	    						<textarea type="text" name="productDesc" placeholder="Description"></textarea>
+	    					</div>
+	    				</div>
+	    				<div class="inline fields">
+	    					<div class="two wide field">
 	    						<label>Variances</label>
 	    					</div>
 	    					<div class="fourteen wide field">
 	    						<div class="ui multiple search selection dropdown">
-	    							<input type="hidden" name="varianceId[]"><i class="dropdown icon"></i>
+	    							<input id="variances" type="hidden" name="varianceId[]"><i class="dropdown icon"></i>
 	    							<input class="search" autocomplete="off" tabindex="0">
 	    							<div class="default text">Select Variances</div>
 	    							<div class="menu" tabindex="-1">
 	    								@foreach($variance as $var)
 	    									@if($var->varianceIsActive==1)
-	    										<div class="item" data-value="{{ $var->varianceId }}">{{ $var->varianceSize }} | {{$var->unit->unitName}}</div>
+	    										<div class="item" name="{{$var->varianceId}}{{$var->varianceSize}}" data-value="{{ $var->varianceId }}">
+	    											{{ $var->varianceSize }} | {{$var->unit->unitName}}
+	    											<div class="ui labeled input">
+	    												<div class="ui label">P</div>
+	    												<input type="text" name="price[]" placeholder="12.75">
+	    											</div>
+	    										</div>
 	    									@endif
 	    								@endforeach
 	    							</div>
 	    						</div>
 	    					</div>
 	    				</div>
-	    				<table id="var" class="ui celled four column definition table">
+	    				<!-- <table id="var" class="ui celled four column definition table">
 	    					<thead>
 	    						<th></th>
 	    						<th>Size</th>
@@ -175,9 +191,7 @@
 	    							@if($var->varianceIsActive==1)
 	    								<tr>
 	    									<td>
-	    										<div class="ui slider checkbox">
-	    											<input type="checkbox" name="{{$var->varianceId}}">
-	    										</div>
+	    										<input class="slider checkbox" type="checkbox" name="{{$var->varianceId}}">
 	    									</td>
 	    									<td>{{$var->varianceSize}}</td>
 	    									<td>{{$var->unit->unitName}}</td>
@@ -186,7 +200,7 @@
 	    							@endif
 	    						@endforeach
 	    					</tbody>
-	    				</table>
+	    				</table> -->
 	    				<div class="actions">
 	    					<i>Note: All with <span>*</span> are required fields</i>
 	    					<button type="reset" class="ui negative button"><i class="remove icon"></i>Clear</button>

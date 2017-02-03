@@ -5457,7 +5457,7 @@ $.fn.dropdown = function(parameters) {
                     event.preventDefault();
                   }
                 }
-                else if(pressedKey == keys.deleteKey || pressedKey == keys.backspace) {
+                /*else if(pressedKey == keys.deleteKey || pressedKey == keys.backspace) {
                   if(hasActiveLabel) {
                     module.verbose('Removing active labels');
                     if(isLastLabel) {
@@ -5474,7 +5474,7 @@ $.fn.dropdown = function(parameters) {
                     $activeLabel = $label.last().addClass(className.active);
                     module.remove.activeLabels($activeLabel);
                   }
-                }
+                }*/
                 else {
                   $activeLabel.removeClass(className.active);
                 }

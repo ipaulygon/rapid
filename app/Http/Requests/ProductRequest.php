@@ -25,16 +25,16 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'productBrand' => 'required',
-            'productName' => 'required|unique_with:product,productBrand','productType',
-            'productType' => 'required',
+            'productBrandId' => 'required',
+            'productTypeId' => 'required',
+            'productName' => 'required|unique_with:product,productBrandId','productTypeId',
         ];
     }
 
     public function messages()
     {
         return [
-            'productBrand.unique_with'  =>  'Product already exists',
+            'productName.unique_with'  =>  'Product already exists',
             'productBrand.required' => 'Product brand required',
             'productName.required' => 'Product name required',
             'productType.required' => 'Product type required'

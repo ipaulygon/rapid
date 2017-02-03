@@ -34,6 +34,20 @@ class ProductController extends Controller
         return view('Maintenance.Inventory.product',compact('product','type','brand','variance','newId'));
     }
 
+    public function create(ProductRequest $request){
+        $product = Product::create(array(
+            'productId' => $request->input('productId'),
+            'productBrandId' => trim($request->input('productBrandId')),
+            'productTypeId' => trim($request->input('productTypeId')),
+            'productName' => trim($request->input('productName')),
+            'productDesc' => trim($request->input('productDesc')),
+            'productIsActive' => 1
+            ));
+        $product->save();
+        \Session::flash('flash_message','Product successfully added.');
+        return redirect('maintenance/product');
+    }
+
     public function smartCounter($id)
     {   
         $lastID = str_split($id);
