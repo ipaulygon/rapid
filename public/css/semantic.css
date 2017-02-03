@@ -22871,9 +22871,10 @@ Floated Menu / Item
   width: 18rem;
 }
 
-.container#content{
+.container#main{
   padding-left: 15rem;
   padding-top: 3rem;
+  display: block
 }
 
 /* Huge */
@@ -36801,3 +36802,69 @@ html.ios body {
 /*******************************
          Site Overrides
 *******************************/
+#top-menu {
+  display: none;
+}
+
+
+/*@media (max-width: 1280px) {
+    #top-menu {
+        display: block !important;
+    }
+    #toc{
+      display: none;
+    }
+    .container#main{
+      padding-left: 0rem;
+    }
+}*/
+
+@media screen 
+  and (min-width: 1280px)
+  and (max-width: 1366px) {
+      #top-menu {
+          display: none;
+      }
+      #toc{
+        display: block !important;
+      }
+      .container#main{
+        padding-left: 15rem;
+      } 
+}
+@media only screen 
+  and (max-width: 1024px) {
+    #top-menu {
+        display: block !important;
+    }
+    #toc{
+      display: none;
+    }
+    .container#main{
+      padding-left: 0rem;
+    }
+}
+/*@media only screen 
+  and (min-device-width: 1079px) {
+    #top-menu {
+        display: block !important;
+    }
+    #toc{
+      display: none;
+    }
+    .container#main{
+      padding-left: 0rem;
+    }
+}*/
+/*@media (min-width: 600px) {
+    #top-menu {
+        display: block !important;
+    }
+    #toc{
+      display: none;
+    }
+    .container#main{
+      padding-left: 0rem;
+    }
+}*/
+

@@ -65,7 +65,7 @@
 	<button class="ui positive button" name="modalCreate" onclick="modal(this.name)"><i class="plus icon"></i>Add Technician</button>
 	<br><br>
 	
-	<table id="listType" class="ui celled table">
+	<table id="listType" class="ui celled definition table">
 		<thead>
 			<th></th>
 			<th>Name</th>
@@ -150,6 +150,30 @@
 		        					<button type="submit" class="ui positive button"><i class="write icon"></i>Update</button>
 		        				</div>
 	        				{!! Form::close() !!}
+						</div>
+						<div class="ui basic modal" id="del{{ $tech->techId }}" style="text-align:center">
+							<div class="ui icon header">
+								<i class="trash icon"></i>
+								Deactivate
+							</div>
+							{!! Form::open(['action' => 'TechController@destroy']) !!}
+								<div class="content">
+									<div class="description">
+										<input type="hidden" name="delTechId" value="{{ $tech->techId }}">
+										<div class="ui small centered card">
+											<div class="image">
+												<img src="{{asset($tech->techPic)}}">
+											</div>
+										</div>
+										<p>{{$tech->techFirst}} {{$tech->techMiddle}} {{$tech->techLast}}</p>
+										<p>{{$tech->techContact}}</p>
+									</div>
+								</div>
+								<div class="actions">
+			        				<button type="submit" class="ui negative button"><i class="trash icon"></i>Deactivate</button>
+			        				<button type="reset" class="ui positive button"><i class="plane icon"></i>Cancel</button>
+			        			</div>
+							{!! Form::close() !!}
 						</div>
 					</tr>
 				@endif

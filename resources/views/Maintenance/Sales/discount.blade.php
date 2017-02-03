@@ -155,11 +155,7 @@
 			<div class="description">
 				<div class="ui form">
 					{!! Form::open(['action' => 'DiscountController@create']) !!}
-						<div class="inline fields">
-	    					<div class="sixteen wide field">
-	    						<input type="hidden" name="discountId" value="{{$newId}}" readonly>
-	    					</div>
-	    				</div>
+						<input type="hidden" name="discountId" value="{{$newId}}" readonly>
 	    				<div class="inline fields">
 	    					<div class="two wide field">
 	    						<label>Discount<span>*</span></label>

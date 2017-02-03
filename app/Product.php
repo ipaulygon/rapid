@@ -25,6 +25,6 @@ class Product extends Model
 		return $this->hasMany('App\ProductVariance','varianceProductId');
 	}
 	public function brand(){
-		return $this->belongsTo('App\Brand','brandId');	
+		return $this->belongsTo('App\Brand','productBrandId');	
 	}
 }

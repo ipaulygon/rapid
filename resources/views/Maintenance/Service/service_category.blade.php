@@ -153,11 +153,7 @@
 			<div class="description">
 				<div class="ui form">
 					{!! Form::open(['action' => 'ServiceCategoryController@create']) !!}
-						<div class="inline fields">
-	    					<div class="sixteen wide field">
-	    						<input type="hidden" name="categoryId" value="{{$newId}}" readonly>
-	    					</div>
-	    				</div>
+						<input type="hidden" name="categoryId" value="{{$newId}}" readonly>
 	    				<div class="inline fields">
 	    					<div class="two wide field">
 	    						<label>Service Category<span>*</span></label>

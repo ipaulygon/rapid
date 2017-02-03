@@ -153,11 +153,7 @@
 			<div class="description">
 				<div class="ui form">
 					{!! Form::open(['action' => 'UnitController@create']) !!}
-						<div class="inline fields">
-	    					<div class="sixteen wide field">
-	    						<input type="hidden" name="unitId" value="{{ $newId }}" readonly>
-	    					</div>
-	    				</div>
+						<input type="hidden" name="unitId" value="{{ $newId }}" readonly>
 	    				<div class="inline fields">
 	    					<div class="two wide field">
 	    						<label>Unit<span>*</span></label>
