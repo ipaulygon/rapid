@@ -16,7 +16,7 @@ class CreatePackageProductTable extends Migration
         Schema::create('package_product', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->string('packagePId');
-            $table->string('packageProductId');
+            $table->unsignedInteger('packageProductId');
             $table->integer('packagePQty');
             $table->primary(['packagePId','packageProductId']);
             $table->foreign('packagePId')

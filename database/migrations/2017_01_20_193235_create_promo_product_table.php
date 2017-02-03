@@ -16,7 +16,7 @@ class CreatePromoProductTable extends Migration
         Schema::create('promo_product', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->string('promoPId');
-            $table->string('promoProductId');
+            $table->unsignedInteger('promoProductId');
             $table->integer('promoPQty');
             $table->primary(['promoPId','promoProductId']);
             $table->foreign('promoPId')

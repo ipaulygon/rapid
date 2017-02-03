@@ -15,7 +15,7 @@ class CreateProductCostTable extends Migration
     {
         Schema::create('product_cost', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->string('pcId');
+            $table->unsignedInteger('pcId');
             $table->float('pcCost',8,2);
             $table->timestamps();
             $table->primary('pcId');

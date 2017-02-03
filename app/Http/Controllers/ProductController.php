@@ -45,19 +45,14 @@ class ProductController extends Controller
             'productIsActive' => 1
             ));
         $product->save();
-        $variances = $request->input('variances');
-        $prices = $request->input('prices');
-        $arrlength = count($variances);
-        for($x=0;$x<$arrlength;$x++) {
-            $pv_max = ProductVariance::max('pvId');
-            $pv_max = $pv_max + 1;
-            $pv_id = 'PV-'.str_pad($pv_max, 5, '0', STR_PAD_LEFT);
+        $variances = $request->variances;
+        $prices = $request->prices;
+        foreach($variances as $var) {
             $pv = ProductVariance::create(array(
-                'pvId' => $pv_id,
                 'pvProductId' => $request->input('productId'),
-                'pvVarianceId' => $variances[$x],
+                'pvVarianceId' => $variances[$var],
                 'pvDesc' => '',
-                'pvCost' => $prices[$x],
+                'pvCost' => $prices[$var],
                 'pvIsActive' => 1
                 ));
             $pv->save();

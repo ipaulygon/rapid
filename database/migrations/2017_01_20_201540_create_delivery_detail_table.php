@@ -16,7 +16,7 @@ class CreateDeliveryDetailTable extends Migration
         Schema::create('delivery_detail', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->string('deliveryHDId');
-            $table->string('deliveryDVarianceId');
+            $table->unsignedInteger('deliveryDVarianceId');
             $table->integer('deliveryDQty');
             $table->foreign('deliveryHDId')
                   ->references('deliveryHId')->on('delivery_header')

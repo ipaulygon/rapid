@@ -16,7 +16,7 @@ class CreateJobProductTable extends Migration
         Schema::create('job_product', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->string('jobPId');
-            $table->string('jobProductId');
+            $table->unsignedInteger('jobProductId');
             $table->integer('jobPQty');
             $table->primary(['jobPId','jobProductId']);
             $table->foreign('jobPId')

@@ -16,7 +16,7 @@ class CreateEstimateProductTable extends Migration
         Schema::create('estimate_product', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->string('estimatePId');
-            $table->string('estimateProductId');
+            $table->unsignedInteger('estimateProductId');
             $table->integer('estimatePQty');
             $table->primary(['estimatePId','estimateProductId']);
             $table->foreign('estimatePId')

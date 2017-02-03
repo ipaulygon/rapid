@@ -16,7 +16,7 @@ class CreatePurchaseDetailTable extends Migration
         Schema::create('purchase_detail', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->string('purchaseHDId');
-            $table->string('purchaseDVarianceId');
+            $table->unsignedInteger('purchaseDVarianceId');
             $table->integer('purchaseDQty');
             $table->foreign('purchaseHDId')
                   ->references('purchaseHId')->on('purchase_header')

@@ -15,7 +15,7 @@ class CreateInventoryTable extends Migration
     {
         Schema::create('inventory', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->string('inventoryPvId');
+            $table->unsignedInteger('inventoryPvId');
             $table->integer('inventoryQty');
             $table->timestamps();
             $table->primary('inventoryPvId');
