@@ -82,8 +82,8 @@
 						<td>{{ $product->brand->brandName }}</td>
 						<td>{{ $product->productName }}</td>
 						<td>{{ $product->productDesc }}</td>
-						<td></td>
 						<td>{{ $product->types->typeName }}</td>
+						<td></td>
 						<td>
 							<button class="ui green basic circular icon button" data-tooltip="Update Data" data-inverted="" name="edit{{ $product->productId }}" onclick="modal(this.name)"><i class="write icon"></i></button>
 							<button class="ui red basic circular icon button" data-tooltip="Deactivate Data" data-inverted="" name="del{{ $product->productId }}" onclick="modal(this.name)"><i class="trash icon"></i></button>
@@ -160,7 +160,7 @@
 	    					</div>
 	    					<div class="fourteen wide field">
 	    						<div class="ui multiple search selection dropdown">
-	    							<input id="variances" type="hidden" name="varianceId[]"><i class="dropdown icon"></i>
+	    							<input id="variances" type="hidden" name="variances[]"><i class="dropdown icon"></i>
 	    							<input class="search" autocomplete="off" tabindex="0">
 	    							<div class="default text">Select Variances</div>
 	    							<div class="menu" tabindex="-1">
@@ -170,7 +170,7 @@
 	    											{{ $var->varianceSize }} | {{$var->unit->unitName}}
 	    											<div class="ui labeled input">
 	    												<div class="ui label">P</div>
-	    												<input type="text" name="price[]" placeholder="12.75">
+	    												<input type="text" name="prices[]" placeholder="12.75">
 	    											</div>
 	    										</div>
 	    									@endif

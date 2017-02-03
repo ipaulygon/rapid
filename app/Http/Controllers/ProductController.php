@@ -6,6 +6,7 @@ use App\Product;
 use App\ProductType;
 use App\Brand;
 use App\Variance;
+use App\ProductVariance;
 
 use Illuminate\Http\Request;
 
@@ -44,6 +45,23 @@ class ProductController extends Controller
             'productIsActive' => 1
             ));
         $product->save();
+        $variances = $request->input('variances');
+        $prices = $request->input('prices');
+        $arrlength = count($variances);
+        for($x=0;$x<$arrlength;$x++) {
+            $pv_max = ProductVariance::max('pvId');
+            $pv_max = $pv_max + 1;
+            $pv_id = 'PV-'.str_pad($pv_max, 5, '0', STR_PAD_LEFT);
+            $pv = ProductVariance::create(array(
+                'pvId' => $pv_id,
+                'pvProductId' => $request->input('productId'),
+                'pvVarianceId' => $variances[$x],
+                'pvDesc' => '',
+                'pvCost' => $prices[$x],
+                'pvIsActive' => 1
+                ));
+            $pv->save();
+        }
         \Session::flash('flash_message','Product successfully added.');
         return redirect('maintenance/product');
     }
