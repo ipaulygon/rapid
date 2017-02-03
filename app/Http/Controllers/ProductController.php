@@ -45,7 +45,7 @@ class ProductController extends Controller
             'productIsActive' => 1
             ));
         $product->save();
-        $variances = $request->variances;
+        $variances = $request->input('variances');
         $prices = $request->prices;
         foreach($variances as $var) {
             $pv = ProductVariance::create(array(

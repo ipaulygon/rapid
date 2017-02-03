@@ -55,7 +55,7 @@ class InspectItemController extends Controller
             $inspectItem = InspectItem::find($request->input('editInspectItemId'));
             $inspectItem->inspectItemName = trim($request->input('editInspectItemName'));
             $inspectItem->inspectItemDesc = trim($request->input('editInspectItemDesc'));
-            $inspectItem->inspectItemDesc = trim($request->input('editInspectItemTypeId'));
+            $inspectItem->inspectItemTypeId = trim($request->input('editInspectItemTypeId'));
             $inspectItem->save();
             \Session::flash('flash_message','Inspection item successfully updated.');
         }else{

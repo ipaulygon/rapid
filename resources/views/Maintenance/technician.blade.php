@@ -138,7 +138,7 @@
 												</div>
 												<div class="field">
 													<label>Email</label>
-													<input type="text" name="editTechEmail" placeholder="Email" value="{{$tech->techEmail}}">
+													<input type="email" name="editTechEmail" placeholder="Email" value="{{$tech->techEmail}}">
 												</div>
 											</div>
 										</div>
