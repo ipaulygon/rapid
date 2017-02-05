@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
-class PromoRequest extends FormRequest
+class SupplierRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,18 +25,15 @@ class PromoRequest extends FormRequest
     public function rules()
     {
         return [
-            'promoName' => 'required|unique:promo',
-            'promoStart' => 'date|required',
-            'promoEnd' => 'date'
+            'supplierName' => 'required|unique:supplier' 
         ];
     }
 
     public function messages()
     {
         return [
-            'promoName.unique'  =>  'Promo already exists.',
-            'promoName.required' => 'Promo name is required.',
-            'promoStart.required' => 'Start Date is required.',
+            'supplierName.unique'  =>  'Supplier already exists.',
+            'supplierName.required' => 'Supplier is required'
         ];
     }
 

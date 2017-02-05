@@ -22,7 +22,7 @@ class Product extends Model
 		return $this->belongsTo('App\ProductType','productTypeId');
 	}
 	public function variance(){
-		return $this->hasMany('App\ProductVariance','varianceProductId');
+		return $this->hasMany('App\ProductVariance','pvProductId');
 	}
 	public function brand(){
 		return $this->belongsTo('App\Brand','productBrandId');	

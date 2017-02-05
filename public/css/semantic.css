@@ -22145,6 +22145,7 @@ Floated Menu / Item
 .ui.inverted.menu {
   border: 0px solid transparent;
   background: #1B1C1D;
+  /*background: #222d32;*/
   box-shadow: none;
 }
 
@@ -36805,19 +36806,6 @@ html.ios body {
 #top-menu {
   display: none;
 }
-
-
-/*@media (max-width: 1280px) {
-    #top-menu {
-        display: block !important;
-    }
-    #toc{
-      display: none;
-    }
-    .container#main{
-      padding-left: 0rem;
-    }
-}*/
 
 @media screen 
   and (min-width: 1280px)

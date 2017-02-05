@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')	
-	<!--Create-->	
+	<!--Add-->	
 	@if(Session::has('flash_message'))
 		<div class="ui small basic modal" style="text-align:center" id="flash_message">
 			<div class="ui icon header">
@@ -62,7 +62,7 @@
 
 	<h2>Maintenance - Unit</h2>
 	<hr><br>
-	<button class="ui positive button" name="modalCreate" onclick="modal(this.name)"><i class="plus icon"></i>Add Unit</button>
+	<button class="ui positive button" name="modalAdd" onclick="modal(this.name)"><i class="plus icon"></i>Add Unit</button>
 	<br><br>
 	<table id="listType" class="ui celled three column table">
 		<thead>
@@ -79,8 +79,8 @@
 						<td>{{ $unit->unitName }}</td>
 						<td>{{ $unit->unitDesc }}</td>
 						<td>
-							<button class="ui green basic circular icon button" data-tooltip="Update Data" data-inverted="" name="edit{{ $unit->unitId }}" onclick="modal(this.name)"><i class="write icon"></i></button>
-							<button class="ui red basic circular icon button" data-tooltip="Deactivate Data" data-inverted="" name="del{{ $unit->unitId }}" onclick="modal(this.name)"><i class="trash icon"></i></button>
+							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="edit{{ $unit->unitId }}" onclick="modal(this.name)"><i class="write icon"></i></button>
+							<button class="ui red basic circular icon button" data-tooltip="Deactivate Record" data-inverted="" name="del{{ $unit->unitId }}" onclick="modal(this.name)"><i class="trash icon"></i></button>
 						</td>
 						<!--Modal for Update-->
 						<div class="ui small modal" id="edit{{ $unit->unitId }}">
@@ -146,9 +146,9 @@
 		</tbody>
 	</table>
 	
-	<!--Create Modal-->
-	<div class="ui small modal" id="modalCreate">
-		<div class="header">Create Unit</div>
+	<!--Add Modal-->
+	<div class="ui small modal" id="modalAdd">
+		<div class="header">Add Unit</div>
 		<div class="content">
 			<div class="description">
 				<div class="ui form">
@@ -173,7 +173,7 @@
 	    				<div class="actions">
 	    					<i>Note: All with <span>*</span> are required fields</i>
 	    					<button type="reset" class="ui negative button"><i class="remove icon"></i>Clear</button>
-	    					<button type="submit" class="ui positive button"><i class="plus icon"></i>Create</button>
+	    					<button type="submit" class="ui positive button"><i class="plus icon"></i>Add</button>
 	    				</div>
 					{!! Form::close() !!}
 				</div>
@@ -189,7 +189,7 @@
 		    $('#listType').DataTable();
 		});
 		/*$('#create').click(function(){
-        	$('#modalCreate').modal('show');    
+        	$('#modalAdd').modal('show');    
     	});*/
 		function modal(open){
 			$('#' + open + '').modal('show');

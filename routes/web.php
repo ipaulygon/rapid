@@ -19,6 +19,12 @@ Auth::routes();
 
 Route::get('dashboard', 'HomeController@index');
 
+//Supplier
+Route::get('maintenance/supplier', 'SupplierController@index');
+Route::post('maintenance/supplier/create', 'SupplierController@create');
+Route::post('maintenance/supplier/update', 'SupplierController@update');
+Route::post('maintenance/supplier/destroy', 'SupplierController@destroy');
+
 //ProductBrand
 Route::get('maintenance/product-brand', 'BrandController@index');
 Route::post('maintenance/product-brand/create', 'BrandController@create');
@@ -54,8 +60,6 @@ Route::get('maintenance/promo','PromoController@index');
 Route::post('maintenance/promo/create','PromoController@create');
 Route::post('maintenance/promo/update','PromoController@update');
 Route::post('maintenance/promo/destroy','PromoController@destroy');
-Route::get('maintenance/promo/{id}','PromoController@view');
-Route::get('maintenance/promo/items','PromoController@add');
 
 //Discount
 Route::get('maintenance/discount','DiscountController@index');
@@ -91,3 +95,9 @@ Route::get('maintenance/technician','TechController@index');
 Route::post('maintenance/technician/create','TechController@create');
 Route::post('maintenance/technician/update','TechController@update');
 Route::post('maintenance/technician/destroy','TechController@destroy');
+
+//Inspect
+Route::get('transaction/inspect','InspectController@index');
+Route::post('transaction/inspect/create','InspectController@create');
+Route::post('transaction/inspect/update','InspectController@update');
+Route::post('transaction/inspect/destroy','InspectController@destroy');

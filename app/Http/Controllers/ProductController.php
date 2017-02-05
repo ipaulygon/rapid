@@ -19,19 +19,19 @@ class ProductController extends Controller
     }
 
     public function index(){
-    	/*$ids = \DB::table('product')
+    	$ids = \DB::table('product')
             ->select('productId')
             ->orderBy('created_at', 'desc')
             ->orderBy('productId', 'desc')
             ->take(1)
             ->get();
         $id = $ids["0"]->productId;
-        $newId = $this->smartCounter($id);*/
-        $newId = "PROD0001";
+        $newId = $this->smartCounter($id);
     	$type = ProductType::get();
         $brand = Brand::get();
         $variance = Variance::with('unit')->get();
-        $product = Product::with('types')->with('brand')->get();
+        $product = Product::with('types')->with('brand')->with('variance.variance.unit')->get();
+        //$pv = ProductVariance::with('product')->with('variance')->get();
         return view('Maintenance.Inventory.product',compact('product','type','brand','variance','newId'));
     }
 
@@ -45,19 +45,74 @@ class ProductController extends Controller
             'productIsActive' => 1
             ));
         $product->save();
-        $variances = $request->input('variances');
-        $prices = $request->prices;
+        $variance = $request->input('variance');
+        $variances = explode(',', $variance);
+        $prices = $request->input('prices');
+        $x = 0;
         foreach($variances as $var) {
             $pv = ProductVariance::create(array(
                 'pvProductId' => $request->input('productId'),
-                'pvVarianceId' => $variances[$var],
+                'pvVarianceId' => $variances[$x],
                 'pvDesc' => '',
-                'pvCost' => $prices[$var],
+                'pvCost' => $prices[$x],
                 'pvIsActive' => 1
                 ));
             $pv->save();
+            $x++;
         }
         \Session::flash('flash_message','Product successfully added.');
+        return redirect('maintenance/product');
+    }
+
+    public function update(Request $request){
+        $checkproducts = Product::all();
+        $isAdded = false;
+        foreach ($checkproducts as $product) {
+            if(!strcasecmp($product->productId, $request->input('editProductId')) == 0 
+                && strcasecmp($product->productName, trim($request->input('editProductName'))) == 0
+                && strcasecmp($product->productBrandId, trim($request->input('editProductBrandId'))) == 0
+                && strcasecmp($product->productTypeId, trim($request->input('editProductTypeId'))) == 0){
+                $isAdded = true;
+            }
+        }
+        if(!$isAdded){
+            $product = Product::find($request->input('editProductId'));
+            $product->productBrandId = trim($request->input('editProductBrandId'));
+            $product->productTypeId = trim($request->input('editProductTypeId'));
+            $product->productName = trim($request->input('editProductName'));
+            $product->productDesc = trim($request->input('editProductDesc'));
+            $product->save();
+            $affectedRows = ProductVariance::where('pvProductId', '=', $request->input('editProductId'))->update(['pvIsActive' => 0]);
+            /*$vars = ProductVariance::where('pvProductId',$request->input('editProductId'));
+            $vars->update(['pvIsActive']=>false);*/
+            $variance = $request->input('editVariance');
+            $variances = explode(',', $variance);
+            $prices = $request->input('price');
+            $x = 0;
+            foreach($variances as $var) {
+                $pv = ProductVariance::create(array(
+                    'pvProductId' => $request->input('editProductId'),
+                    'pvVarianceId' => $variances[$x],
+                    'pvDesc' => '',
+                    'pvCost' => $prices[$x],
+                    'pvIsActive' => 1
+                    ));
+                $pv->save();
+                $x++;
+            }
+            \Session::flash('flash_message','Product successfully updated.');
+        }else{
+            \Session::flash('error_message','Product already exists. Update failed.');
+        }
+        return redirect('maintenance/product');
+    }
+
+    public function destroy(Request $request){
+        $id = $request->input('delProductId');
+        $product = Product::find($request->input('delProductId'));
+        $product->productIsActive = 0;
+        $product->save();
+        \Session::flash('flash_message','Product successfully deleted.');
         return redirect('maintenance/product');
     }
 

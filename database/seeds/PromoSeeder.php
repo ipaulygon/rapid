@@ -14,10 +14,10 @@ class PromoSeeder extends Seeder
         $promos = array (
             array(
             	'promoId' => 'PROMO0001',
-				'promoName' => 'Buy 1 Take 1 - Shell Nitro V',
+				'promoName' => 'Buy 1 Take 1 Mobil Techron',
 				'promoDesc' => '',
-				'promoStart' => '2017-01-28',
-				'promoEnd' => '2017-01-28',
+				'promoStart' => '2017-02-4',
+				'promoEnd' => '2017-02-28',
 				'promoIsActive' => 1,
             )
         );

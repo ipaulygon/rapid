@@ -16,4 +16,7 @@ class InspectType extends Model
 								'inspectTypeIsActive'
 								//
 								);
+	public function item(){
+		return $this->hasMany('App\InspectItem','inspectItemTypeId');
+	}
 }

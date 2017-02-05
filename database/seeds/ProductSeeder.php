@@ -14,16 +14,8 @@ class ProductSeeder extends Seeder
         $product = array (
             array(
             	'productId' => 'PROD0001',
-                'productBrand' => 'Petron',
-				'productName' => 'XCS Euro 4',
-				'productTypeId' => 'TYPE002',
-				'productDesc' => 'Premium Plus Grade',
-				'productIsActive' => 1,
-            ),
-            array(
-            	'productId' => 'PROD0002',
-                'productBrand' => 'Petron',
-				'productName' => 'Turbo Diesel',
+                'productBrandId' => 'BRAND0002',
+				'productName' => 'Techron',
 				'productTypeId' => 'TYPE002',
 				'productDesc' => '',
 				'productIsActive' => 1,

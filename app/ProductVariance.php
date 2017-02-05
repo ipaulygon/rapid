@@ -17,4 +17,10 @@ class ProductVariance extends Model
 								'pvIsActive'
 								//
 								);
+	public function product(){
+		return $this->belongsTo('App\Product','pvProductId');
+	}
+	public function variance(){
+		return $this->belongsTo('App\Variance','pvVarianceId');
+	}
 }

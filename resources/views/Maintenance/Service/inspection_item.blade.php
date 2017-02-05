@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')	
-	<!--Create-->	
+	<!--Add-->	
 	@if(Session::has('flash_message'))
 		<div class="ui small basic modal" style="text-align:center" id="flash_message">
 			<div class="ui icon header">
@@ -62,7 +62,7 @@
 
 	<h2>Maintenance - Inspection Item</h2>
 	<hr><br>
-	<button class="ui positive button" name="modalCreateItem" onclick="modal(this.name)"><i class="plus icon"></i>Add Inspection Item</button>
+	<button class="ui positive button" name="modalAddItem" onclick="modal(this.name)"><i class="plus icon"></i>Add Inspection Item</button>
 	<br><br>
 	<table id="list" class="ui celled four column table">
 		<thead>
@@ -81,8 +81,8 @@
 						<td>{{ $inspectItem->inspectItemDesc }}</td>
 						<td>{{ $inspectItem->type->inspectTypeName }}</td>
 						<td>
-							<button class="ui green basic circular icon button" data-tooltip="Update Data" data-inverted="" name="edit{{ $inspectItem->inspectItemId }}" onclick="modal(this.name)"><i class="write icon"></i></button>
-							<button class="ui red basic circular icon button" data-tooltip="Deactivate Data" data-inverted="" name="del{{ $inspectItem->inspectItemId }}" onclick="modal(this.name)"><i class="trash icon"></i></button>
+							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="edit{{ $inspectItem->inspectItemId }}" onclick="modal(this.name)"><i class="write icon"></i></button>
+							<button class="ui red basic circular icon button" data-tooltip="Deactivate Record" data-inverted="" name="del{{ $inspectItem->inspectItemId }}" onclick="modal(this.name)"><i class="trash icon"></i></button>
 						</td>
 						<!--Modal for Update-->
 						<div class="ui small modal" id="edit{{ $inspectItem->inspectItemId }}">
@@ -166,9 +166,9 @@
 		</tbody>
 	</table>
 
-	<!--Create Modal-->
-	<div class="ui small modal" id="modalCreateItem">
-        <div class="header">Create Inspection Item</div>
+	<!--Add Modal-->
+	<div class="ui small modal" id="modalAddItem">
+        <div class="header">Add Inspection Item</div>
         <div class="content">
             <div class="description">
                 <div class="ui form">
@@ -210,7 +210,7 @@
                         <div class="actions">
                             <i>Note: All with <span>*</span> are required fields</i>
                             <button type="reset" class="ui negative button"><i class="remove icon"></i>Clear</button>
-                            <button type="submit" class="ui positive button"><i class="plus icon"></i>Create</button>
+                            <button type="submit" class="ui positive button"><i class="plus icon"></i>Add</button>
                         </div>
                     {!! Form::close() !!}
                 </div>
@@ -229,7 +229,7 @@
 		    $('.ui.dropdown').dropdown();
 		});
 		/*$('#create').click(function(){
-        	$('#modalCreate').modal('show');    
+        	$('#modalAdd').modal('show');    
     	});*/
 		function modal(open){
 			$('#' + open + '').modal('show');

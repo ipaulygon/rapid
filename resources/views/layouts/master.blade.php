@@ -15,13 +15,15 @@
     <link rel="stylesheet" type="text/css" href="{{asset('css/semantic.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/dataTables.jqueryui.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/dataTables.semanticui.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/calendar.css')}}">
     <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery-3.1.1.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/semantic.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.dataTables.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/dataTables.jqueryui.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/dataTables.semanticui.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery.tablesort.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/calendar.js') }}"></script>
+    <!-- <script type="text/javascript" src="{{ asset('js/jquery.tablesort.js') }}"></script> -->
 
     <!-- Scripts -->
     <script>
@@ -38,11 +40,12 @@
         <!--Maintenance-->
         <div class="item">
             <div class="header">Maintenance</div>
-            <div class="ui vertical accordion inverted menu">
+            <div class="ui vertical accordion inverted fluid">
                 <div class="item">
                     <a class="title"><i class="dropdown icon"></i>Inventory</a>
                     <div class="content">
                         <div class="ui form">
+                            <a href="/maintenance/supplier" class="item">Supplier</a>
                             <a href="/maintenance/product-brand" class="item">Product Brand</a>
                             <a href="/maintenance/product-type" class="item">Product Type</a>
                             <a href="/maintenance/product-unit" class="item">Product Unit</a>
@@ -67,7 +70,8 @@
                     <div class="content">
                         <div class="ui form">
                             <a href="/maintenance/promo" class="item">Promo</a>
-                            <a href="/maintenance/discount" class="item">Discounts</a>
+                            <a href="/maintenance/discount" class="item">Discount</a>
+                            <a href="/maintenance/package" class="item">Package</a>
                         </div>
                     </div>
                 </div>
@@ -79,14 +83,13 @@
         <!--Transaction-->
         <div class="item">
             <div class="header">Transaction</div>
-            <div class="ui vertical accordion inverted menu">
+            <div class="ui vertical accordion inverted">
                 <div class="item">
                     <a class="title"><i class="dropdown icon"></i>Inventory</a>
                     <div class="content">
                         <div class="ui form">
                             <a href="" class="item">Order Supplies</a>
                             <a href="" class="item">Accept Delivery</a>
-                            <a href="" class="item">Add Price</a>
                         </div>
                     </div>
                 </div>
@@ -94,7 +97,7 @@
                     <a class="title"><i class="dropdown icon"></i>Car Care</a>
                     <div class="content">
                         <div class="ui form">
-                            <a href="" class="item">Inspect Vehicle</a>
+                            <a href="/transaction/inspect" class="item">Inspect Vehicle</a>
                             <a href="" class="item">Customize Vehicle</a>
                             <a href="" class="item">Repair Vehicle</a>
                         </div>
@@ -136,11 +139,12 @@
         <!--Maintenance-->
         <div class="item">
             <div class="header">Maintenance</div>
-            <div class="ui vertical accordion inverted menu">
+            <div class="ui vertical accordion inverted fluid">
                 <div class="item">
                     <a class="title"><i class="dropdown icon"></i>Inventory</a>
                     <div class="content">
                         <div class="ui form">
+                            <a href="/maintenance/supplier" class="item">Supplier</a>
                             <a href="/maintenance/product-brand" class="item">Product Brand</a>
                             <a href="/maintenance/product-type" class="item">Product Type</a>
                             <a href="/maintenance/product-unit" class="item">Product Unit</a>
@@ -165,7 +169,8 @@
                     <div class="content">
                         <div class="ui form">
                             <a href="/maintenance/promo" class="item">Promo</a>
-                            <a href="/maintenance/discount" class="item">Discounts</a>
+                            <a href="/maintenance/discount" class="item">Discount</a>
+                            <a href="/maintenance/package" class="item">Package</a>
                         </div>
                     </div>
                 </div>
@@ -177,14 +182,13 @@
         <!--Transaction-->
         <div class="item">
             <div class="header">Transaction</div>
-            <div class="ui vertical accordion inverted menu">
+            <div class="ui vertical accordion inverted">
                 <div class="item">
                     <a class="title"><i class="dropdown icon"></i>Inventory</a>
                     <div class="content">
                         <div class="ui form">
                             <a href="" class="item">Order Supplies</a>
                             <a href="" class="item">Accept Delivery</a>
-                            <a href="" class="item">Add Price</a>
                         </div>
                     </div>
                 </div>
@@ -192,7 +196,7 @@
                     <a class="title"><i class="dropdown icon"></i>Car Care</a>
                     <div class="content">
                         <div class="ui form">
-                            <a href="" class="item">Inspect Vehicle</a>
+                            <a href="/transaction/inspect" class="item">Inspect Vehicle</a>
                             <a href="" class="item">Customize Vehicle</a>
                             <a href="" class="item">Repair Vehicle</a>
                         </div>

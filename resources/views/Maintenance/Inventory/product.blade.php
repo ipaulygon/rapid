@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')	
-	<!--Create-->	
+	<!--Add-->	
 	@if(Session::has('flash_message'))
 		<div class="ui small basic modal" style="text-align:center" id="flash_message">
 			<div class="ui icon header">
@@ -62,9 +62,9 @@
 
 	<h2>Maintenance - Product</h2>
 	<hr><br>
-	<button class="ui positive button" name="modalCreate" onclick="modal(this.name)"><i class="plus icon"></i>Add Product</button>
+	<button class="ui positive button" name="modalAdd" onclick="modal(this.name)"><i class="plus icon"></i>Add Product</button>
 	<br><br>
-	<table id="list" class="ui celled five column table">
+	<table id="list" class="ui celled table">
 		<thead>
 			<tr>
 				<th>Brand</th>
@@ -83,20 +83,160 @@
 						<td>{{ $product->productName }}</td>
 						<td>{{ $product->productDesc }}</td>
 						<td>{{ $product->types->typeName }}</td>
-						<td></td>
 						<td>
-							<button class="ui green basic circular icon button" data-tooltip="Update Data" data-inverted="" name="edit{{ $product->productId }}" onclick="modal(this.name)"><i class="write icon"></i></button>
-							<button class="ui red basic circular icon button" data-tooltip="Deactivate Data" data-inverted="" name="del{{ $product->productId }}" onclick="modal(this.name)"><i class="trash icon"></i></button>
+							@foreach($product->variance as $vars)
+								@if($vars->pvIsActive==1)
+									<li>{{$vars->variance->varianceSize}} | {{$vars->variance->unit->unitName}} | P{{$vars->pvCost}}</li>
+								@endif
+							@endforeach
 						</td>
+						<td>
+							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="edit{{ $product->productId }}" onclick="modal(this.name)"><i class="write icon"></i></button>
+							<button class="ui red basic circular icon button" data-tooltip="Deactivate Record" data-inverted="" name="del{{ $product->productId }}" onclick="modal(this.name)"><i class="trash icon"></i></button>
+						</td>
+						<!--Modal for Update-->
+						<div class="ui small modal" id="edit{{ $product->productId }}">
+							<div class="header">Update Product</div>
+							{!! Form::open(['action' => 'ProductController@update']) !!}	
+								<div class="content">
+									<div class="description">
+										<div class="ui form">								
+											<div class="sixteen wide field">
+				        						<input type="hidden" name="editProductId" value="{{ $product->productId }}">
+				        					</div>
+				        					<div class="inline fields">
+						    					<div class="two wide field">
+						    						<label>Brand<span>*</span></label>
+						    					</div>
+						    					<div class="six wide field">
+						    						<div class="ui search selection dropdown">
+						    							<input type="hidden" name="editProductBrandId" value="{{ $product->productBrandId }}"><i class="dropdown icon"></i>
+						    							<input class="search" autocomplete="off" tabindex="0">
+						    							<div class="default text">Select Brand</div>
+						    							<div class="menu" tabindex="-1">
+						    								@foreach($brand as $brands)
+						    									@if($brands->brandIsActive==1)
+						    										<div class="item" data-value="{{ $brands->brandId }}">{{ $brands->brandName }}</div>
+						    									@endif
+						    								@endforeach
+						    							</div>
+						    						</div>
+						    					</div>
+						    					<div class="two wide field">
+						    						<label>Type<span>*</span></label>
+						    					</div>
+						    					<div class="six wide field">
+						    						<div class="ui search selection dropdown">
+						    							<input type="hidden" name="editProductTypeId" value="{{ $product->productTypeId }}"><i class="dropdown icon"></i>
+						    							<input class="search" autocomplete="off" tabindex="0">
+						    							<div class="default text">Select Type</div>
+						    							<div class="menu" tabindex="-1">
+						    								@foreach($type as $types)
+						    									@if($types->typeIsActive==1)
+						    										<div class="item" data-value="{{ $types->typeId }}">{{ $types->typeName }}</div>
+						    									@endif
+						    								@endforeach
+						    							</div>
+						    						</div>
+						    					</div>
+						    				</div>
+					        				<div class="inline fields">
+						    					<div class="two wide field">
+						    						<label>Product<span>*</span></label>
+						    					</div>
+						    					<div class="fourteen wide field">
+						    						<input type="text" name="editProductName" placeholder="Product" value="{{ $product->productName }}">
+						    					</div>
+						    				</div>
+						    				<div class="inline fields">
+						    					<div class="two wide field">
+						    						<label>Description</label>
+						    					</div>
+						    					<div class="fourteen wide field">
+						    						<textarea type="text" name="editProductDesc" placeholder="Description">{{ $product->productDesc }}</textarea>
+						    					</div>
+						    				</div>
+						    				<div class="inline fields">
+						    					<div class="two wide field">
+						    						<label>Variances</label>
+						    					</div>
+						    					<div class="fourteen wide field">
+						    						<div id="editVar{{$product->productId}}" class="ui multiple search selection dropdown">
+						    							<input id="variances" type="hidden" name="editVariance"><i class="dropdown icon"></i>
+						    							<input class="search" autocomplete="off" tabindex="0">
+						    							<div class="default text">Select Variances</div>
+						    							<div class="menu" tabindex="-1">
+						    								@foreach($variance as $var)
+						    									@if($var->varianceIsActive==1)
+						    										<div class="item" name="{{$var->varianceId}}{{$var->varianceSize}}" data-value="{{ $var->varianceId }}">
+						    											{{ $var->varianceSize }} | {{$var->unit->unitName}}
+						    											<div class="ui labeled input">
+						    												<div class="ui label">P</div>
+						    												<input type="text" name="price[]" id="input{{ $product->productId }}{{$var->varianceId}}" placeholder="12.75">
+						    											</div>
+						    										</div>
+						    									@endif
+						    								@endforeach
+						    							</div>
+						    						</div>
+						    					</div>
+						    				</div>
+										</div>
+									</div>
+								</div>
+								<div class="actions">
+									<i>Note: All with <span>*</span> are required fields</i>
+		        					<button type="reset" class="ui negative button"><i class="remove icon"></i>Clear</button>
+		        					<button type="submit" class="ui positive button"><i class="write icon"></i>Update</button>
+		        				</div>
+		        				<script type="text/javascript">
+		        					var array = [
+		        						@foreach($product->variance as $var)
+		        							@if($vars->pvIsActive==1)
+		        								'{{$var->variance->varianceId}}',
+		        							@endif
+		        						@endforeach
+		        					];
+		        					$('#editVar{{$product->productId}}').dropdown('set selected',array);
+		        					@foreach($product->variance as $var)
+		        						@if($vars->pvIsActive==1)
+	        								$( "input[id=input{{$product->productId}}{{$var->variance->varianceId}}]" ).val("{{$var->pvCost}}");
+	        							@endif
+	        						@endforeach
+		        				</script>
+	        				{!! Form::close() !!}
+						</div>
+						<div class="ui small basic modal" id="del{{ $product->productId }}" style="text-align:center">
+							<div class="ui icon header">
+								<i class="trash icon"></i>
+								Deactivate
+							</div>
+							{!! Form::open(['action' => 'ProductController@destroy']) !!}
+								<div class="content">
+									<div class="description">
+										<input type="hidden" name="delProductId" value="{{ $product->productId }}">
+										<p>
+											<label>Product: {{ $product->productName }}</label><br>
+											<label>Brand: {{$product->brand->brandName}}</label><br>
+											<label>Type: {{$product->types->typeName}}</label>
+										</p>
+									</div>
+								</div>
+								<div class="actions">
+			        				<button type="submit" class="ui negative button"><i class="trash icon"></i>Deactivate</button>
+			        				<button type="reset" class="ui positive button"><i class="plane icon"></i>Cancel</button>
+			        			</div>
+							{!! Form::close() !!}
+						</div>
 					</tr>
 				@endif
 			@endforeach
 		</tbody>
 	</table>
 	
-	<!--Create Modal-->
-	<div class="ui small modal" id="modalCreate">
-		<div class="header">Create Product</div>
+	<!--Add Modal-->
+	<div class="ui small modal" id="modalAdd">
+		<div class="header">Add Product</div>
 		<div class="content">
 			<div class="description">
 				<div class="ui form">
@@ -160,7 +300,7 @@
 	    					</div>
 	    					<div class="fourteen wide field">
 	    						<div class="ui multiple search selection dropdown">
-	    							<input id="variances" type="hidden" name="variances[]"><i class="dropdown icon"></i>
+	    							<input id="variances" type="hidden" name="variance"><i class="dropdown icon"></i>
 	    							<input class="search" autocomplete="off" tabindex="0">
 	    							<div class="default text">Select Variances</div>
 	    							<div class="menu" tabindex="-1">
@@ -204,7 +344,7 @@
 	    				<div class="actions">
 	    					<i>Note: All with <span>*</span> are required fields</i>
 	    					<button type="reset" class="ui negative button"><i class="remove icon"></i>Clear</button>
-	    					<button type="submit" class="ui positive button"><i class="plus icon"></i>Create</button>
+	    					<button type="submit" class="ui positive button"><i class="plus icon"></i>Add</button>
 	    				</div>
 					{!! Form::close() !!}
 				</div>
@@ -218,7 +358,6 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 		    $('#list').DataTable();
-		    $('#var').DataTable();
 		    $('.ui.dropdown').dropdown();
 		});
 		function modal(open){

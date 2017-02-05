@@ -60,44 +60,44 @@
 		</script>
 	@endif
 
-	<h2>Maintenance - Inspection Type</h2>
+	<h2>Maintenance - Supplier</h2>
 	<hr><br>
-	<button class="ui positive button" name="modalAddType" onclick="modal(this.name)"><i class="plus icon"></i>Add Inspection Type</button>
+	<button class="ui positive button" name="modalAdd" onclick="modal(this.name)"><i class="plus icon"></i>Add Supplier</button>
 	<br><br>
-	<table id="list" class="ui celled three column table">
+	<table id="listType" class="ui celled three column table">
 		<thead>
 			<tr>
-				<th>Inspection Type</th>
+				<th>Supplier</th>
 				<th>Description</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
-			@foreach($inspect_type as $inspectType)
-				@if($inspectType->inspectTypeIsActive==1)
+			@foreach($supplier as $supplier)
+				@if($supplier->supplierIsActive==1)
 					<tr>
-						<td>{{ $inspectType->inspectTypeName }}</td>
-						<td>{{ $inspectType->inspectTypeDesc }}</td>
+						<td>{{ $supplier->supplierName }}</td>
+						<td>{{ $supplier->supplierDesc }}</td>
 						<td>
-							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="edit{{ $inspectType->inspectTypeId }}" onclick="modal(this.name)"><i class="write icon"></i></button>
-							<button class="ui red basic circular icon button" data-tooltip="Deactivate Record" data-inverted="" name="del{{ $inspectType->inspectTypeId }}" onclick="modal(this.name)"><i class="trash icon"></i></button>
+							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="edit{{ $supplier->supplierId }}" onclick="modal(this.name)"><i class="write icon"></i></button>
+							<button class="ui red basic circular icon button" data-tooltip="Deactivate Record" data-inverted="" name="del{{ $supplier->supplierId }}" onclick="modal(this.name)"><i class="trash icon"></i></button>
 						</td>
 						<!--Modal for Update-->
-						<div class="ui small modal" id="edit{{ $inspectType->inspectTypeId }}">
-							<div class="header">Update Inspection Type</div>
-							{!! Form::open(['action' => 'InspectTypeController@update']) !!}	
+						<div class="ui small modal" id="edit{{ $supplier->supplierId }}">
+							<div class="header">Update Supplier</div>
+							{!! Form::open(['action' => 'SupplierController@update']) !!}	
 								<div class="content">
 									<div class="description">
 										<div class="ui form">								
 											<div class="sixteen wide field">
-				        						<input type="hidden" name="editInspectTypeId" value="{{ $inspectType->inspectTypeId }}">
+				        						<input type="hidden" name="editSupplierId" value="{{ $supplier->supplierId }}">
 				        					</div>
 					        				<div class="inline fields">
 					        					<div class="two wide field">
-					        						<label>Inspect Type<span>*</span></label>
+					        						<label>Supplier<span>*</span></label>
 					        					</div>
 					        					<div class="fourteen wide field">
-					        						<input type="text" name="editInspectTypeName" value="{{ $inspectType->inspectTypeName }}" placeholder="Inspect Type">
+					        						<input type="text" name="editSupplierName" value="{{ $supplier->supplierName }}" placeholder="Supplier">
 					        					</div>
 					        				</div>
 					        				<div class="inline fields">
@@ -105,7 +105,7 @@
 					        						<label>Description</label>
 					        					</div>
 					        					<div class="fourteen wide field">
-					        						<textarea type="text" name="editInspectTypeDesc" placeholder="Description">{{ $inspectType->inspectTypeDesc }}</textarea>
+					        						<textarea type="text" name="editSupplierDesc" placeholder="Description">{{ $supplier->supplierDesc }}</textarea>
 					        					</div>
 					        				</div>
 										</div>
@@ -119,18 +119,18 @@
 	        				{!! Form::close() !!}
 						</div>
 						<!--Modal for Deactivate-->
-						<div class="ui small basic modal" id="del{{ $inspectType->inspectTypeId }}" style="text-align:center">
+						<div class="ui small basic modal" id="del{{ $supplier->supplierId }}" style="text-align:center">
 							<div class="ui icon header">
 								<i class="trash icon"></i>
 								Deactivate
 							</div>
-							{!! Form::open(['action' => 'InspectTypeController@destroy']) !!}
+							{!! Form::open(['action' => 'SupplierController@destroy']) !!}
 								<div class="content">
 									<div class="description">
-										<input type="hidden" name="delInspectTypeId" value="{{ $inspectType->inspectTypeId }}">
+										<input type="hidden" name="delSupplierId" value="{{ $supplier->supplierId }}">
 										<p>
-											<label>Inspect Type: {{$inspectType->inspectTypeName}}</label><br>
-											<label>Description: {{$inspectType->inspectTypeDesc}}</label>
+											<label>Supplier: {{$supplier->supplierName}}</label><br>
+											<label>Description: {{$supplier->supplierDesc}}</label>
 										</p>
 									</div>
 								</div>
@@ -145,21 +145,21 @@
 			@endforeach
 		</tbody>
 	</table>
-
+	
 	<!--Add Modal-->
-	<div class="ui small modal" id="modalAddType">
-		<div class="header">Add Inspection Type</div>
+	<div class="ui small modal" id="modalAdd">
+		<div class="header">Add Supplier</div>
 		<div class="content">
 			<div class="description">
 				<div class="ui form">
-					{!! Form::open(['action' => 'InspectTypeController@create']) !!}
-						<input type="hidden" name="inspectTypeId" value="{{$newIdType}}" readonly>
+					{!! Form::open(['action' => 'SupplierController@create']) !!}
+						<input type="hidden" name="supplierId" value="{{ $newId }}" readonly>
 	    				<div class="inline fields">
 	    					<div class="two wide field">
-	    						<label>Inspection Type<span>*</span></label>
+	    						<label>Supplier<span>*</span></label>
 	    					</div>
 	    					<div class="fourteen wide field">
-	    						<input type="text" name="inspectTypeName" placeholder="Inspection Type">
+	    						<input type="text" name="supplierName" placeholder="Supplier">
 	    					</div>
 	    				</div>
 	    				<div class="inline fields">
@@ -167,7 +167,7 @@
 	    						<label>Description</label>
 	    					</div>
 	    					<div class="fourteen wide field">
-	    						<textarea type="text" name="inspectTypeDesc" placeholder="Description"></textarea>
+	    						<textarea type="text" name="supplierDesc" placeholder="Description"></textarea>
 	    					</div>
 	    				</div>
 	    				<div class="actions">
@@ -186,10 +186,7 @@
 @section('scripts')
 	<script type="text/javascript">
 		$(document).ready(function(){
-		    $('#list').DataTable();
-		    $('#listItem').DataTable();
-		    $('.menu .item').tab();
-		    $('.ui.dropdown').dropdown();
+		    $('#listType').DataTable();
 		});
 		/*$('#create').click(function(){
         	$('#modalAdd').modal('show');    

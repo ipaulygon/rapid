@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')	
-	<!--Create-->	
+	<!--Add-->	
 	@if(Session::has('flash_message'))
 		<div class="ui small basic modal" style="text-align:center" id="flash_message">
 			<div class="ui icon header">
@@ -62,7 +62,7 @@
 
 	<h2>Maintenance - Service</h2>
 	<hr><br>
-	<button class="ui positive button" name="modalCreate" onclick="modal(this.name)"><i class="plus icon"></i>Add Service</button>
+	<button class="ui positive button" name="modalAdd" onclick="modal(this.name)"><i class="plus icon"></i>Add Service</button>
 	<br><br>
 	<table id="list" class="ui celled table">
 		<thead>
@@ -83,8 +83,8 @@
 						<td>{{ $serv->categories->categoryName }}</td>
 						<td>{{ $serv->servicePrice }}</td>
 						<td>
-							<button class="ui green basic circular icon button" data-tooltip="Update Data" data-inverted="" name="edit{{ $serv->serviceId }}" onclick="modal(this.name)"><i class="write icon"></i></button>
-							<button class="ui red basic circular icon button" data-tooltip="Deactivate Data" data-inverted="" name="del{{ $serv->serviceId }}" onclick="modal(this.name)"><i class="trash icon"></i></button>
+							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="edit{{ $serv->serviceId }}" onclick="modal(this.name)"><i class="write icon"></i></button>
+							<button class="ui red basic circular icon button" data-tooltip="Deactivate Record" data-inverted="" name="del{{ $serv->serviceId }}" onclick="modal(this.name)"><i class="trash icon"></i></button>
 						</td>
 						<!--Modal for Update-->
 						<div class="ui small modal" id="edit{{ $serv->serviceId }}">
@@ -181,9 +181,9 @@
 		</tbody>
 	</table>
 	
-	<!--Create Modal-->
-	<div class="ui small modal" id="modalCreate">
-		<div class="header">Create Service</div>
+	<!--Add Modal-->
+	<div class="ui small modal" id="modalAdd">
+		<div class="header">Add Service</div>
 		<div class="content">
 			<div class="description">
 				{!! Form::open(['action' => 'ServiceController@create']) !!}
@@ -253,7 +253,7 @@
 		    $('.ui.dropdown').dropdown();
 		});
 		/*$('#create').click(function(){
-        	$('#modalCreate').modal('show');    
+        	$('#modalAdd').modal('show');    
     	});*/
 		function modal(open){
 			$('#' + open + '').modal('show');
