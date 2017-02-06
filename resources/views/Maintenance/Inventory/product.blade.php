@@ -161,18 +161,19 @@
 						    						<label>Variances</label>
 						    					</div>
 						    					<div class="fourteen wide field">
-						    						<div id="editVar{{$product->productId}}" class="ui multiple search selection dropdown">
-						    							<input id="variances" type="hidden" name="editVariance"><i class="dropdown icon"></i>
+						    						<div style="width:100%" id="editVar{{$product->productId}}" class="ui multiple search selection dropdown">
+						    							<input type="hidden" name="editVariance"><i class="dropdown icon"></i>
 						    							<input class="search" autocomplete="off" tabindex="0">
 						    							<div class="default text">Select Variances</div>
 						    							<div class="menu" tabindex="-1">
 						    								@foreach($variance as $var)
 						    									@if($var->varianceIsActive==1)
-						    										<div class="item" name="{{$var->varianceId}}{{$var->varianceSize}}" data-value="{{ $var->varianceId }}">
+						    										<div class="item" data-value="{{ $var->varianceId }}">
 						    											{{ $var->varianceSize }} | {{$var->unit->unitName}}
 						    											<div class="ui labeled input">
 						    												<div class="ui label">P</div>
-						    												<input type="text" name="price[]" id="input{{ $product->productId }}{{$var->varianceId}}" placeholder="12.75">
+						    												<input type="text" name="price[]" id="input{{ $product->productId }}{{$var->varianceId}}" placeholder="12.75" onchange="load(this)">
+						    												<input type="hidden" title="input{{ $product->productId }}{{$var->varianceId}}" name="pricee[]">
 						    											</div>
 						    										</div>
 						    									@endif
@@ -192,15 +193,16 @@
 		        				<script type="text/javascript">
 		        					var array = [
 		        						@foreach($product->variance as $var)
-		        							@if($vars->pvIsActive==1)
+		        							@if($var->pvIsActive==1)
 		        								'{{$var->variance->varianceId}}',
 		        							@endif
 		        						@endforeach
 		        					];
 		        					$('#editVar{{$product->productId}}').dropdown('set selected',array);
 		        					@foreach($product->variance as $var)
-		        						@if($vars->pvIsActive==1)
-	        								$( "input[id=input{{$product->productId}}{{$var->variance->varianceId}}]" ).val("{{$var->pvCost}}");
+		        						@if($var->pvIsActive==1)
+	        								$( "input[id=input{{$product->productId}}{{$var->variance->varianceId}}]" ).val({{$var->pvCost}});
+	        								$( "input[title=input{{$product->productId}}{{$var->variance->varianceId}}]" ).val({{$var->pvCost}});
 	        							@endif
 	        						@endforeach
 		        				</script>
@@ -319,28 +321,6 @@
 	    						</div>
 	    					</div>
 	    				</div>
-	    				<!-- <table id="var" class="ui celled four column definition table">
-	    					<thead>
-	    						<th></th>
-	    						<th>Size</th>
-	    						<th>Unit</th>
-	    						<th>Price</th>
-	    					</thead>
-	    					<tbody>
-	    						@foreach($variance as $var)
-	    							@if($var->varianceIsActive==1)
-	    								<tr>
-	    									<td>
-	    										<input class="slider checkbox" type="checkbox" name="{{$var->varianceId}}">
-	    									</td>
-	    									<td>{{$var->varianceSize}}</td>
-	    									<td>{{$var->unit->unitName}}</td>
-	    									<td><input type="text" id="{{$var->varianceId}}" name="price[]" disabled></td>
-	    								</tr>
-	    							@endif
-	    						@endforeach
-	    					</tbody>
-	    				</table> -->
 	    				<div class="actions">
 	    					<i>Note: All with <span>*</span> are required fields</i>
 	    					<button type="reset" class="ui negative button"><i class="remove icon"></i>Clear</button>
@@ -362,6 +342,13 @@
 		});
 		function modal(open){
 			$('#' + open + '').modal('show');
+		}
+		function load(input){
+			var val = $(input).val();
+			var id = $(input).attr('id');
+			$( "input[title="+id+"]").val(val);
+			/*$(input).attr("value",val);
+			alert("new value is" + val);*/
 		}
 	</script>
 @stop

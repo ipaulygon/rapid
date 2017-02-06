@@ -102,7 +102,7 @@
 				<div class="ui form">
 					{!! Form::open(['action' => 'InspectController@create']) !!}
 						<input type="hidden" name="inspectHId" value="{{ $newId }}" readonly>
-						<div class="ui secondary pointing menu">
+						<div class="ui stackable container secondary pointing menu">
 							<a class="active item" data-tab="first">Vehicle Details</a>
 							<a class="item" data-tab="second">Customer Details</a>
 							<a class="item" data-tab="third">Inspection Details</a>

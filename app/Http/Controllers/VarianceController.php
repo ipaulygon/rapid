@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\VarianceRequest;
 use App\Variance;
 use App\Unit;
+use App\ProductType;
+use App\TypeVariance;
 
 use Illuminate\Http\Request;
 
@@ -24,9 +26,10 @@ class VarianceController extends Controller
             ->get();
         $id = $ids["0"]->varianceId;
         $newId = $this->smartCounter($id);
-    	$variance = Variance::with('unit')->get();
+    	$variance = Variance::with('unit')->with('type.type')->get();
     	$unit = Unit::get();
-    	return view('Maintenance.Inventory.product_variance',compact('variance','unit','newId'));
+        $types = ProductType::get();
+    	return view('Maintenance.Inventory.product_variance',compact('variance','unit','types','newId'));
     }
 
     public function create(VarianceRequest $request){
@@ -38,6 +41,18 @@ class VarianceController extends Controller
             'varianceIsActive' => 1
             ));
         $variance->save();
+        $type = $request->input('types');
+        $types = explode(',', $type);
+        $x = 0;
+        foreach($types as $typ) {
+            $tv = TypeVariance::create(array(
+                'tvTypeId' => $types[$x],
+                'tvVarianceId' => $request->input('varianceId'),
+                'tvIsActive' => 1
+                ));
+            $tv->save();
+            $x++;
+        }
         \Session::flash('flash_message','Variance successfully added.');
         return redirect('maintenance/product-variance');
     }
@@ -58,6 +73,19 @@ class VarianceController extends Controller
             $variance->varianceUnitId = trim($request->input('editVarianceUnitId'));
             $variance->varianceDesc = trim($request->input('editVarianceDesc'));
             $variance->save();
+            $affectedRows = TypeVariance::where('tvVarianceId', '=', $request->input('editVarianceId'))->update(['tvIsActive' => 0]);
+            $type = $request->input('editTypes');
+            $types = explode(',', $type);
+            $x = 0;
+            foreach($types as $typ) {
+                $tv = TypeVariance::create(array(
+                    'tvTypeId' => $types[$x],
+                    'tvVarianceId' => $request->input('editVarianceId'),
+                    'tvIsActive' => 1
+                    ));
+                $tv->save();
+                $x++;
+            }
             \Session::flash('flash_message','Variance successfully updated.');
         }else{
             \Session::flash('error_message','Variance already exists. Update failed.');

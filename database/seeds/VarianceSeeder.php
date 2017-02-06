@@ -19,6 +19,13 @@ class VarianceSeeder extends Seeder
 				'varianceUnitId' => 'UNIT001',
 				'varianceIsActive' => 1,
             ),
+            array(
+                'varianceId' => 'VAR0002',
+                'varianceSize' => '200 ml',
+                'varianceDesc' => '',
+                'varianceUnitId' => 'UNIT001',
+                'varianceIsActive' => 1,
+            ),
         );
         DB::table('variance')->insert($variance);
     }

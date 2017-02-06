@@ -16,4 +16,7 @@ class ProductType extends Model
 								'typeIsActive'
 								//
 								);
+	public function variance(){
+		return $this->hasMany('App\TypeVariance','tvTypeId');
+	}
 }

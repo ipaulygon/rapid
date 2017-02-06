@@ -64,12 +64,13 @@
 	<hr><br>
 	<button class="ui positive button" name="modalAdd" onclick="modal(this.name)"><i class="plus icon"></i>Add Variance</button>
 	<br><br>
-	<table id="list" class="ui celled four column table">
+	<table id="list" class="ui celled five column table">
 		<thead>
 			<tr>
 				<th>Variance Size</th>
 				<th>Variance Unit</th>
 				<th>Description</th>
+				<th>Limited to</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
@@ -80,6 +81,13 @@
 						<td>{{ $variance->varianceSize }}</td>
 						<td>{{ $variance->unit->unitName }}</td>
 						<td>{{ $variance->varianceDesc }}</td>
+						<td>
+							@foreach($variance->type as $type)
+								@if($type->tvIsActive==1)
+									<li>{{$type->type->typeName}}</li>
+								@endif
+							@endforeach
+						</td>
 						<td>
 							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="edit{{ $variance->varianceId }}" onclick="modal(this.name)"><i class="write icon"></i></button>
 							<button class="ui red basic circular icon button" data-tooltip="Deactivate Record" data-inverted="" name="del{{ $variance->varianceId }}" onclick="modal(this.name)"><i class="trash icon"></i></button>
@@ -120,6 +128,25 @@
 						    					</div>
 					        				</div>
 					        				<div class="inline fields">
+						    					<div class="two wide field">
+						    						<label>Limit Variance to type(s)</label>
+						    					</div>
+						    					<div class="fourteen wide field">
+						    						<div id="editType{{$variance->varianceId}}" style="width:100%" class="ui multiple search selection dropdown">
+						    							<input type="hidden" name="editTypes"><i class="dropdown icon"></i>
+						    							<input class="search" autocomplete="off" tabindex="0">
+						    							<div class="default text">Limit to Types</div>
+						    							<div class="menu" tabindex="-1">
+						    								@foreach($types as $type)
+						    									@if($type->typeIsActive==1)
+						    										<div class="item" data-value="{{ $type->typeId }}">{{ $type->typeName }}</div>
+						    									@endif
+						    								@endforeach
+						    							</div>
+						    						</div>
+						    					</div>
+						    				</div>
+					        				<div class="inline fields">
 					        					<div class="two wide field">
 					        						<label>Description</label>
 					        					</div>
@@ -135,6 +162,16 @@
 		        					<button type="reset" class="ui negative button"><i class="remove icon"></i>Clear</button>
 		        					<button type="submit" class="ui positive button"><i class="write icon"></i>Update</button>
 		        				</div>
+		        				<script type="text/javascript">
+		        					var array=[
+		        						@foreach($variance->type as $type)
+											@if($type->tvIsActive==1)
+												'{{$type->type->typeId}}',
+											@endif
+										@endforeach
+		        					];
+		        					$('#editType{{$variance->varianceId}}').dropdown('set selected',array);
+		        				</script>
 	        				{!! Form::close() !!}
 						</div>
 						<!--Modal for Deactivate-->
@@ -193,6 +230,25 @@
 	    								@foreach($unit as $unit)
 	    									@if($unit->unitIsActive==1)
 	    										<div class="item" data-value="{{ $unit->unitId }}">{{ $unit->unitName }}</div>
+	    									@endif
+	    								@endforeach
+	    							</div>
+	    						</div>
+	    					</div>
+	    				</div>
+	    				<div class="inline fields">
+	    					<div class="two wide field">
+	    						<label>Limit Variance to type(s)</label>
+	    					</div>
+	    					<div class="fourteen wide field">
+	    						<div style="width:100%" class="ui multiple search selection dropdown">
+	    							<input type="hidden" name="types"><i class="dropdown icon"></i>
+	    							<input class="search" autocomplete="off" tabindex="0">
+	    							<div class="default text">Limit to Types</div>
+	    							<div class="menu" tabindex="-1">
+	    								@foreach($types as $types)
+	    									@if($types->typeIsActive==1)
+	    										<div class="item" data-value="{{ $types->typeId }}">{{ $types->typeName }}</div>
 	    									@endif
 	    								@endforeach
 	    							</div>

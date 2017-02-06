@@ -53,7 +53,6 @@ class ProductController extends Controller
             $pv = ProductVariance::create(array(
                 'pvProductId' => $request->input('productId'),
                 'pvVarianceId' => $variances[$x],
-                'pvDesc' => '',
                 'pvCost' => $prices[$x],
                 'pvIsActive' => 1
                 ));
@@ -83,17 +82,14 @@ class ProductController extends Controller
             $product->productDesc = trim($request->input('editProductDesc'));
             $product->save();
             $affectedRows = ProductVariance::where('pvProductId', '=', $request->input('editProductId'))->update(['pvIsActive' => 0]);
-            /*$vars = ProductVariance::where('pvProductId',$request->input('editProductId'));
-            $vars->update(['pvIsActive']=>false);*/
             $variance = $request->input('editVariance');
             $variances = explode(',', $variance);
-            $prices = $request->input('price');
+            $prices = $request->input('pricee');
             $x = 0;
             foreach($variances as $var) {
                 $pv = ProductVariance::create(array(
                     'pvProductId' => $request->input('editProductId'),
                     'pvVarianceId' => $variances[$x],
-                    'pvDesc' => '',
                     'pvCost' => $prices[$x],
                     'pvIsActive' => 1
                     ));

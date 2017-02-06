@@ -13,7 +13,22 @@ class CreateTypeVarianceTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('type_variance', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->increments('tvId');
+            $table->string('tvTypeId');
+            $table->string('tvVarianceId');
+            $table->tinyInteger('tvIsActive');
+            $table->timestamps();
+            $table->foreign('tvTypeId')
+                  ->references('typeId')->on('product_type')
+                  ->onUpdate('cascade')
+                  ->onDelete('restrict');
+            $table->foreign('tvVarianceId')
+                  ->references('varianceId')->on('variance')
+                  ->onUpdate('cascade')
+                  ->onDelete('restrict');
+        });
     }
 
     /**
@@ -23,6 +38,6 @@ class CreateTypeVarianceTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('type_variance');
     }
 }

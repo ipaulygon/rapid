@@ -18,7 +18,6 @@ class CreateProductVarianceTable extends Migration
             $table->increments('pvId');
             $table->string('pvProductId');
             $table->string('pvVarianceId');
-            $table->text('pvDesc')->nullable();
             $table->float('pvCost',8,2);
             $table->tinyInteger('pvIsActive');
             $table->timestamps();

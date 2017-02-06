@@ -20,4 +20,7 @@ class Variance extends Model
 	public function unit(){
 		return $this->belongsTo('App\Unit','varianceUnitId');
 	}
+	public function type(){
+		return $this->hasMany('App\TypeVariance','tvVarianceId');
+	}
 }
