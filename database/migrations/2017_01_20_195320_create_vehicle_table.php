@@ -16,6 +16,7 @@ class CreateVehicleTable extends Migration
         Schema::create('vehicle', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->string('vehicleId');
+            $table->string('vehiclePlate');
             $table->string('vehicleMakeId');
             $table->string('vehicleModelId');
             $table->date('vehicleYear');
