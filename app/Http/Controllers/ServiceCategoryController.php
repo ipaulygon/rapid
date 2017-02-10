@@ -14,14 +14,9 @@ class ServiceCategoryController extends Controller
     }
 
     public function index(){
-        $ids = \DB::table('service_category')
-            ->select('categoryId')
-            ->orderBy('created_at', 'desc')
-            ->orderBy('categoryId', 'desc')
-            ->take(1)
-            ->get();
-        $id = $ids["0"]->categoryId;
-        $newId = $this->smartCounter($id);
+        $category_max = \DB::table('service_category')->count('categoryId');
+        $category_max = $category_max + 1;
+        $newId = 'SC'.str_pad($category_max, 3, '0', STR_PAD_LEFT); 
     	$service_category = ServiceCategory::get();
     	return view('Maintenance.Service.service_category',compact('service_category','newId'));
     }
@@ -66,38 +61,5 @@ class ServiceCategoryController extends Controller
         $category->save();
         \Session::flash('flash_message','ServiceCategory successfully deleted.');
         return redirect('maintenance/service-category');
-    }
-
-    public function smartCounter($id)
-    {   
-        $lastID = str_split($id);
-        $ctr = 0;
-        $tempID = "";
-        $tempNew = [];
-        $newID = "";
-        $add = TRUE;
-        for($ctr = count($lastID)-1; $ctr >= 0; $ctr--){
-            $tempID = $lastID[$ctr];
-            if($add){
-                if(is_numeric($tempID) || $tempID == '0'){
-                    if($tempID == '9'){
-                        $tempID = '0';
-                        $tempNew[$ctr] = $tempID;
-                    }else{
-                        $tempID = $tempID + 1;
-                        $tempNew[$ctr] = $tempID;
-                        $add = FALSE;
-                    }
-                }else{
-                    $tempNew[$ctr] = $tempID;
-                }           
-            }
-            $tempNew[$ctr] = $tempID;   
-        }
-        
-        for($ctr = 0; $ctr < count($lastID); $ctr++){
-            $newID = $newID . $tempNew[$ctr];
-        }
-        return $newID;
     }
 }

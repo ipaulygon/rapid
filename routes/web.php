@@ -54,6 +54,7 @@ Route::get('maintenance/product','ProductController@index');
 Route::post('maintenance/product/create','ProductController@create');
 Route::post('maintenance/product/update','ProductController@update');
 Route::post('maintenance/product/destroy','ProductController@destroy');
+Route::post('maintenance/product/type','ProductController@type');
 
 //Promo
 Route::get('maintenance/promo','PromoController@index');

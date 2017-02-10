@@ -164,27 +164,15 @@
 	    				</div>
 	    				<div class="inline fields">
 	    					<div class="two wide field">
-	    						<label>Start Date</label>
+	    						<label>Start Date<span>*</span></label>
 	    					</div>
 	    					<div class="six wide field">
-	    						<!-- <div class="ui calendar" id="rangestart">
-	    							<div class="ui input left icon">
-	    								<i class="calendar icon"></i>
-	    								<input type="text" name="promoStart" placeholder="Start">
-	    							</div>
-	    						</div> -->
 	    						<input type="date" name="promoStart" placeholder="Start Date" min="{{$dateNow}}">
 	    					</div>
 	    					<div class="two wide field">
 	    						<label>End Date</label>
 	    					</div>
 	    					<div class="six wide field">
-	    						<!-- <div class="ui calendar" id="rangeend">
-	    							<div class="ui input left icon">
-	    								<i class="calendar icon"></i>
-	    								<input type="text" name="promoEnd" placeholder="End">
-	    							</div>
-	    						</div> -->
 	    						<input type="date" name="promoEnd" placeholder="End Date">
 	    					</div>
 	    				</div>
@@ -196,11 +184,6 @@
 	    						<textarea type="text" name="promoDesc" placeholder="Description"></textarea>
 	    					</div>
 	    				</div>
-<!-- 	    				<div class="inline fields">
-	    					<div class="eight wide field">
-	    						
-	    					</div>
-	    				</div> -->
 	    				<div class="actions">
 	    					<i>Note: All with <span>*</span> are required fields</i>
 	    					<button type="reset" class="ui negative button"><i class="remove icon"></i>Clear</button>

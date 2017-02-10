@@ -7,6 +7,7 @@ use App\ProductType;
 use App\Brand;
 use App\Variance;
 use App\ProductVariance;
+use App\TypeVariance;
 
 use Illuminate\Http\Request;
 
@@ -19,19 +20,14 @@ class ProductController extends Controller
     }
 
     public function index(){
-    	$ids = \DB::table('product')
-            ->select('productId')
-            ->orderBy('created_at', 'desc')
-            ->orderBy('productId', 'desc')
-            ->take(1)
-            ->get();
-        $id = $ids["0"]->productId;
-        $newId = $this->smartCounter($id);
+    	$prod_max = \DB::table('product')->count('productId');
+        $prod_max = $prod_max + 1;
+        $newId = 'PROD'.str_pad($prod_max, 4, '0', STR_PAD_LEFT); 
     	$type = ProductType::get();
         $brand = Brand::get();
-        $variance = Variance::with('unit')->get();
-        $product = Product::with('types')->with('brand')->with('variance.variance.unit')->get();
-        //$pv = ProductVariance::with('product')->with('variance')->get();
+        $variance = Variance::with('unit')->orderBy('varianceSize')->get();
+        $product = Product::with('types.variance.variance.unit')->with('brand')->with('variance.variance.unit')->get();
+        //$pv = ProductVariance::with('product')->with('variance')->orderBy('pvVarianceId')->get();
         return view('Maintenance.Inventory.product',compact('product','type','brand','variance','newId'));
     }
 
@@ -47,12 +43,12 @@ class ProductController extends Controller
         $product->save();
         $variance = $request->input('variance');
         $variances = explode(',', $variance);
-        $prices = $request->input('prices');
+        $prices = $request->input('cost');
         $x = 0;
         foreach($variances as $var) {
             $pv = ProductVariance::create(array(
                 'pvProductId' => $request->input('productId'),
-                'pvVarianceId' => $variances[$x],
+                'pvVarianceId' => $var,
                 'pvCost' => $prices[$x],
                 'pvIsActive' => 1
                 ));
@@ -83,13 +79,20 @@ class ProductController extends Controller
             $product->save();
             $affectedRows = ProductVariance::where('pvProductId', '=', $request->input('editProductId'))->update(['pvIsActive' => 0]);
             $variance = $request->input('editVariance');
+            $prodId = $request->input('editProductId');
             $variances = explode(',', $variance);
-            $prices = $request->input('pricee');
+            $prices = $request->input('editCost');
             $x = 0;
+
+            /*for($y = 0; $y < count($prices) ; $y++ ){
+                echo $prices[$y];
+            }
+            die();*/
+
             foreach($variances as $var) {
                 $pv = ProductVariance::create(array(
                     'pvProductId' => $request->input('editProductId'),
-                    'pvVarianceId' => $variances[$x],
+                    'pvVarianceId' => $var,
                     'pvCost' => $prices[$x],
                     'pvIsActive' => 1
                     ));
@@ -112,36 +115,9 @@ class ProductController extends Controller
         return redirect('maintenance/product');
     }
 
-    public function smartCounter($id)
-    {   
-        $lastID = str_split($id);
-        $ctr = 0;
-        $tempID = "";
-        $tempNew = [];
-        $newID = "";
-        $add = TRUE;
-        for($ctr = count($lastID)-1; $ctr >= 0; $ctr--){
-            $tempID = $lastID[$ctr];
-            if($add){
-                if(is_numeric($tempID) || $tempID == '0'){
-                    if($tempID == '9'){
-                        $tempID = '0';
-                        $tempNew[$ctr] = $tempID;
-                    }else{
-                        $tempID = $tempID + 1;
-                        $tempNew[$ctr] = $tempID;
-                        $add = FALSE;
-                    }
-                }else{
-                    $tempNew[$ctr] = $tempID;
-                }           
-            }
-            $tempNew[$ctr] = $tempID;   
-        }
-        
-        for($ctr = 0; $ctr < count($lastID); $ctr++){
-            $newID = $newID . $tempNew[$ctr];
-        }
-        return $newID;
+    public function type(Request $request){
+        $typeId = $_POST['id'];
+        $data = TypeVariance::with('variance.unit')->where('tvTypeId','=',$typeId)->where('tvIsActive','=',1)->get();
+        return \Response::json(array('data'=>$data));
     }
 }

@@ -14,14 +14,9 @@ class TechController extends Controller
     }
 
     public function index(){
-        $ids = \DB::table('technician')
-        ->select('techId')
-            ->orderBy('created_at', 'desc')
-            ->orderBy('techId', 'desc')
-            ->take(1)
-            ->get();
-        $id = $ids["0"]->techId;
-        $newId = $this->smartCounter($id);
+        $tech_max = \DB::table('technician')->count('techId');
+        $tech_max = $tech_max + 1;
+        $newId = 'TECH'.str_pad($brand_max, 4, '0', STR_PAD_LEFT); 
         $technician = Technician::get();
     	return view('Maintenance.technician',compact('technician','newId'));
     }
@@ -67,9 +62,9 @@ class TechController extends Controller
         }
         foreach ($checktechs as $tech) {
             if(!strcasecmp($tech->techId, $request->input('editTechId')) == 0 
-                && strcasecmp($tech->techFirst, trim($request->input('editTechFirst'))) == 0
-                && strcasecmp($tech->techMiddle, trim($request->input('editTechMiddle'))) == 0
-                && strcasecmp($tech->techLast, trim($request->input('editTechLast'))) == 0){
+                && strcmp($tech->techFirst, trim($request->input('editTechFirst'))) == 0
+                && strcmp($tech->techMiddle, trim($request->input('editTechMiddle'))) == 0
+                && strcmp($tech->techLast, trim($request->input('editTechLast'))) == 0){
                 $isAdded = true;
             }
         }
@@ -99,38 +94,5 @@ class TechController extends Controller
         $tech->save();
         \Session::flash('flash_message','Technician successfully deactivated.');
         return redirect('maintenance/technician');
-    }
-
-    public function smartCounter($id)
-    {   
-        $lastID = str_split($id);
-        $ctr = 0;
-        $tempID = "";
-        $tempNew = [];
-        $newID = "";
-        $add = TRUE;
-        for($ctr = count($lastID)-1; $ctr >= 0; $ctr--){
-            $tempID = $lastID[$ctr];
-            if($add){
-                if(is_numeric($tempID) || $tempID == '0'){
-                    if($tempID == '9'){
-                        $tempID = '0';
-                        $tempNew[$ctr] = $tempID;
-                    }else{
-                        $tempID = $tempID + 1;
-                        $tempNew[$ctr] = $tempID;
-                        $add = FALSE;
-                    }
-                }else{
-                    $tempNew[$ctr] = $tempID;
-                }           
-            }
-            $tempNew[$ctr] = $tempID;   
-        }
-        
-        for($ctr = 0; $ctr < count($lastID); $ctr++){
-            $newID = $newID . $tempNew[$ctr];
-        }
-        return $newID;
     }
 }

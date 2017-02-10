@@ -14,15 +14,9 @@ class ProductTypeController extends Controller
     }
 
     public function index(){
-    	//smartCounter
-    	$ids = \DB::table('product_type')
-        	->select('typeId')
-            ->orderBy('created_at', 'desc')
-            ->orderBy('typeId', 'desc')
-            ->take(1)
-            ->get();
-        $id = $ids["0"]->typeId;
-        $newId = $this->smartCounter($id);
+    	$type_max = \DB::table('product_type')->count('typeId');
+        $type_max = $type_max + 1;
+        $newId = 'TYPE'.str_pad($type_max, 3, '0', STR_PAD_LEFT); 
     	$product_type = ProductType::get();
     	return view('Maintenance.Inventory.product_type',compact('product_type','newId'));
     }
@@ -67,38 +61,5 @@ class ProductTypeController extends Controller
         $type->save();
         \Session::flash('flash_message','Product type successfully deleted.');
         return redirect('maintenance/product-type');
-    }
-
-    public function smartCounter($id)
-    {   
-        $lastID = str_split($id);
-        $ctr = 0;
-        $tempID = "";
-        $tempNew = [];
-        $newID = "";
-        $add = TRUE;
-        for($ctr = count($lastID)-1; $ctr >= 0; $ctr--){
-            $tempID = $lastID[$ctr];
-            if($add){
-                if(is_numeric($tempID) || $tempID == '0'){
-                    if($tempID == '9'){
-                        $tempID = '0';
-                        $tempNew[$ctr] = $tempID;
-                    }else{
-                        $tempID = $tempID + 1;
-                        $tempNew[$ctr] = $tempID;
-                        $add = FALSE;
-                    }
-                }else{
-                    $tempNew[$ctr] = $tempID;
-                }           
-            }
-            $tempNew[$ctr] = $tempID;   
-        }
-        
-        for($ctr = 0; $ctr < count($lastID); $ctr++){
-            $newID = $newID . $tempNew[$ctr];
-        }
-        return $newID;
     }
 }

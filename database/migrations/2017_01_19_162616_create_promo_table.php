@@ -19,7 +19,8 @@ class CreatePromoTable extends Migration
             $table->string('promoName');
             $table->text('promoDesc')->nullable();
             $table->date('promoStart');
-            $table->date('promoEnd');
+            $table->date('promoEnd')->nullable();
+            $table->float('promoCost')->nullable();
             $table->boolean('promoIsActive');
             $table->timestamps();
             $table->primary('promoId');

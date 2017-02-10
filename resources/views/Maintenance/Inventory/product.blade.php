@@ -109,7 +109,7 @@
 						    						<label>Brand<span>*</span></label>
 						    					</div>
 						    					<div class="six wide field">
-						    						<div class="ui search selection dropdown">
+						    						<div id="brand" class="ui search selection dropdown">
 						    							<input type="hidden" name="editProductBrandId" value="{{ $product->productBrandId }}"><i class="dropdown icon"></i>
 						    							<input class="search" autocomplete="off" tabindex="0">
 						    							<div class="default text">Select Brand</div>
@@ -126,8 +126,8 @@
 						    						<label>Type<span>*</span></label>
 						    					</div>
 						    					<div class="six wide field">
-						    						<div class="ui search selection dropdown">
-						    							<input type="hidden" name="editProductTypeId" value="{{ $product->productTypeId }}"><i class="dropdown icon"></i>
+						    						<div id="type" class="ui search selection dropdown" title="{{$product->productId}}" onchange="reload(this.title)">
+						    							<input id="drop{{$product->productId}}" type="hidden" name="editProductTypeId" value="{{ $product->productTypeId }}"><i class="dropdown icon"></i>
 						    							<input class="search" autocomplete="off" tabindex="0">
 						    							<div class="default text">Select Type</div>
 						    							<div class="menu" tabindex="-1">
@@ -161,20 +161,15 @@
 						    						<label>Variances</label>
 						    					</div>
 						    					<div class="fourteen wide field">
-						    						<div style="width:100%" id="editVar{{$product->productId}}" class="ui multiple search selection dropdown">
+						    						<div style="width:100%" id="editVar{{$product->productId}}" class="ui multiple update search selection dropdown">
 						    							<input type="hidden" name="editVariance"><i class="dropdown icon"></i>
 						    							<input class="search" autocomplete="off" tabindex="0">
 						    							<div class="default text">Select Variances</div>
-						    							<div class="menu" tabindex="-1">
+						    							<div id="menu{{$product->productId}}" class="menu" tabindex="-1">
 						    								@foreach($variance as $var)
 						    									@if($var->varianceIsActive==1)
-						    										<div class="item" data-value="{{ $var->varianceId }}">
-						    											{{ $var->varianceSize }} | {{$var->unit->unitName}}
-						    											<div class="ui labeled input">
-						    												<div class="ui label">P</div>
-						    												<input type="text" name="price[]" id="input{{ $product->productId }}{{$var->varianceId}}" placeholder="12.75" onchange="load(this)">
-						    												<input type="hidden" title="input{{ $product->productId }}{{$var->varianceId}}" name="pricee[]">
-						    											</div>
+						    										<div class="item" data-value="{{ $var->varianceId }}" id="{{$product->productId}}" title="{{$product->productId}}">
+						    											{{ $var->varianceSize }} | {{$var->unit->unitName}}						    										
 						    										</div>
 						    									@endif
 						    								@endforeach
@@ -182,6 +177,13 @@
 						    						</div>
 						    					</div>
 						    				</div>
+						    				<div id="cost{{$product->productId}}" class="sixteen wide field">
+					    						@foreach($product->variance as $var)
+					        						@if($var->pvIsActive==1)
+				        								<label id="{{$var->pvVarianceId}}">{{$var->variance->varianceSize}}|{{$var->variance->unit->unitName}}</label><input id="{{$var->pvVarianceId}}" type="text" name="editCost[]" value="{{$var->pvCost}}" onchange="load(this)">
+				        							@endif
+				        						@endforeach
+					    					</div>
 										</div>
 									</div>
 								</div>
@@ -190,23 +192,17 @@
 		        					<button type="reset" class="ui negative button"><i class="remove icon"></i>Clear</button>
 		        					<button type="submit" class="ui positive button"><i class="write icon"></i>Update</button>
 		        				</div>
-		        				<script type="text/javascript">
-		        					var array = [
-		        						@foreach($product->variance as $var)
-		        							@if($var->pvIsActive==1)
-		        								'{{$var->variance->varianceId}}',
-		        							@endif
-		        						@endforeach
-		        					];
-		        					$('#editVar{{$product->productId}}').dropdown('set selected',array);
-		        					@foreach($product->variance as $var)
-		        						@if($var->pvIsActive==1)
-	        								$( "input[id=input{{$product->productId}}{{$var->variance->varianceId}}]" ).val({{$var->pvCost}});
-	        								$( "input[title=input{{$product->productId}}{{$var->variance->varianceId}}]" ).val({{$var->pvCost}});
+	        				{!! Form::close() !!}
+	        				<script type="text/javascript">
+	        					var array = [
+	        						@foreach($product->variance as $var)
+	        							@if($var->pvIsActive==1)
+	        								'{{$var->variance->varianceId}}',
 	        							@endif
 	        						@endforeach
-		        				</script>
-	        				{!! Form::close() !!}
+	        					];
+	        					$('#editVar{{$product->productId}}').dropdown('set selected',array);
+	        				</script>
 						</div>
 						<div class="ui small basic modal" id="del{{ $product->productId }}" style="text-align:center">
 							<div class="ui icon header">
@@ -249,7 +245,7 @@
 	    						<label>Brand<span>*</span></label>
 	    					</div>
 	    					<div class="six wide field">
-	    						<div class="ui search selection dropdown">
+	    						<div id="brand" class="ui search selection dropdown">
 	    							<input type="hidden" name="productBrandId"><i class="dropdown icon"></i>
 	    							<input class="search" autocomplete="off" tabindex="0">
 	    							<div class="default text">Select Brand</div>
@@ -266,8 +262,8 @@
 	    						<label>Type<span>*</span></label>
 	    					</div>
 	    					<div class="six wide field">
-	    						<div class="ui search selection dropdown">
-	    							<input type="hidden" name="productTypeId"><i class="dropdown icon"></i>
+	    						<div id="type" class="ui search selection dropdown" title="{{$newId}}" onchange="reload(this.title)">
+	    							<input id="drop{{$newId}}" type="hidden" name="productTypeId"><i class="dropdown icon"></i>
 	    							<input class="search" autocomplete="off" tabindex="0">
 	    							<div class="default text">Select Type</div>
 	    							<div class="menu" tabindex="-1">
@@ -301,26 +297,16 @@
 	    						<label>Variances</label>
 	    					</div>
 	    					<div class="fourteen wide field">
-	    						<div class="ui multiple search selection dropdown">
+	    						<div id="add" style="width:100%" class="ui multiple search selection dropdown">
 	    							<input id="variances" type="hidden" name="variance"><i class="dropdown icon"></i>
 	    							<input class="search" autocomplete="off" tabindex="0">
 	    							<div class="default text">Select Variances</div>
-	    							<div class="menu" tabindex="-1">
-	    								@foreach($variance as $var)
-	    									@if($var->varianceIsActive==1)
-	    										<div class="item" name="{{$var->varianceId}}{{$var->varianceSize}}" data-value="{{ $var->varianceId }}">
-	    											{{ $var->varianceSize }} | {{$var->unit->unitName}}
-	    											<div class="ui labeled input">
-	    												<div class="ui label">P</div>
-	    												<input type="text" name="prices[]" placeholder="12.75">
-	    											</div>
-	    										</div>
-	    									@endif
-	    								@endforeach
+	    							<div id="menu{{$newId}}" class="menu" tabindex="-1">
 	    							</div>
 	    						</div>
 	    					</div>
 	    				</div>
+	    				<div id="cost{{$newId}}" class="sixteen wide field"></div>
 	    				<div class="actions">
 	    					<i>Note: All with <span>*</span> are required fields</i>
 	    					<button type="reset" class="ui negative button"><i class="remove icon"></i>Clear</button>
@@ -338,17 +324,58 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 		    $('#list').DataTable();
-		    $('.ui.dropdown').dropdown();
+		    $('#brand.ui.dropdown').dropdown();
+		    $('#type.ui.dropdown').dropdown();
+		    $('#add.ui.dropdown').dropdown({
+		    	onAdd: function(value,text,$addedChoice){
+		    		var prod = $addedChoice.attr('title');
+		    		$("#cost"+prod).append('<label id="'+value+'">'+text+'</label><input id="'+value+'" type="text" name="cost[]">');
+		    	},
+		    	onRemove: function(value, text, $removedChoice){
+		    		var prod = $removedChoice.attr('title');
+		    		$("#cost"+prod+" input[id="+value+"]").remove();
+		    		$("#cost"+prod+" label[id="+value+"]").remove();
+		    	}
+		    });
+		    $('.update.ui.dropdown').dropdown({
+		    	onAdd: function(value,text,$addedChoice){
+		    		var prod = $addedChoice.attr('title');
+		    		$("#cost"+prod).append('<label id="'+value+'">'+text+'</label><input id="'+value+'" type="text" name="editCost[]" onchange="load(this)">');
+		    	},
+		    	onRemove: function(value, text, $removedChoice){
+		    		var prod = $removedChoice.attr('title');
+		    		$("#cost"+prod+" input[id="+value+"]").remove();
+		    		$("#cost"+prod+" label[id="+value+"]").remove();
+		    	}
+		    });
 		});
+		function reload(title){
+			$(".item#"+title).remove();
+			var id = $("#drop"+title).val();
+			$.ajaxSetup({
+		        headers: {
+		            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		        }
+			});
+			$.ajax({
+				type: "POST",
+				url: "{{url('maintenance/product/type')}}",
+				data: {'id':id},
+				dataType: "JSON",
+				success:function(data){
+					console.log(data.data[0]);
+					for(var x=0;x<data.data.length;x++){
+						$("#menu"+title).append('<div class="item" data-value="'+data.data[x].variance["varianceId"]+'" id="'+title+'" title="'+title+'">'+data.data[x].variance["varianceSize"]+'|'+data.data[x].variance.unit["unitName"]+'</div>');
+					}
+				}
+			});
+		}
 		function modal(open){
 			$('#' + open + '').modal('show');
 		}
 		function load(input){
 			var val = $(input).val();
-			var id = $(input).attr('id');
-			$( "input[title="+id+"]").val(val);
-			/*$(input).attr("value",val);
-			alert("new value is" + val);*/
+			$(input).attr('value',val);
 		}
 	</script>
 @stop

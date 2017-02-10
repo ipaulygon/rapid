@@ -3,6 +3,14 @@
 namespace App\Http\Controllers;
 use App\Http\Requests\PromoRequest;
 use App\Promo;
+use App\Product;
+use App\ProductType;
+use App\Brand;
+use App\Variance;
+use App\ProductVariance;
+use App\TypeVariance;
+use App\Service;
+use App\ServiceCategory;
 
 use Illuminate\Http\Request;
 
@@ -14,15 +22,9 @@ class PromoController extends Controller
     }
 
     public function index(){
-    	//smartCounter
-        $ids = \DB::table('promo')
-            ->select('promoId')
-            ->orderBy('created_at', 'desc')
-            ->orderBy('promoId', 'desc')
-            ->take(1)
-            ->get();
-        $id = $ids["0"]->promoId;
-        $newId = $this->smartCounter($id);
+    	$promo_max = \DB::table('promo')->count('promoId');
+        $promo_max = $promo_max + 1;
+        $newId = 'PROMO'.str_pad($promo_max, 4, '0', STR_PAD_LEFT); 
         $dateNow = date("Y-m-d");
     	$promo = Promo::get();
     	return view('Maintenance.Sales.promo',compact('promo','dateNow','newId'));
@@ -38,6 +40,7 @@ class PromoController extends Controller
                 'promoIsActive' => 1
             ));
         $promo->save();
+
         \Session::flash('flash_message','Promo successfully added.');
         return redirect('maintenance/promo');
     }
@@ -77,42 +80,5 @@ class PromoController extends Controller
     public function view($id){
         \Session::flash('add_promo','Add items');
         return redirect('maintenance/promo');
-    }
-
-    public function add(){
-        
-    }
-
-    public function smartCounter($id)
-    {   
-        $lastID = str_split($id);
-        $ctr = 0;
-        $tempID = "";
-        $tempNew = [];
-        $newID = "";
-        $add = TRUE;
-        for($ctr = count($lastID)-1; $ctr >= 0; $ctr--){
-            $tempID = $lastID[$ctr];
-            if($add){
-                if(is_numeric($tempID) || $tempID == '0'){
-                    if($tempID == '9'){
-                        $tempID = '0';
-                        $tempNew[$ctr] = $tempID;
-                    }else{
-                        $tempID = $tempID + 1;
-                        $tempNew[$ctr] = $tempID;
-                        $add = FALSE;
-                    }
-                }else{
-                    $tempNew[$ctr] = $tempID;
-                }           
-            }
-            $tempNew[$ctr] = $tempID;   
-        }
-        
-        for($ctr = 0; $ctr < count($lastID); $ctr++){
-            $newID = $newID . $tempNew[$ctr];
-        }
-        return $newID;
     }
 }

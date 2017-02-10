@@ -17,15 +17,9 @@ class VarianceController extends Controller
     }
 
     public function index(){
-    	//smartCounter
-    	$ids = \DB::table('variance')
-        	->select('varianceId')
-            ->orderBy('created_at', 'desc')
-            ->orderBy('varianceId', 'desc')
-            ->take(1)
-            ->get();
-        $id = $ids["0"]->varianceId;
-        $newId = $this->smartCounter($id);
+    	$var_max = \DB::table('variance')->count('varianceId');
+        $var_max = $var_max + 1;
+        $newId = 'VAR'.str_pad($var_max, 4, '0', STR_PAD_LEFT); 
     	$variance = Variance::with('unit')->with('type.type')->get();
     	$unit = Unit::get();
         $types = ProductType::get();

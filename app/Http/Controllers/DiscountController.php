@@ -14,15 +14,9 @@ class DiscountController extends Controller
     }
 
     public function index(){
-    	//smartCounter
-    	$ids = \DB::table('discount')
-        	->select('discountId')
-            ->orderBy('created_at', 'desc')
-            ->orderBy('discountId', 'desc')
-            ->take(1)
-            ->get();
-        $id = $ids["0"]->discountId;
-        $newId = $this->smartCounter($id);
+        $discount_max = \DB::table('discount')->count('discountId');
+        $discount_max = $discount_max + 1;
+        $newId = 'DS'.str_pad($brand_max, 3, '0', STR_PAD_LEFT); 
     	$discount = Discount::get();
     	return view('Maintenance.Sales.discount',compact('discount','newId'));
     }
@@ -67,38 +61,5 @@ class DiscountController extends Controller
         $discount->save();
         \Session::flash('flash_message','Discount successfully deleted.');
         return redirect('maintenance/discount');
-    }
-
-    public function smartCounter($id)
-    {   
-        $lastID = str_split($id);
-        $ctr = 0;
-        $tempID = "";
-        $tempNew = [];
-        $newID = "";
-        $add = TRUE;
-        for($ctr = count($lastID)-1; $ctr >= 0; $ctr--){
-            $tempID = $lastID[$ctr];
-            if($add){
-                if(is_numeric($tempID) || $tempID == '0'){
-                    if($tempID == '9'){
-                        $tempID = '0';
-                        $tempNew[$ctr] = $tempID;
-                    }else{
-                        $tempID = $tempID + 1;
-                        $tempNew[$ctr] = $tempID;
-                        $add = FALSE;
-                    }
-                }else{
-                    $tempNew[$ctr] = $tempID;
-                }           
-            }
-            $tempNew[$ctr] = $tempID;   
-        }
-        
-        for($ctr = 0; $ctr < count($lastID); $ctr++){
-            $newID = $newID . $tempNew[$ctr];
-        }
-        return $newID;
     }
 }

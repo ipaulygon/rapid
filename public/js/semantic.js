@@ -7725,8 +7725,8 @@ $.fn.dropdown.settings = {
   placeholder            : 'auto',     // whether to convert blank <select> values to placeholder text
   preserveHTML           : true,       // preserve html when selecting value
   sortSelect             : false,      // sort selection on init
-
-  forceSelection         : true,       // force a choice on blur with search selection
+  //edited
+  forceSelection         : false,       // force a choice on blur with search selection
 
   allowAdditions         : false,      // whether multiple select should allow user added values
   hideAdditions          : true,      // whether or not to hide special message prompting a user they can enter a value

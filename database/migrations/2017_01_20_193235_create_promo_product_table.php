@@ -17,7 +17,7 @@ class CreatePromoProductTable extends Migration
             $table->engine = 'InnoDB';
             $table->string('promoPId');
             $table->unsignedInteger('promoProductId');
-            $table->integer('promoPQty');
+            $table->integer('promoPQty')->nullable();
             $table->primary(['promoPId','promoProductId']);
             $table->foreign('promoPId')
                   ->references('promoId')->on('promo')
