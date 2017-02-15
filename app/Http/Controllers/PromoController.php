@@ -7,10 +7,13 @@ use App\Product;
 use App\ProductType;
 use App\Brand;
 use App\Variance;
+use App\Unit;
 use App\ProductVariance;
 use App\TypeVariance;
 use App\Service;
 use App\ServiceCategory;
+use App\PromoProduct;
+use App\PromoService;
 
 use Illuminate\Http\Request;
 
@@ -26,8 +29,11 @@ class PromoController extends Controller
         $promo_max = $promo_max + 1;
         $newId = 'PROMO'.str_pad($promo_max, 4, '0', STR_PAD_LEFT); 
         $dateNow = date("Y-m-d");
-    	$promo = Promo::get();
-    	return view('Maintenance.Sales.promo',compact('promo','dateNow','newId'));
+    	$promo = Promo::with('product.product.product.types')->with('product.product.product.brand')->with('product.product.variance.unit')->with('service.service.categories')->get();
+        $product = ProductVariance::with('product.types')->with('product.brand')->with('variance.unit')->get();
+    	$service = Service::with('categories')->get();
+        //$pp = PromoProduct::with('product.product.brand')->with('product.product.types')->with('product.variance.unit')->get();
+        return view('Maintenance.Sales.promo',compact('promo','product','service','dateNow','newId'));
     }
 
     public function create(PromoRequest $request){
@@ -37,10 +43,40 @@ class PromoController extends Controller
                 'promoDesc' => trim($request->input('promoDesc')),
                 'promoStart' => trim($request->input('promoStart')),
                 'promoEnd' => trim($request->input('promoEnd')),
+                'promoCost' => trim($request->input('promoCost')),
                 'promoIsActive' => 1
             ));
         $promo->save();
-
+        $prod = $request->input('promoProductId');
+        $prods = explode(",", $prod);
+        $serv = $request->input('promoServiceId');
+        $servs = explode(",", $serv);
+        $qty = $request->input('qty');
+        if($prods!=null || $prods!=''){
+            $x = 0;
+            foreach ($prods as $prods) {
+                $pp = PromoProduct::create(array(
+                    'promoPId' => $request->input('promoId'),
+                    'promoProductId' => $prods,
+                    'promoPQty' => $qty[$x],
+                    'promoPIsActive' => 1
+                    ));
+                $pp->save();
+                $x++;
+            }
+        }
+        if($servs!=null || $servs!=''){
+            $x = 0;
+            foreach ($servs as $servs) {
+                $ps = PromoService::create(array(
+                    'promoSId' => $request->input('promoId'),
+                    'promoServiceId' => $servs,
+                    'promoSIsActive' => 1
+                    ));
+                $ps->save();
+                $x++;
+            }
+        }
         \Session::flash('flash_message','Promo successfully added.');
         return redirect('maintenance/promo');
     }

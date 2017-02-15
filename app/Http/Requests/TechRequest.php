@@ -25,7 +25,7 @@ class TechRequest extends FormRequest
     public function rules()
     {
         return [
-            'techPic' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'techPic' => 'image|mimes:jpeg,png,jpg,svg|max:2048',
             'techFirst' => 'required|unique_with:technician,techMiddle,techLast',
             'techLast' => 'required',
             'street' => 'required',
@@ -47,7 +47,10 @@ class TechRequest extends FormRequest
             'city.required' => 'City is required',
             'techContact.required' => 'Contact is required',
             'techEmail.email' => 'Invalid email address',
-            'techContact.regex' => 'Invalid contact'
+            'techContact.regex' => 'Invalid contact',
+            'techPic.image' => 'Invalid image',
+            'techPic.mimes' => 'Invalid file type for image',
+            'techPic.max' => 'Max size of 2MB',
         ];
     }
 

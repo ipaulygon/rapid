@@ -15,14 +15,9 @@ class InspectItemController extends Controller
     }
 
     public function index(){
-        $ids = \DB::table('inspect_item')
-        ->select('inspectItemId')
-            ->orderBy('created_at', 'desc')
-            ->orderBy('inspectItemId', 'desc')
-            ->take(1)
-            ->get();
-        $id = $ids["0"]->inspectItemId;
-        $newIdItem = $this->smartCounter($id);
+        $insitem_max = \DB::table('inspect_item')->count('inspectItemId');
+        $insitem_max = $insitem_max + 1;
+        $newId = 'INSITEM'.str_pad($insitem_max, 4, '0', STR_PAD_LEFT); 
     	$inspect_item = InspectItem::with('type')->get();
     	$inspect_type = InspectType::get();
     	return view('Maintenance.Service.inspection_item',compact('inspect_item','newIdItem','inspect_type'));
@@ -69,40 +64,7 @@ class InspectItemController extends Controller
         $inspectItem = InspectItem::find($request->input('delInspectItemId'));
         $inspectItem->inspectItemIsActive = 0;
         $inspectItem->save();
-        \Session::flash('flash_message','Inspection item successfully deleted.');
+        \Session::flash('flash_message','Inspection item successfully deactivated.');
         return redirect('maintenance/inspect-item');
-    }
-
-    public function smartCounter($id)
-    {   
-        $lastID = str_split($id);
-        $ctr = 0;
-        $tempID = "";
-        $tempNew = [];
-        $newID = "";
-        $add = TRUE;
-        for($ctr = count($lastID)-1; $ctr >= 0; $ctr--){
-            $tempID = $lastID[$ctr];
-            if($add){
-                if(is_numeric($tempID) || $tempID == '0'){
-                    if($tempID == '9'){
-                        $tempID = '0';
-                        $tempNew[$ctr] = $tempID;
-                    }else{
-                        $tempID = $tempID + 1;
-                        $tempNew[$ctr] = $tempID;
-                        $add = FALSE;
-                    }
-                }else{
-                    $tempNew[$ctr] = $tempID;
-                }           
-            }
-            $tempNew[$ctr] = $tempID;   
-        }
-        
-        for($ctr = 0; $ctr < count($lastID); $ctr++){
-            $newID = $newID . $tempNew[$ctr];
-        }
-        return $newID;
     }
 }

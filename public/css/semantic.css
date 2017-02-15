@@ -20681,6 +20681,10 @@ ol.ui.horizontal.list li:before,
   min-height: 2.85714286em;
 }
 
+#toc{
+  overflow-y: scroll;
+}
+
 .ui.menu:after {
   content: '';
   display: block;

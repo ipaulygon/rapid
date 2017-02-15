@@ -27,8 +27,9 @@ class ProductController extends Controller
         $brand = Brand::get();
         $variance = Variance::with('unit')->orderBy('varianceSize')->get();
         $product = Product::with('types.variance.variance.unit')->with('brand')->with('variance.variance.unit')->get();
+        $tv = TypeVariance::with('type')->with('variance.unit')->get();
         //$pv = ProductVariance::with('product')->with('variance')->orderBy('pvVarianceId')->get();
-        return view('Maintenance.Inventory.product',compact('product','type','brand','variance','newId'));
+        return view('Maintenance.Inventory.product',compact('product','type','brand','variance','tv','newId'));
     }
 
     public function create(ProductRequest $request){
@@ -43,17 +44,19 @@ class ProductController extends Controller
         $product->save();
         $variance = $request->input('variance');
         $variances = explode(',', $variance);
-        $prices = $request->input('cost');
-        $x = 0;
-        foreach($variances as $var) {
-            $pv = ProductVariance::create(array(
-                'pvProductId' => $request->input('productId'),
-                'pvVarianceId' => $var,
-                'pvCost' => $prices[$x],
-                'pvIsActive' => 1
-                ));
-            $pv->save();
-            $x++;
+        if($variances!=null || $variances!=''){
+            $prices = $request->input('cost');
+            $x = 0;
+            foreach($variances as $var) {
+                $pv = ProductVariance::create(array(
+                    'pvProductId' => $request->input('productId'),
+                    'pvVarianceId' => $var,
+                    'pvCost' => $prices[$x],
+                    'pvIsActive' => 1
+                    ));
+                $pv->save();
+                $x++;
+            }
         }
         \Session::flash('flash_message','Product successfully added.');
         return redirect('maintenance/product');
@@ -111,12 +114,12 @@ class ProductController extends Controller
         $product = Product::find($request->input('delProductId'));
         $product->productIsActive = 0;
         $product->save();
-        \Session::flash('flash_message','Product successfully deleted.');
+        \Session::flash('flash_message','Product successfully deactivated.');
         return redirect('maintenance/product');
     }
 
     public function type(Request $request){
-        $typeId = $_POST['id'];
+        $typeId = $request->input('id');
         $data = TypeVariance::with('variance.unit')->where('tvTypeId','=',$typeId)->where('tvIsActive','=',1)->get();
         return \Response::json(array('data'=>$data));
     }

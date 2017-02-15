@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')	
-	<!--Add-->	
+	<!--New-->	
 	@if(Session::has('flash_message'))
 		<div class="ui small basic modal" style="text-align:center" id="flash_message">
 			<div class="ui icon header">
@@ -62,7 +62,7 @@
 
 	<h2>Maintenance - Discount</h2>
 	<hr><br>
-	<button class="ui positive button" name="modalAdd" onclick="modal(this.name)"><i class="plus icon"></i>Add Discount</button>
+	<button class="ui positive button" name="modalNew" onclick="modal(this.name)"><i class="plus icon"></i>New Discount</button>
 	<br><br>
 	<table id="list" class="ui celled three column table">
 		<thead>
@@ -148,9 +148,9 @@
 		</tbody>
 	</table>
 	
-	<!--Add Modal-->
-	<div class="ui small modal" id="modalAdd">
-		<div class="header">Add Discount</div>
+	<!--New Modal-->
+	<div class="ui small modal" id="modalNew">
+		<div class="header">New Discount</div>
 		<div class="content">
 			<div class="description">
 				<div class="ui form">
@@ -175,7 +175,7 @@
 	    				<div class="actions">
 	    					<i>Note: All with <span>*</span> are required fields</i>
 	    					<button type="reset" class="ui negative button"><i class="remove icon"></i>Clear</button>
-	    					<button type="submit" class="ui positive button"><i class="plus icon"></i>Add</button>
+	    					<button type="submit" class="ui positive button"><i class="plus icon"></i>New</button>
 	    				</div>
 					{!! Form::close() !!}
 				</div>
@@ -191,7 +191,7 @@
 		    $('#list').DataTable();
 		});
 		/*$('#create').click(function(){
-        	$('#modalAdd').modal('show');    
+        	$('#modalNew').modal('show');    
     	});*/
 		function modal(open){
 			$('#' + open + '').modal('show');

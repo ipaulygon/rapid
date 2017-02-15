@@ -59,7 +59,7 @@ class SupplierController extends Controller
         $supplier = Supplier::find($request->input('delSupplierId'));
         $supplier->supplierIsActive = 0;
         $supplier->save();
-        \Session::flash('flash_message','Supplier successfully deleted.');
+        \Session::flash('flash_message','Supplier successfully deactivated.');
         return redirect('maintenance/supplier');
     }
 }

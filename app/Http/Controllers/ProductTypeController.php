@@ -59,7 +59,7 @@ class ProductTypeController extends Controller
         $type = ProductType::find($request->input('delTypeId'));
         $type->typeIsActive = 0;
         $type->save();
-        \Session::flash('flash_message','Product type successfully deleted.');
+        \Session::flash('flash_message','Product type successfully deactivated.');
         return redirect('maintenance/product-type');
     }
 }

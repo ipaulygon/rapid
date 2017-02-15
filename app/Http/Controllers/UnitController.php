@@ -59,7 +59,7 @@ class UnitController extends Controller
         $unit = Unit::find($request->input('delUnitId'));
         $unit->unitIsActive = 0;
         $unit->save();
-        \Session::flash('flash_message','Unit successfully deleted.');
+        \Session::flash('flash_message','Unit successfully deactivated.');
         return redirect('maintenance/product-unit');
     }
 }

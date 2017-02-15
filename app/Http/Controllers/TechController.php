@@ -16,19 +16,22 @@ class TechController extends Controller
     public function index(){
         $tech_max = \DB::table('technician')->count('techId');
         $tech_max = $tech_max + 1;
-        $newId = 'TECH'.str_pad($brand_max, 4, '0', STR_PAD_LEFT); 
+        $newId = 'TECH'.str_pad($tech_max, 4, '0', STR_PAD_LEFT); 
         $technician = Technician::get();
     	return view('Maintenance.technician',compact('technician','newId'));
     }
 
     public function create(TechRequest $request){
         $file = $request->file('techPic');
+        $id = $request->input('techId');
         $techPic = "";
         if($file == '' || $file == null){
             $techPic = "pics/steve1.jpg";
         }else{
-            $techPic = "pics/".$request->file('techPic')->getClientOriginalName();
-            $request->file('techPic')->move("pics",$request->file('techPic')->getClientOriginalName());    
+            $date = date("Ymdhis");
+            $extension = $request->file('techPic')->getClientOriginalExtension();
+            $techPic = "pics/".$date.$id.'.'.$extension;
+            $request->file('techPic')->move("pics",$techPic);    
         }
         $tech = Technician::create(array(
             'techId' => $request->input('techId'),
@@ -52,13 +55,20 @@ class TechController extends Controller
         $checktechs = Technician::all();
         $isAdded = false;
         $file = $request->file('editTechPic');
+        $id = $request->input('editTechId');
         $techPic = "";
         if($file == '' || $file == null){
             $techPic = $request->input('currentPic');
         }
         else{
-            $techPic = "pics/".$request->file('editTechPic')->getClientOriginalName();
-            $request->file('editTechPic')->move("pics",$request->file('editTechPic')->getClientOriginalName());    
+            $date = date("Ymdhis");
+            $extension = $request->file('editTechPic')->getClientOriginalExtension();
+            if($extension!="jpeg" || $extension!="jpg" || $extension!="png" || $extension!="svg"){
+                \Session::flash('error_message','Invalid image format. Update failed');
+                return redirect('maintenance/technician');
+            }
+            $techPic = "pics/".$date.$id.'.'.$extension;
+            $request->file('editTechPic')->move("pics",$techPic); 
         }
         foreach ($checktechs as $tech) {
             if(!strcasecmp($tech->techId, $request->input('editTechId')) == 0 

@@ -59,7 +59,7 @@ class BrandController extends Controller
         $brand = Brand::find($request->input('delBrandId'));
         $brand->brandIsActive = 0;
         $brand->save();
-        \Session::flash('flash_message','Brand successfully deleted.');
+        \Session::flash('flash_message','Brand successfully deactivated.');
         return redirect('maintenance/product-brand');
     }
 }

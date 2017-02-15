@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.maintenance')
 
 @section('content')	
 	<!--Add-->	
@@ -62,7 +62,7 @@
 
 	<h2>Maintenance - Product</h2>
 	<hr><br>
-	<button class="ui positive button" name="modalAdd" onclick="modal(this.name)"><i class="plus icon"></i>Add Product</button>
+	<button class="ui positive button" name="modalNew" onclick="modal(this.name)"><i class="plus icon"></i>New Product</button>
 	<br><br>
 	<table id="list" class="ui celled table">
 		<thead>
@@ -86,7 +86,11 @@
 						<td>
 							@foreach($product->variance as $vars)
 								@if($vars->pvIsActive==1)
-									<li>{{$vars->variance->varianceSize}} | {{$vars->variance->unit->unitName}} | P{{$vars->pvCost}}</li>
+								<?php 
+									$price = $vars->pvCost;
+									$price = number_format($price,2);
+								?>
+									<li>{{$vars->variance->varianceSize}} | {{$vars->variance->unit->unitName}} | Php {{$price}}</li>
 								@endif
 							@endforeach
 						</td>
@@ -161,15 +165,15 @@
 						    						<label>Variances</label>
 						    					</div>
 						    					<div class="fourteen wide field">
-						    						<div style="width:100%" id="editVar{{$product->productId}}" class="ui multiple update search selection dropdown">
+						    						<div id="add{{$product->productId}}" style="width:100%" class="ui multiple update search selection dropdown">
 						    							<input type="hidden" name="editVariance"><i class="dropdown icon"></i>
 						    							<input class="search" autocomplete="off" tabindex="0">
 						    							<div class="default text">Select Variances</div>
 						    							<div id="menu{{$product->productId}}" class="menu" tabindex="-1">
-						    								@foreach($variance as $var)
-						    									@if($var->varianceIsActive==1)
-						    										<div class="item" data-value="{{ $var->varianceId }}" id="{{$product->productId}}" title="{{$product->productId}}">
-						    											{{ $var->varianceSize }} | {{$var->unit->unitName}}						    										
+						    								@foreach($tv as $tv)
+						    									@if($tv->tvIsActive==1 && $tv->tvTypeId==$product->productTypeId)
+						    										<div class="item" data-value="{{ $tv->variance->varianceId }}" id="{{$product->productId}}" title="{{$product->productId}}">
+						    											{{ $tv->variance->varianceSize }} | {{$tv->variance->unit->unitName}}						    										
 						    										</div>
 						    									@endif
 						    								@endforeach
@@ -189,7 +193,7 @@
 								</div>
 								<div class="actions">
 									<i>Note: All with <span>*</span> are required fields</i>
-		        					<button type="reset" class="ui negative button"><i class="remove icon"></i>Clear</button>
+		        					<button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
 		        					<button type="submit" class="ui positive button"><i class="write icon"></i>Update</button>
 		        				</div>
 	        				{!! Form::close() !!}
@@ -201,7 +205,7 @@
 	        							@endif
 	        						@endforeach
 	        					];
-	        					$('#editVar{{$product->productId}}').dropdown('set selected',array);
+	        					$('#add{{$product->productId}}').dropdown('set selected',array);
 	        				</script>
 						</div>
 						<div class="ui small basic modal" id="del{{ $product->productId }}" style="text-align:center">
@@ -233,8 +237,8 @@
 	</table>
 	
 	<!--Add Modal-->
-	<div class="ui small modal" id="modalAdd">
-		<div class="header">Add Product</div>
+	<div class="ui small modal" id="modalNew">
+		<div class="header">New Product</div>
 		<div class="content">
 			<div class="description">
 				<div class="ui form">
@@ -292,25 +296,24 @@
 	    						<textarea type="text" name="productDesc" placeholder="Description"></textarea>
 	    					</div>
 	    				</div>
-	    				<div class="inline fields">
-	    					<div class="two wide field">
+	    				<div class="two fields">
+	    					<div class="field">
 	    						<label>Variances</label>
-	    					</div>
-	    					<div class="fourteen wide field">
-	    						<div id="add" style="width:100%" class="ui multiple search selection dropdown">
+	    						<div id="add{{$newId}}" style="width:100%" class="ui multiple add search selection dropdown">
 	    							<input id="variances" type="hidden" name="variance"><i class="dropdown icon"></i>
 	    							<input class="search" autocomplete="off" tabindex="0">
 	    							<div class="default text">Select Variances</div>
-	    							<div id="menu{{$newId}}" class="menu" tabindex="-1">
-	    							</div>
+	    							<div id="menu{{$newId}}" class="menu" tabindex="-1"></div>
 	    						</div>
 	    					</div>
+	    					<div class="field">
+	    						<div id="cost{{$newId}}" class="sixteen wide field"></div>
+	    					</div>
 	    				</div>
-	    				<div id="cost{{$newId}}" class="sixteen wide field"></div>
 	    				<div class="actions">
 	    					<i>Note: All with <span>*</span> are required fields</i>
-	    					<button type="reset" class="ui negative button"><i class="remove icon"></i>Clear</button>
-	    					<button type="submit" class="ui positive button"><i class="plus icon"></i>Add</button>
+	    					<button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
+	    					<button type="submit" class="ui positive button"><i class="plus icon"></i>Save</button>
 	    				</div>
 					{!! Form::close() !!}
 				</div>
@@ -326,7 +329,7 @@
 		    $('#list').DataTable();
 		    $('#brand.ui.dropdown').dropdown();
 		    $('#type.ui.dropdown').dropdown();
-		    $('#add.ui.dropdown').dropdown({
+		    $('.add.ui.dropdown').dropdown({
 		    	onAdd: function(value,text,$addedChoice){
 		    		var prod = $addedChoice.attr('title');
 		    		$("#cost"+prod).append('<label id="'+value+'">'+text+'</label><input id="'+value+'" type="text" name="cost[]">');
@@ -340,7 +343,7 @@
 		    $('.update.ui.dropdown').dropdown({
 		    	onAdd: function(value,text,$addedChoice){
 		    		var prod = $addedChoice.attr('title');
-		    		$("#cost"+prod).append('<label id="'+value+'">'+text+'</label><input id="'+value+'" type="text" name="editCost[]" onchange="load(this)">');
+		    		$("#cost"+prod).append('<label id="'+value+'">'+text+'</label><input id="'+value+'" type="text" name="editCost[]" required>');
 		    	},
 		    	onRemove: function(value, text, $removedChoice){
 		    		var prod = $removedChoice.attr('title');
@@ -351,6 +354,9 @@
 		});
 		function reload(title){
 			$(".item#"+title).remove();
+			$("#cost"+title+" input").remove();
+			$("#cost"+title+" label").remove();
+			$("#add"+title).dropdown('clear');
 			var id = $("#drop"+title).val();
 			$.ajaxSetup({
 		        headers: {
@@ -374,8 +380,8 @@
 			$('#' + open + '').modal('show');
 		}
 		function load(input){
-			var val = $(input).val();
-			$(input).attr('value',val);
+			var val = $("#"+input).val();
+			$("#"+input).val(val);
 		}
 	</script>
 @stop

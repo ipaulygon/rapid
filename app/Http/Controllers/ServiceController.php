@@ -78,7 +78,7 @@ class ServiceController extends Controller
         $serv = Service::find($request->input('delServiceId'));
         $serv->serviceIsActive = 0;
         $serv->save();
-        \Session::flash('flash_message','Service successfully deleted.');
+        \Session::flash('flash_message','Service successfully deactivated.');
         return redirect('maintenance/service');
     }
 }

@@ -16,7 +16,7 @@ class DiscountController extends Controller
     public function index(){
         $discount_max = \DB::table('discount')->count('discountId');
         $discount_max = $discount_max + 1;
-        $newId = 'DS'.str_pad($brand_max, 3, '0', STR_PAD_LEFT); 
+        $newId = 'DS'.str_pad($discount_max, 3, '0', STR_PAD_LEFT); 
     	$discount = Discount::get();
     	return view('Maintenance.Sales.discount',compact('discount','newId'));
     }

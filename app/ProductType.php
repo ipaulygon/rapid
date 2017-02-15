@@ -19,4 +19,7 @@ class ProductType extends Model
 	public function variance(){
 		return $this->hasMany('App\TypeVariance','tvTypeId');
 	}
+	public function product(){
+		return $this->hasMany('App\Product','productTypeId');
+	}
 }

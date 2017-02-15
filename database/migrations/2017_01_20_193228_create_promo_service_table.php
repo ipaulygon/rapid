@@ -17,6 +17,8 @@ class CreatePromoServiceTable extends Migration
             $table->engine = 'InnoDB';
             $table->string('promoSId');
             $table->string('promoServiceId');
+            $table->boolean('promoSIsActive');
+            $table->timestamps();
             $table->primary(['promoSId','promoServiceId']);
             $table->foreign('promoSId')
                   ->references('promoId')->on('promo')

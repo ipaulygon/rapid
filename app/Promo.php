@@ -15,7 +15,14 @@ class Promo extends Model
 								'promoDesc',
 								'promoStart',
 								'promoEnd',
+								'promoCost',
 								'promoIsActive'
 								//
 								);
+	public function product(){
+		return $this->hasMany('App\PromoProduct','promoPId');
+	}
+	public function service(){
+		return $this->hasMany('App\PromoService','promoSId');
+	}
 }

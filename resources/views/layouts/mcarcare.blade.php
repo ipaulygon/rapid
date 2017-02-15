@@ -51,8 +51,8 @@
                     </div>
                 </div>
                 <div class="item">
-                    <a class="title"><i class="dropdown icon"></i>Car Care</a>
-                    <div class="content">
+                    <a class="title active"><i class="dropdown icon"></i>Car Care</a>
+                    <div class="content active">
                         <div class="ui form">
                             <a href="/maintenance/service-category" class="item">Service Category</a>
                             <a href="/maintenance/service" class="item">Service</a>
@@ -138,8 +138,8 @@
                     </div>
                 </div>
                 <div class="item">
-                    <a class="title"><i class="dropdown icon"></i>Car Care</a>
-                    <div class="content">
+                    <a class="title active"><i class="dropdown icon"></i>Car Care</a>
+                    <div class="content active">
                         <div class="ui form">
                             <a href="/maintenance/service-category" class="item">Service Category</a>
                             <a href="/maintenance/service" class="item">Service</a>

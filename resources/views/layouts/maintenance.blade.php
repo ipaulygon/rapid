@@ -38,8 +38,8 @@
             <div class="header">Maintenance</div>
             <div class="ui vertical accordion inverted fluid">
                 <div class="item">
-                    <a class="title"><i class="dropdown icon"></i>Inventory</a>
-                    <div class="content">
+                    <a class="title active"><i class="dropdown icon"></i>Inventory</a>
+                    <div class="content active">
                         <div class="ui form">
                             <a href="/maintenance/supplier" class="item">Supplier</a>
                             <a href="/maintenance/product-brand" class="item">Product Brand</a>
@@ -125,8 +125,8 @@
             <div class="header">Maintenance</div>
             <div class="ui vertical accordion inverted fluid">
                 <div class="item">
-                    <a class="title"><i class="dropdown icon"></i>Inventory</a>
-                    <div class="content">
+                    <a class="title active"><i class="dropdown icon"></i>Inventory</a>
+                    <div class="content active">
                         <div class="ui form">
                             <a href="/maintenance/supplier" class="item">Supplier</a>
                             <a href="/maintenance/product-brand" class="item">Product Brand</a>

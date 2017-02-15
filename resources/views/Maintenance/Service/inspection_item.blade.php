@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')	
-	<!--Add-->	
+	<!--New-->	
 	@if(Session::has('flash_message'))
 		<div class="ui small basic modal" style="text-align:center" id="flash_message">
 			<div class="ui icon header">
@@ -62,7 +62,7 @@
 
 	<h2>Maintenance - Inspection Item</h2>
 	<hr><br>
-	<button class="ui positive button" name="modalAddItem" onclick="modal(this.name)"><i class="plus icon"></i>Add Inspection Item</button>
+	<button class="ui positive button" name="modalNewItem" onclick="modal(this.name)"><i class="plus icon"></i>New Inspection Item</button>
 	<br><br>
 	<table id="list" class="ui celled four column table">
 		<thead>
@@ -132,7 +132,7 @@
 								</div>
 								<div class="actions">
 									<i>Note: All with <span>*</span> are required fields</i>
-		        					<button type="reset" class="ui negative button"><i class="remove icon"></i>Clear</button>
+		        					<button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
 		        					<button type="submit" class="ui positive button"><i class="write icon"></i>Update</button>
 		        				</div>
 	        				{!! Form::close() !!}
@@ -166,9 +166,9 @@
 		</tbody>
 	</table>
 
-	<!--Add Modal-->
-	<div class="ui small modal" id="modalAddItem">
-        <div class="header">Add Inspection Item</div>
+	<!--New Modal-->
+	<div class="ui small modal" id="modalNewItem">
+        <div class="header">New Inspection Item</div>
         <div class="content">
             <div class="description">
                 <div class="ui form">
@@ -209,8 +209,8 @@
                         </div>
                         <div class="actions">
                             <i>Note: All with <span>*</span> are required fields</i>
-                            <button type="reset" class="ui negative button"><i class="remove icon"></i>Clear</button>
-                            <button type="submit" class="ui positive button"><i class="plus icon"></i>Add</button>
+                            <button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
+                            <button type="submit" class="ui positive button"><i class="plus icon"></i>Save</button>
                         </div>
                     {!! Form::close() !!}
                 </div>
@@ -229,7 +229,7 @@
 		    $('.ui.dropdown').dropdown();
 		});
 		/*$('#create').click(function(){
-        	$('#modalAdd').modal('show');    
+        	$('#modalNew').modal('show');    
     	});*/
 		function modal(open){
 			$('#' + open + '').modal('show');

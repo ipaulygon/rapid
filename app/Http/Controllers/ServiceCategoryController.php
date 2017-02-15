@@ -59,7 +59,7 @@ class ServiceCategoryController extends Controller
         $category = ServiceCategory::find($request->input('delCategoryId'));
         $category->categoryIsActive = 0;
         $category->save();
-        \Session::flash('flash_message','ServiceCategory successfully deleted.');
+        \Session::flash('flash_message','ServiceCategory successfully deactivated.');
         return redirect('maintenance/service-category');
     }
 }
