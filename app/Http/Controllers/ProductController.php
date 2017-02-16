@@ -27,7 +27,7 @@ class ProductController extends Controller
         $brand = Brand::get();
         $variance = Variance::with('unit')->orderBy('varianceSize')->get();
         $product = Product::with('types.variance.variance.unit')->with('brand')->with('variance.variance.unit')->get();
-        $tv = TypeVariance::with('type')->with('variance.unit')->get();
+        $tv = TypeVariance::with('variance.unit')->get();
         //$pv = ProductVariance::with('product')->with('variance')->orderBy('pvVarianceId')->get();
         return view('Maintenance.Inventory.product',compact('product','type','brand','variance','tv','newId'));
     }
@@ -44,9 +44,9 @@ class ProductController extends Controller
         $product->save();
         $variance = $request->input('variance');
         $variances = explode(',', $variance);
+        $prices = $request->input('cost');
+        $x = 0;
         if($variances!=null || $variances!=''){
-            $prices = $request->input('cost');
-            $x = 0;
             foreach($variances as $var) {
                 $pv = ProductVariance::create(array(
                     'pvProductId' => $request->input('productId'),
@@ -84,23 +84,19 @@ class ProductController extends Controller
             $variance = $request->input('editVariance');
             $prodId = $request->input('editProductId');
             $variances = explode(',', $variance);
-            $prices = $request->input('editCost');
+            $prices = $request->input('costs');
             $x = 0;
-
-            /*for($y = 0; $y < count($prices) ; $y++ ){
-                echo $prices[$y];
-            }
-            die();*/
-
-            foreach($variances as $var) {
-                $pv = ProductVariance::create(array(
-                    'pvProductId' => $request->input('editProductId'),
-                    'pvVarianceId' => $var,
-                    'pvCost' => $prices[$x],
-                    'pvIsActive' => 1
-                    ));
-                $pv->save();
-                $x++;
+            if($variances!=null || $variances!=''){
+                foreach($variances as $var) {
+                    $pv = ProductVariance::create(array(
+                        'pvProductId' => $request->input('editProductId'),
+                        'pvVarianceId' => $var,
+                        'pvCost' => $prices[$x],
+                        'pvIsActive' => 1
+                        ));
+                    $pv->save();
+                    $x++;
+                }
             }
             \Session::flash('flash_message','Product successfully updated.');
         }else{
@@ -122,5 +118,11 @@ class ProductController extends Controller
         $typeId = $request->input('id');
         $data = TypeVariance::with('variance.unit')->where('tvTypeId','=',$typeId)->where('tvIsActive','=',1)->get();
         return \Response::json(array('data'=>$data));
+    }
+
+    public function view(Request $request){
+        $id = $request->input('id');
+        $product = Product::with('types.variance.variance.unit')->with('brand')->with('variance.variance.unit')->where('productId','=',$id)->get();
+        return \Response::json(array('$product'=>$product));
     }
 }

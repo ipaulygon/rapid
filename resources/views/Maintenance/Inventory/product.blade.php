@@ -95,119 +95,11 @@
 							@endforeach
 						</td>
 						<td>
-							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="edit{{ $product->productId }}" onclick="modal(this.name)"><i class="write icon"></i></button>
+							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="modalUpdate" id="{{ $product->productId }}" onclick="update(this.id),modal(this.name)"><i class="write icon"></i></button>
 							<button class="ui red basic circular icon button" data-tooltip="Deactivate Record" data-inverted="" name="del{{ $product->productId }}" onclick="modal(this.name)"><i class="trash icon"></i></button>
 						</td>
 						<!--Modal for Update-->
-						<div class="ui small modal" id="edit{{ $product->productId }}">
-							<div class="header">Update Product</div>
-							{!! Form::open(['action' => 'ProductController@update']) !!}	
-								<div class="content">
-									<div class="description">
-										<div class="ui form">								
-											<div class="sixteen wide field">
-				        						<input type="hidden" name="editProductId" value="{{ $product->productId }}">
-				        					</div>
-				        					<div class="inline fields">
-						    					<div class="two wide field">
-						    						<label>Brand<span>*</span></label>
-						    					</div>
-						    					<div class="six wide field">
-						    						<div id="brand" class="ui search selection dropdown">
-						    							<input type="hidden" name="editProductBrandId" value="{{ $product->productBrandId }}"><i class="dropdown icon"></i>
-						    							<input class="search" autocomplete="off" tabindex="0">
-						    							<div class="default text">Select Brand</div>
-						    							<div class="menu" tabindex="-1">
-						    								@foreach($brand as $brands)
-						    									@if($brands->brandIsActive==1)
-						    										<div class="item" data-value="{{ $brands->brandId }}">{{ $brands->brandName }}</div>
-						    									@endif
-						    								@endforeach
-						    							</div>
-						    						</div>
-						    					</div>
-						    					<div class="two wide field">
-						    						<label>Type<span>*</span></label>
-						    					</div>
-						    					<div class="six wide field">
-						    						<div id="type" class="ui search selection dropdown" title="{{$product->productId}}" onchange="reload(this.title)">
-						    							<input id="drop{{$product->productId}}" type="hidden" name="editProductTypeId" value="{{ $product->productTypeId }}"><i class="dropdown icon"></i>
-						    							<input class="search" autocomplete="off" tabindex="0">
-						    							<div class="default text">Select Type</div>
-						    							<div class="menu" tabindex="-1">
-						    								@foreach($type as $types)
-						    									@if($types->typeIsActive==1)
-						    										<div class="item" data-value="{{ $types->typeId }}">{{ $types->typeName }}</div>
-						    									@endif
-						    								@endforeach
-						    							</div>
-						    						</div>
-						    					</div>
-						    				</div>
-					        				<div class="inline fields">
-						    					<div class="two wide field">
-						    						<label>Product<span>*</span></label>
-						    					</div>
-						    					<div class="fourteen wide field">
-						    						<input type="text" name="editProductName" placeholder="Product" value="{{ $product->productName }}">
-						    					</div>
-						    				</div>
-						    				<div class="inline fields">
-						    					<div class="two wide field">
-						    						<label>Description</label>
-						    					</div>
-						    					<div class="fourteen wide field">
-						    						<textarea type="text" name="editProductDesc" placeholder="Description">{{ $product->productDesc }}</textarea>
-						    					</div>
-						    				</div>
-						    				<div class="inline fields">
-						    					<div class="two wide field">
-						    						<label>Variances</label>
-						    					</div>
-						    					<div class="fourteen wide field">
-						    						<div id="add{{$product->productId}}" style="width:100%" class="ui multiple update search selection dropdown">
-						    							<input type="hidden" name="editVariance"><i class="dropdown icon"></i>
-						    							<input class="search" autocomplete="off" tabindex="0">
-						    							<div class="default text">Select Variances</div>
-						    							<div id="menu{{$product->productId}}" class="menu" tabindex="-1">
-						    								@foreach($tv as $tv)
-						    									@if($tv->tvIsActive==1 && $tv->tvTypeId==$product->productTypeId)
-						    										<div class="item" data-value="{{ $tv->variance->varianceId }}" id="{{$product->productId}}" title="{{$product->productId}}">
-						    											{{ $tv->variance->varianceSize }} | {{$tv->variance->unit->unitName}}						    										
-						    										</div>
-						    									@endif
-						    								@endforeach
-						    							</div>
-						    						</div>
-						    					</div>
-						    				</div>
-						    				<div id="cost{{$product->productId}}" class="sixteen wide field">
-					    						@foreach($product->variance as $var)
-					        						@if($var->pvIsActive==1)
-				        								<label id="{{$var->pvVarianceId}}">{{$var->variance->varianceSize}}|{{$var->variance->unit->unitName}}</label><input id="{{$var->pvVarianceId}}" type="text" name="editCost[]" value="{{$var->pvCost}}" onchange="load(this)">
-				        							@endif
-				        						@endforeach
-					    					</div>
-										</div>
-									</div>
-								</div>
-								<div class="actions">
-									<i>Note: All with <span>*</span> are required fields</i>
-		        					<button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
-		        					<button type="submit" class="ui positive button"><i class="write icon"></i>Update</button>
-		        				</div>
-	        				{!! Form::close() !!}
-	        				<script type="text/javascript">
-	        					var array = [
-	        						@foreach($product->variance as $var)
-	        							@if($var->pvIsActive==1)
-	        								'{{$var->variance->varianceId}}',
-	        							@endif
-	        						@endforeach
-	        					];
-	        					$('#add{{$product->productId}}').dropdown('set selected',array);
-	        				</script>
-						</div>
+						
 						<div class="ui small basic modal" id="del{{ $product->productId }}" style="text-align:center">
 							<div class="ui icon header">
 								<i class="trash icon"></i>
@@ -236,6 +128,91 @@
 		</tbody>
 	</table>
 	
+	<!--Update Modal-->
+	<div class="ui small modal" id="modalUpdate">
+		<div class="header">Update Product</div>
+		<div class="content">
+			<div class="description">
+				<div class="ui form">
+					{!! Form::open(['action' => 'ProductController@update']) !!}
+						<input type="hidden" id="editProductId" name="editProductId" readonly>
+	    				<div class="inline fields">
+	    					<div class="two wide field">
+	    						<label>Brand<span>*</span></label>
+	    					</div>
+	    					<div class="six wide field">
+	    						<div id="editProductBrandName" class="ui search selection dropdown">
+	    							<input id="editProductBrandId" type="hidden" name="editProductBrandId"><i class="dropdown icon"></i>
+	    							<input class="search" autocomplete="off" tabindex="0">
+	    							<div class="default text">Select Brand</div>
+	    							<div class="menu" tabindex="-1">
+	    								@foreach($brand as $brands)
+	    									@if($brands->brandIsActive==1)
+	    										<div class="item" data-value="{{ $brands->brandId }}">{{ $brands->brandName }}</div>
+	    									@endif
+	    								@endforeach
+	    							</div>
+	    						</div>
+	    					</div>
+	    					<div class="two wide field">
+	    						<label>Type<span>*</span></label>
+	    					</div>
+	    					<div class="six wide field">
+	    						<div id="editProductTypeName" class="ui search selection dropdown" onchange="reload(this.title)">
+	    							<input class="editProductTypeId" type="hidden" name="editProductTypeId"><i class="dropdown icon"></i>
+	    							<input class="search" autocomplete="off" tabindex="0">
+	    							<div class="default text">Select Type</div>
+	    							<div class="menu" tabindex="-1">
+	    								@foreach($type as $types)
+	    									@if($types->typeIsActive==1)
+	    										<div class="item" data-value="{{ $types->typeId }}">{{ $types->typeName }}</div>
+	    									@endif
+	    								@endforeach
+	    							</div>
+	    						</div>
+	    					</div>
+	    				</div>
+	    				<div class="inline fields">
+	    					<div class="two wide field">
+	    						<label>Product<span>*</span></label>
+	    					</div>
+	    					<div class="fourteen wide field">
+	    						<input id="editProductName" type="text" name="editProductName" placeholder="Product">
+	    					</div>
+	    				</div>
+	    				<div class="inline fields">
+	    					<div class="two wide field">
+	    						<label>Description</label>
+	    					</div>
+	    					<div class="fourteen wide field">
+	    						<textarea id="editProductDesc" type="text" name="editProductDesc" placeholder="Description"></textarea>
+	    					</div>
+	    				</div>
+	    				<div class="two fields">
+	    					<div class="field">
+	    						<label>Variances</label>
+	    						<div style="width:100%" class="ui multiple update search selection dropdown variances">
+	    							<input type="hidden" name="editVariance"><i class="dropdown icon"></i>
+	    							<input class="search" autocomplete="off" tabindex="0">
+	    							<div class="default text">Select Variances</div>
+	    							<div class="menu edit" tabindex="-1"></div>
+	    						</div>
+	    					</div>
+	    					<div class="field">
+	    						<div class="cost" class="sixteen wide field"></div>
+	    					</div>
+	    				</div>
+	    				<div class="actions">
+	    					<i>Note: All with <span>*</span> are required fields</i>
+	    					<button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
+	    					<button type="submit" class="ui positive button"><i class="plus icon"></i>Save</button>
+	    				</div>
+					{!! Form::close() !!}
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!--Add Modal-->
 	<div class="ui small modal" id="modalNew">
 		<div class="header">New Product</div>
@@ -343,7 +320,7 @@
 		    $('.update.ui.dropdown').dropdown({
 		    	onAdd: function(value,text,$addedChoice){
 		    		var prod = $addedChoice.attr('title');
-		    		$("#cost"+prod).append('<label id="'+value+'">'+text+'</label><input id="'+value+'" type="text" name="editCost[]" required>');
+		    		$("#cost"+prod).append('<label id="'+value+'">'+text+'</label><input id="'+value+'" type="text" name="costs[]" value="">');
 		    	},
 		    	onRemove: function(value, text, $removedChoice){
 		    		var prod = $removedChoice.attr('title');
@@ -352,6 +329,72 @@
 		    	}
 		    });
 		});
+		function update(id){
+			$.ajaxSetup({
+		        headers: {
+		            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		        }
+			});
+			$.ajax({
+				type: "POST",
+				url: "{{url('maintenance/product/view')}}",
+				data: {'id':id},
+				dataType: "JSON",
+				success:function(product){
+					console.log(product.$product[0]);
+					$('#editProductId').attr('value',id);
+					//brand
+					$('#editProductBrandId').val(product.$product[0].brand.brandId);
+					$('#editProductBrandName').dropdown('set selected',product.$product[0].brand.brandName);
+					//menu - variances
+					$('.menu.edit').attr('id','menu'+id);
+					//name
+					$('#editProductName').attr('value',product.$product[0].productName);
+					//desc
+					$('#editProductDesc').text(product.$product[0].productDesc);
+					/*$('#editVariance').attr('value',variances);*/
+					$('.update.variances').attr('id','add'+id);
+					//cost
+					$('.cost').attr('id','cost'+id);
+					//types
+					$('.editProductTypeId').attr({id:'drop'+id,value:product.$product[0].types.typeId});
+					$('#editProductTypeName').dropdown('set selected',product.$product[0].types.typeName);
+					$('#editProductTypeName').attr('title',id);
+					//$(".menu.edit").children().remove();
+					/*for(var x=0;x<product.$product[0].types.variance.length;x++){
+						if(product.$product[0].types.variance[x].tvIsActive==1){
+							$(".menu.edit").append('<div class="item" data-value="'+product.$product[0].types.variance[x].tvVarianceId+'" id="'+id+'" title="'+id+'">'+product.$product[0].types.variance[x].variance.varianceSize+'|'+product.$product[0].types.variance[x].variance.unit.unitName+'</div>');
+						}
+					}*/
+					setTimeout(function(){
+						reload(id);
+						//variances
+						var variance = [];			
+						for (var x=0; x < product.$product[0].variance.length; x++) {
+							if(product.$product[0].variance[x].pvIsActive==1){
+								variance.push(product.$product[0].variance[x].pvVarianceId);
+								//$('.cost').append('<label id="'+id+id+'">'+product.$product[0].variance[x].variance.varianceSize+'|'+product.$product[0].variance[x].variance.unit.unitName+'</label><input id="'+id+id+'" type="text" name="costs[]" value="'+product.$product[0].variance[x].pvCost+'">');
+							}
+						}
+						var variances = variance.join();
+						setTimeout(function (){
+							$('.update.variances').dropdown('refresh');
+							$('.update.variances').dropdown('set selected',variance);
+						}, 500);
+						setTimeout(function(){
+							for (var x=0; x < product.$product[0].variance.length; x++) {
+								if(product.$product[0].variance[x].pvIsActive==1){
+									// $('.cost').children($('input[id='+product.$product[0].variance[x].pvVarianceId+']')).val(product.$product[0].variance[x].pvCost);
+									$('#cost'+id+' input[id='+product.$product[0].variance[x].pvVarianceId+']').val(product.$product[0].variance[x].pvCost);
+									console.log(product.$product[0].variance[x].pvCost);
+								}
+							}
+						}, 500);
+					}, 500);
+					
+				}
+			});
+		}
 		function reload(title){
 			$(".item#"+title).remove();
 			$("#cost"+title+" input").remove();
@@ -369,7 +412,6 @@
 				data: {'id':id},
 				dataType: "JSON",
 				success:function(data){
-					console.log(data.data[0]);
 					for(var x=0;x<data.data.length;x++){
 						$("#menu"+title).append('<div class="item" data-value="'+data.data[x].variance["varianceId"]+'" id="'+title+'" title="'+title+'">'+data.data[x].variance["varianceSize"]+'|'+data.data[x].variance.unit["unitName"]+'</div>');
 					}
@@ -378,10 +420,6 @@
 		}
 		function modal(open){
 			$('#' + open + '').modal('show');
-		}
-		function load(input){
-			var val = $("#"+input).val();
-			$("#"+input).val(val);
 		}
 	</script>
 @stop

@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('dashboard');
+    return view('welcome');
 });
 
 Auth::routes();
@@ -55,6 +55,7 @@ Route::post('maintenance/product/create','ProductController@create');
 Route::post('maintenance/product/update','ProductController@update');
 Route::post('maintenance/product/destroy','ProductController@destroy');
 Route::post('maintenance/product/type','ProductController@type');
+Route::post('maintenance/product/view','ProductController@view');
 
 //Promo
 Route::get('maintenance/promo','PromoController@index');
