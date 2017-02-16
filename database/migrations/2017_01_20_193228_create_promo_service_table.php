@@ -19,7 +19,6 @@ class CreatePromoServiceTable extends Migration
             $table->string('promoServiceId');
             $table->boolean('promoSIsActive');
             $table->timestamps();
-            $table->primary(['promoSId','promoServiceId']);
             $table->foreign('promoSId')
                   ->references('promoId')->on('promo')
                   ->onUpdate('cascade')

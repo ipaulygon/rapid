@@ -97,6 +97,38 @@ class PromoController extends Controller
             $promo->promoStart = trim($request->input('editPromoStart'));
             $promo->promoEnd = trim($request->input('editPromoEnd'));
             $promo->save();
+            $prod = $request->input('editPromoProductId');
+            $prods = explode(",", $prod);
+            $serv = $request->input('editPromoServiceId');
+            $servs = explode(",", $serv);
+            $qty = $request->input('qtys');
+            $affectedRows = PromoProduct::where('promoPId', '=', $request->input('editPromoId'))->update(['promoPIsActive' => 0]);
+            if($prods!=null || $prods!=''){
+                $x = 0;
+                foreach ($prods as $prods) {
+                    $pp = PromoProduct::create(array(
+                        'promoPId' => $request->input('editPromoId'),
+                        'promoProductId' => $prods,
+                        'promoPQty' => $qty[$x],
+                        'promoPIsActive' => 1
+                        ));
+                    $pp->save();
+                    $x++;
+                }
+            }
+            $affectedRows = PromoService::where('promoSId', '=', $request->input('editPromoId'))->update(['promoSIsActive' => 0]);
+            if($servs!=null || $servs!=''){
+                $x = 0;
+                foreach ($servs as $servs) {
+                    $ps = PromoService::create(array(
+                        'promoSId' => $request->input('editPromoId'),
+                        'promoServiceId' => $servs,
+                        'promoSIsActive' => 1
+                        ));
+                    $ps->save();
+                    $x++;
+                }
+            }
             \Session::flash('flash_message','Promo successfully updated.');
         }else{
             \Session::flash('error_message','Promo already exists. Update failed.');
@@ -113,8 +145,9 @@ class PromoController extends Controller
         return redirect('maintenance/promo');
     }
 
-    public function view($id){
-        \Session::flash('add_promo','Add items');
-        return redirect('maintenance/promo');
+    public function view(Request $request){
+        $id = $request->input('id');
+        $promo = Promo::with('product.product.product.types')->with('product.product.product.brand')->with('product.product.variance.unit')->with('service.service.categories')->where('promoId','=',$id)->get();
+        return \Response::json(array('$promo'=>$promo));
     }
 }

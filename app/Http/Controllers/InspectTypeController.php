@@ -16,7 +16,7 @@ class InspectTypeController extends Controller
     public function index(){
         $itype_max = \DB::table('inspect_type')->count('inspectTypeId');
         $itype_max = $itype_max + 1;
-        $newId = 'INSTYP'.str_pad($itype_max, 3, '0', STR_PAD_LEFT); 
+        $newIdType = 'INSTYP'.str_pad($itype_max, 3, '0', STR_PAD_LEFT); 
     	$inspect_type = InspectType::get();
     	return view('Maintenance.Service.inspection_type',compact('inspect_type','newIdType'));
     }

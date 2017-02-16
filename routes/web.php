@@ -62,6 +62,7 @@ Route::get('maintenance/promo','PromoController@index');
 Route::post('maintenance/promo/create','PromoController@create');
 Route::post('maintenance/promo/update','PromoController@update');
 Route::post('maintenance/promo/destroy','PromoController@destroy');
+Route::post('maintenance/promo/view','PromoController@view');
 
 //Discount
 Route::get('maintenance/discount','DiscountController@index');

@@ -64,14 +64,14 @@
 	<hr><br>
 	<button class="ui positive button" name="modalNew" onclick="modal(this.name)"><i class="plus icon"></i>New Service</button>
 	<br><br>
-	<table id="list" class="ui celled table">
+	<table id="list" class="ui five column celled table">
 		<thead>
 			<tr>
 				<th>Service</th>
 				<th>Description</th>
 				<th>Category</th>
-				<th>Price</th>
-				<th class="four wide">Actions</th>
+				<th class="right aligned">Price</th>
+				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -85,7 +85,7 @@
 						<td>{{ $serv->serviceName }}</td>
 						<td>{{ $serv->serviceDesc }}</td>
 						<td>{{ $serv->categories->categoryName }}</td>
-						<td>Php {{ $price }}</td>
+						<td class="right aligned">Php {{ $price }}</td>
 						<td>
 							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="edit{{ $serv->serviceId }}" onclick="modal(this.name)"><i class="write icon"></i></button>
 							<button class="ui red basic circular icon button" data-tooltip="Deactivate Record" data-inverted="" name="del{{ $serv->serviceId }}" onclick="modal(this.name)"><i class="trash icon"></i></button>

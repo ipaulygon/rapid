@@ -205,7 +205,7 @@
 	    				<div class="actions">
 	    					<i>Note: All with <span>*</span> are required fields</i>
 	    					<button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
-	    					<button type="submit" class="ui positive button"><i class="plus icon"></i>Save</button>
+	    					<button type="submit" class="ui positive button"><i class="plus icon"></i>Update</button>
 	    				</div>
 					{!! Form::close() !!}
 				</div>
@@ -341,31 +341,17 @@
 				data: {'id':id},
 				dataType: "JSON",
 				success:function(product){
-					console.log(product.$product[0]);
 					$('#editProductId').attr('value',id);
-					//brand
 					$('#editProductBrandId').val(product.$product[0].brand.brandId);
 					$('#editProductBrandName').dropdown('set selected',product.$product[0].brand.brandName);
-					//menu - variances
 					$('.menu.edit').attr('id','menu'+id);
-					//name
 					$('#editProductName').attr('value',product.$product[0].productName);
-					//desc
 					$('#editProductDesc').text(product.$product[0].productDesc);
-					/*$('#editVariance').attr('value',variances);*/
 					$('.update.variances').attr('id','add'+id);
-					//cost
 					$('.cost').attr('id','cost'+id);
-					//types
 					$('.editProductTypeId').attr({id:'drop'+id,value:product.$product[0].types.typeId});
 					$('#editProductTypeName').dropdown('set selected',product.$product[0].types.typeName);
 					$('#editProductTypeName').attr('title',id);
-					//$(".menu.edit").children().remove();
-					/*for(var x=0;x<product.$product[0].types.variance.length;x++){
-						if(product.$product[0].types.variance[x].tvIsActive==1){
-							$(".menu.edit").append('<div class="item" data-value="'+product.$product[0].types.variance[x].tvVarianceId+'" id="'+id+'" title="'+id+'">'+product.$product[0].types.variance[x].variance.varianceSize+'|'+product.$product[0].types.variance[x].variance.unit.unitName+'</div>');
-						}
-					}*/
 					setTimeout(function(){
 						reload(id);
 						//variances
@@ -376,7 +362,6 @@
 								//$('.cost').append('<label id="'+id+id+'">'+product.$product[0].variance[x].variance.varianceSize+'|'+product.$product[0].variance[x].variance.unit.unitName+'</label><input id="'+id+id+'" type="text" name="costs[]" value="'+product.$product[0].variance[x].pvCost+'">');
 							}
 						}
-						var variances = variance.join();
 						setTimeout(function (){
 							$('.update.variances').dropdown('refresh');
 							$('.update.variances').dropdown('set selected',variance);
@@ -386,7 +371,6 @@
 								if(product.$product[0].variance[x].pvIsActive==1){
 									// $('.cost').children($('input[id='+product.$product[0].variance[x].pvVarianceId+']')).val(product.$product[0].variance[x].pvCost);
 									$('#cost'+id+' input[id='+product.$product[0].variance[x].pvVarianceId+']').val(product.$product[0].variance[x].pvCost);
-									console.log(product.$product[0].variance[x].pvCost);
 								}
 							}
 						}, 500);

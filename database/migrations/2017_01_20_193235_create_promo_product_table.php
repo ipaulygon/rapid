@@ -20,7 +20,6 @@ class CreatePromoProductTable extends Migration
             $table->integer('promoPQty')->nullable();
             $table->boolean('promoPIsActive');
             $table->timestamps();
-            $table->primary(['promoPId','promoProductId']);
             $table->foreign('promoPId')
                   ->references('promoId')->on('promo')
                   ->onUpdate('cascade')

@@ -17,7 +17,7 @@ class InspectItemController extends Controller
     public function index(){
         $insitem_max = \DB::table('inspect_item')->count('inspectItemId');
         $insitem_max = $insitem_max + 1;
-        $newId = 'INSITEM'.str_pad($insitem_max, 4, '0', STR_PAD_LEFT); 
+        $newIdItem = 'INSITEM'.str_pad($insitem_max, 4, '0', STR_PAD_LEFT); 
     	$inspect_item = InspectItem::with('type')->get();
     	$inspect_type = InspectType::get();
     	return view('Maintenance.Service.inspection_item',compact('inspect_item','newIdItem','inspect_type'));
