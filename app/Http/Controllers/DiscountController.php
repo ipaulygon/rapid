@@ -34,6 +34,10 @@ class DiscountController extends Controller
     }
 
     public function update(Request $request){
+        $this->validate($request, [
+            'editDiscountName' => 'required',
+            'editDiscountRate' => 'numeric|required',
+        ]);
     	$checkDis = Discount::all();
         $isAdded = false;
         foreach ($checkDis as $discount) {
