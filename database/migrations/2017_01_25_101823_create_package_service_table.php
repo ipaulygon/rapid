@@ -17,7 +17,8 @@ class CreatePackageServiceTable extends Migration
             $table->engine = 'InnoDB';
             $table->string('packageSId');
             $table->string('packageServiceId');
-            $table->primary(['packageSId','packageServiceId']);
+            $table->boolean('packageSIsActive');
+            $table->timestamps();
             $table->foreign('packageSId')
                   ->references('packageId')->on('package')
                   ->onUpdate('cascade')

@@ -64,11 +64,11 @@
 	<hr><br>
 	<button class="ui positive button" name="modalAdd" onclick="modal(this.name)"><i class="plus icon"></i>New Promo</button>
 	<br><br>
-	<table id="listType" class="ui celled six column table">
+	<table id="listType" class="ui celled table">
 		<thead>
 			<tr>
 				<th>Promo</th>
-				<th>Price</th>
+				<th class="right aligned">Price</th>
 				<th>Description</th>
 				<th>Products</th>
 				<th>Services</th>
@@ -89,7 +89,7 @@
 						<td>
 							@foreach($promo->product as $pp)
 								@if($pp->promoPIsActive==1)
-									<li>{{$pp->product->product->brand->brandName}} - {{$pp->product->product->productName}}| {{$pp->product->variance->varianceSize}} - {{$pp->product->variance->unit->unitName}}|{{$pp->product->product->types->typeName}}</li>
+									<li>{{$pp->product->product->brand->brandName}} - {{$pp->product->product->productName}}| {{$pp->product->variance->varianceSize}} - {{$pp->product->variance->unit->unitName}}|{{$pp->product->product->types->typeName}} // {{$pp->promoPQty}} pcs</li>
 								@endif
 							@endforeach
 						</td>

@@ -13,9 +13,14 @@ class Package extends Model
 								'packageId',
 								'packageName',
 								'packageDesc',
-								'packageStart',
-								'packageEnd',
+								'packageCost',
 								'packageIsActive'
 								//
 								);
+	public function product(){
+		return $this->hasMany('App\PackageProduct','packagePId');
+	}
+	public function service(){
+		return $this->hasMany('App\PackageService','packageSId');
+	}
 }

@@ -103,7 +103,7 @@ class PromoController extends Controller
             $servs = explode(",", $serv);
             $qty = $request->input('qtys');
             $affectedRows = PromoProduct::where('promoPId', '=', $request->input('editPromoId'))->update(['promoPIsActive' => 0]);
-            if($prods!=null || $prods!=''){
+            if($prod!=null || $prod!=''){
                 $x = 0;
                 foreach ($prods as $prods) {
                     $pp = PromoProduct::create(array(
@@ -117,7 +117,7 @@ class PromoController extends Controller
                 }
             }
             $affectedRows = PromoService::where('promoSId', '=', $request->input('editPromoId'))->update(['promoSIsActive' => 0]);
-            if($servs!=null || $servs!=''){
+            if($serv!=null || $serv!=''){
                 $x = 0;
                 foreach ($servs as $servs) {
                     $ps = PromoService::create(array(

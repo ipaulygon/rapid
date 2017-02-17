@@ -17,8 +17,9 @@ class CreatePackageProductTable extends Migration
             $table->engine = 'InnoDB';
             $table->string('packagePId');
             $table->unsignedInteger('packageProductId');
+            $table->boolean('packagePIsActive');
+            $table->timestamps();
             $table->integer('packagePQty')->nullable();
-            $table->primary(['packagePId','packageProductId']);
             $table->foreign('packagePId')
                   ->references('packageId')->on('package')
                   ->onUpdate('cascade')

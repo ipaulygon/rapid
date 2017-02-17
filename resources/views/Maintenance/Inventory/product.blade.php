@@ -328,6 +328,9 @@
 		    		$("#cost"+prod+" label[id="+value+"]").remove();
 		    	}
 		    });
+		    update("PROD0001");
+		    $('#modalUpdate').modal('refresh');
+
 		});
 		function update(id){
 			$.ajaxSetup({
@@ -352,29 +355,24 @@
 					$('.editProductTypeId').attr({id:'drop'+id,value:product.$product[0].types.typeId});
 					$('#editProductTypeName').dropdown('set selected',product.$product[0].types.typeName);
 					$('#editProductTypeName').attr('title',id);
+					reload(id);
+					var variance = [];			
+					for (var x=0; x < product.$product[0].variance.length; x++) {
+						if(product.$product[0].variance[x].pvIsActive==1){
+							variance.push(product.$product[0].variance[x].pvVarianceId);
+							//$('.cost').append('<label id="'+id+id+'">'+product.$product[0].variance[x].variance.varianceSize+'|'+product.$product[0].variance[x].variance.unit.unitName+'</label><input id="'+id+id+'" type="text" name="costs[]" value="'+product.$product[0].variance[x].pvCost+'">');
+						}
+					}
 					setTimeout(function(){
-						reload(id);
-						//variances
-						var variance = [];			
+						$('.update.variances').dropdown('refresh');
+						$('.update.variances').dropdown('set selected',variance);
 						for (var x=0; x < product.$product[0].variance.length; x++) {
 							if(product.$product[0].variance[x].pvIsActive==1){
-								variance.push(product.$product[0].variance[x].pvVarianceId);
-								//$('.cost').append('<label id="'+id+id+'">'+product.$product[0].variance[x].variance.varianceSize+'|'+product.$product[0].variance[x].variance.unit.unitName+'</label><input id="'+id+id+'" type="text" name="costs[]" value="'+product.$product[0].variance[x].pvCost+'">');
+								// $('.cost').children($('input[id='+product.$product[0].variance[x].pvVarianceId+']')).val(product.$product[0].variance[x].pvCost);
+								$('#cost'+id+' input[id='+product.$product[0].variance[x].pvVarianceId+']').val(product.$product[0].variance[x].pvCost);
 							}
 						}
-						setTimeout(function (){
-							$('.update.variances').dropdown('refresh');
-							$('.update.variances').dropdown('set selected',variance);
-						}, 500);
-						setTimeout(function(){
-							for (var x=0; x < product.$product[0].variance.length; x++) {
-								if(product.$product[0].variance[x].pvIsActive==1){
-									// $('.cost').children($('input[id='+product.$product[0].variance[x].pvVarianceId+']')).val(product.$product[0].variance[x].pvCost);
-									$('#cost'+id+' input[id='+product.$product[0].variance[x].pvVarianceId+']').val(product.$product[0].variance[x].pvCost);
-								}
-							}
-						}, 500);
-					}, 500);
+					},700);
 					
 				}
 			});

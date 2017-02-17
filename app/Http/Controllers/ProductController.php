@@ -22,14 +22,15 @@ class ProductController extends Controller
     public function index(){
     	$prod_max = \DB::table('product')->count('productId');
         $prod_max = $prod_max + 1;
-        $newId = 'PROD'.str_pad($prod_max, 4, '0', STR_PAD_LEFT); 
+        $newId = 'PROD'.str_pad($prod_max, 4, '0', STR_PAD_LEFT);
+        $first = Product::first();
     	$type = ProductType::get();
         $brand = Brand::get();
         $variance = Variance::with('unit')->orderBy('varianceSize')->get();
         $product = Product::with('types.variance.variance.unit')->with('brand')->with('variance.variance.unit')->get();
         $tv = TypeVariance::with('variance.unit')->get();
         //$pv = ProductVariance::with('product')->with('variance')->orderBy('pvVarianceId')->get();
-        return view('Maintenance.Inventory.product',compact('product','type','brand','variance','tv','newId'));
+        return view('Maintenance.Inventory.product',compact('first','product','type','brand','variance','tv','newId'));
     }
 
     public function create(ProductRequest $request){
@@ -46,7 +47,7 @@ class ProductController extends Controller
         $variances = explode(',', $variance);
         $prices = $request->input('cost');
         $x = 0;
-        if($variances!=null || $variances!=''){
+        if($variance!=null || $variance!=''){
             foreach($variances as $var) {
                 $pv = ProductVariance::create(array(
                     'pvProductId' => $request->input('productId'),
@@ -86,7 +87,7 @@ class ProductController extends Controller
             $variances = explode(',', $variance);
             $prices = $request->input('costs');
             $x = 0;
-            if($variances!=null || $variances!=''){
+            if($variance!=null || $variance!=''){
                 foreach($variances as $var) {
                     $pv = ProductVariance::create(array(
                         'pvProductId' => $request->input('editProductId'),

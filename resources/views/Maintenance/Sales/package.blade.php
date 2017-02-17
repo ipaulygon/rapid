@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')	
-	<!--New-->	
+	<!--Add-->	
 	@if(Session::has('flash_message'))
 		<div class="ui small basic modal" style="text-align:center" id="flash_message">
 			<div class="ui icon header">
@@ -60,77 +60,63 @@
 		</script>
 	@endif
 
-	<h2>Maintenance - Promo</h2>
+	<h2>Maintenance - Package</h2>
 	<hr><br>
-	<button class="ui positive button" name="modalNew" onclick="modal(this.name)"><i class="plus icon"></i>New Promo</button>
+	<button class="ui positive button" name="modalAdd" onclick="modal(this.name)"><i class="plus icon"></i>New Package</button>
 	<br><br>
-	<table id="listType" class="ui celled three column table">
+	<table id="listType" class="ui celled table">
 		<thead>
 			<tr>
-				<th>Promo</th>
+				<th>Package</th>
+				<th class="right aligned">Price</th>
 				<th>Description</th>
+				<th>Products</th>
+				<th>Services</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
-			@foreach($promo as $promo)
-				@if($promo->promoIsActive==1)
+			@foreach($package as $package)
+				@if($package->packageIsActive==1)
 					<tr>
-						<td>{{ $promo->promoName }}</td>
-						<td>{{ $promo->promoDesc }}</td>
+						<?php 
+							$price = $package->packageCost;
+							$price = number_format($price,2);
+						?>
+						<td>{{ $package->packageName }}</td>
+						<td class="right aligned">Php {{ $price }}</td>
+						<td>{{ $package->packageDesc }}</td>
 						<td>
-							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="edit{{ $promo->promoId }}" onclick="modal(this.name)"><i class="write icon"></i></button>
-							<button class="ui red basic circular icon button" data-tooltip="Deactivate Record" data-inverted="" name="del{{ $promo->promoId }}" onclick="modal(this.name)"><i class="trash icon"></i></button>
+							@foreach($package->product as $pp)
+								@if($pp->packagePIsActive==1)
+									<li>{{$pp->product->product->brand->brandName}} - {{$pp->product->product->productName}}| {{$pp->product->variance->varianceSize}} - {{$pp->product->variance->unit->unitName}}|{{$pp->product->product->types->typeName}} // {{$pp->packagePQty}} pcs</li>
+								@endif
+							@endforeach
 						</td>
-						<!--Modal for Update-->
-						<div class="ui small modal" id="edit{{ $promo->promoId }}">
-							<div class="header">Update Promo</div>
-							{!! Form::open(['action' => 'PromoController@update']) !!}	
-								<div class="content">
-									<div class="description">
-										<div class="ui form">								
-											<div class="sixteen wide field">
-				        						<input type="hidden" name="editPromoId" value="{{ $promo->promoId }}">
-				        					</div>
-					        				<div class="inline fields">
-					        					<div class="two wide field">
-					        						<label>Promo<span>*</span></label>
-					        					</div>
-					        					<div class="fourteen wide field">
-					        						<input type="text" name="editPromoName" value="{{ $promo->promoName }}" placeholder="Promo">
-					        					</div>
-					        				</div>
-					        				<div class="inline fields">
-					        					<div class="two wide field">
-					        						<label>Description</label>
-					        					</div>
-					        					<div class="fourteen wide field">
-					        						<textarea type="text" name="editPromoDesc" placeholder="Description">{{ $promo->promoDesc }}</textarea>
-					        					</div>
-					        				</div>
-										</div>
-									</div>
-								</div>
-								<div class="actions">
-									<i>Note: All with <span>*</span> are required fields</i>
-		        					<button type="reset" class="ui negative button"><i class="remove icon"></i>Clear</button>
-		        					<button type="submit" class="ui positive button"><i class="write icon"></i>Update</button>
-		        				</div>
-	        				{!! Form::close() !!}
-						</div>
+						<td>
+							@foreach($package->service as $ps)
+								@if($ps->packageSIsActive==1)
+									<li>{{$ps->service->serviceName}} - {{$ps->service->categories->categoryName}}</li>
+								@endif
+							@endforeach
+						</td>
+						<td>
+							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="modalUpdate" id="{{$package->packageId}}" onclick="update(this.id),modal(this.name)"><i class="write icon"></i></button>
+							<button class="ui red basic circular icon button" data-tooltip="Deactivate Record" data-inverted="" name="del{{ $package->packageId }}" onclick="modal(this.name)"><i class="trash icon"></i></button>
+						</td>
 						<!--Modal for Deactivate-->
-						<div class="ui small basic modal" id="del{{ $promo->promoId }}" style="text-align:center">
+						<div class="ui small basic modal" id="del{{ $package->packageId }}" style="text-align:center">
 							<div class="ui icon header">
 								<i class="trash icon"></i>
 								Deactivate
 							</div>
-							{!! Form::open(['action' => 'PromoController@destroy']) !!}
+							{!! Form::open(['action' => 'PackageController@destroy']) !!}
 								<div class="content">
 									<div class="description">
-										<input type="hidden" name="delPromoId" value="{{ $promo->promoId }}">
+										<input type="hidden" name="delPackageId" value="{{ $package->packageId }}">
 										<p>
-											<label>Promo: {{$promo->promoName}}</label><br>
-											<label>Description: {{$promo->promoDesc}}</label>
+											<label>Package: {{$package->packageName}}</label><br>
+											<label>Description: {{$package->packageDesc}}</label>
 										</p>
 									</div>
 								</div>
@@ -146,46 +132,29 @@
 		</tbody>
 	</table>
 	
-	<!--New Modal-->
-	<div class="ui small modal" id="modalNew">
-		<div class="header">New Promo</div>
+	<!-- Update Modal -->
+	<div class="ui modal" id="modalUpdate">
+		<div class="header">Update Package</div>
 		<div class="content">
 			<div class="description">
 				<div class="ui form">
-					{!! Form::open(['action' => 'PromoController@create']) !!}
-						<input type="hidden" name="promoId" value="{{ $newId }}" readonly>
+					{!! Form::open(['action' => 'PackageController@update']) !!}
+						<input type="hidden" name="editPackageId" id="editPackageId" readonly>
 	    				<div class="inline fields">
 	    					<div class="two wide field">
-	    						<label>Promo<span>*</span></label>
-	    					</div>
-	    					<div class="fourteen wide field">
-	    						<input type="text" name="promoName" placeholder="Promo">
-	    					</div>
-	    				</div>
-	    				<div class="inline fields">
-	    					<div class="two wide field">
-	    						<label>Start Date</label>
+	    						<label>Package<span>*</span></label>
 	    					</div>
 	    					<div class="six wide field">
-	    						<!-- <div class="ui calendar" id="rangestart">
-	    							<div class="ui input left icon">
-	    								<i class="calendar icon"></i>
-	    								<input type="text" name="promoStart" placeholder="Start">
-	    							</div>
-	    						</div> -->
-	    						<input type="date" name="promoStart" placeholder="Start Date" min="{{$dateNow}}">
+	    						<input type="text" name="editPackageName" id="editPackageName" placeholder="Package">
 	    					</div>
 	    					<div class="two wide field">
-	    						<label>End Date</label>
+	    						<label>Price<span>*</span></label>
 	    					</div>
 	    					<div class="six wide field">
-	    						<!-- <div class="ui calendar" id="rangeend">
-	    							<div class="ui input left icon">
-	    								<i class="calendar icon"></i>
-	    								<input type="text" name="promoEnd" placeholder="End">
-	    							</div>
-	    						</div> -->
-	    						<input type="date" name="promoEnd" placeholder="End Date">
+		    					<div class="ui labeled input">
+		    						<div class="ui label">P</div>
+		    						<input type="text" name="editPackageCost" id="editPackageCost" placeholder="100">
+		    					</div>
 	    					</div>
 	    				</div>
 	    				<div class="inline fields">
@@ -193,18 +162,127 @@
 	    						<label>Description</label>
 	    					</div>
 	    					<div class="fourteen wide field">
-	    						<textarea type="text" name="promoDesc" placeholder="Description"></textarea>
+	    						<textarea type="text" name="editPackageDesc" id="editPackageDesc" placeholder="Description"></textarea>
 	    					</div>
 	    				</div>
-<!-- 	    				<div class="inline fields">
-	    					<div class="eight wide field">
-	    						
+	    				<div class="two fields">
+	    					<div class="field">
+	    						<label>Products:</label>
+	    						<div style="width:100%" class="ui multiple update search selection dropdown product">
+	    							<input type="hidden" name="editPackageProductId"><i class="dropdown icon"></i>
+	    							<input class="search" autocomplete="off" tabindex="0">
+	    							<div class="default text">Select Products</div>
+	    							<div class="menu edit" tabindex="-1">
+	    								@foreach($product as $products)
+	    									@if($products->pvIsActive==1)
+	    										<div class="item" data-value="{{ $products->pvId }}">{{$products->product->brand->brandName}} - {{$products->product->productName}}| {{$products->variance->varianceSize}} - {{$products->variance->unit->unitName}}| {{$products->product->types->typeName}}</div>
+	    									@endif
+	    								@endforeach
+	    							</div>
+	    						</div>
+	    						<div class="qty">
+	    							<label>Quantity:</label><br>
+	    						</div>
 	    					</div>
-	    				</div> -->
+	    					<div class="field">
+	    						<label>Services:</label>
+	    						<div id="serv" style="width:100%" class="ui multiple update search selection dropdown service">
+	    							<input type="hidden" name="editPackageServiceId"><i class="dropdown icon"></i>
+	    							<input class="search" autocomplete="off" tabindex="0">
+	    							<div class="default text">Select Services</div>
+	    							<div class="menu" tabindex="-1">
+	    								@foreach($service as $services)
+	    									@if($services->serviceIsActive==1)
+	    										<div class="item" data-value="{{ $services->serviceId }}">{{$services->serviceName}} - {{$services->categories->categoryName}}</div>
+	    									@endif
+	    								@endforeach
+	    							</div>
+	    						</div>
+	    					</div>
+	    				</div>
 	    				<div class="actions">
 	    					<i>Note: All with <span>*</span> are required fields</i>
-	    					<button type="reset" class="ui negative button"><i class="remove icon"></i>Clear</button>
-	    					<button type="submit" class="ui positive button"><i class="plus icon"></i>New</button>
+	    					<button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
+	    					<button type="submit" class="ui positive button"><i class="plus icon"></i>Update</button>
+	    				</div>
+					{!! Form::close() !!}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Add Modal-->
+	<div class="ui modal" id="modalAdd">
+		<div class="header">New Package</div>
+		<div class="content">
+			<div class="description">
+				<div class="ui form">
+					{!! Form::open(['action' => 'PackageController@create']) !!}
+						<input type="hidden" name="packageId" value="{{ $newId }}" readonly>
+	    				<div class="inline fields">
+	    					<div class="two wide field">
+	    						<label>Package<span>*</span></label>
+	    					</div>
+	    					<div class="six wide field">
+	    						<input type="text" name="packageName" placeholder="Package">
+	    					</div>
+	    					<div class="two wide field">
+	    						<label>Price<span>*</span></label>
+	    					</div>
+	    					<div class="six wide field">
+		    					<div class="ui labeled input">
+		    						<div class="ui label">P</div>
+		    						<input type="text" name="packageCost" placeholder="100">
+		    					</div>
+	    					</div>
+	    				</div>
+	    				<div class="inline fields">
+	    					<div class="two wide field">
+	    						<label>Description</label>
+	    					</div>
+	    					<div class="fourteen wide field">
+	    						<textarea type="text" name="packageDesc" placeholder="Description"></textarea>
+	    					</div>
+	    				</div>
+	    				<div class="two fields">
+	    					<div class="field">
+	    						<label>Products:</label>
+	    						<div id="add" style="width:100%" class="ui multiple search selection dropdown">
+	    							<input type="hidden" name="packageProductId"><i class="dropdown icon"></i>
+	    							<input class="search" autocomplete="off" tabindex="0">
+	    							<div class="default text">Select Products</div>
+	    							<div class="menu" tabindex="-1">
+	    								@foreach($product as $product)
+	    									@if($product->pvIsActive==1)
+	    										<div class="item" title="{{$newId}}" data-value="{{ $product->pvId }}">{{$product->product->brand->brandName}} - {{$product->product->productName}}| {{$product->variance->varianceSize}} - {{$product->variance->unit->unitName}}| {{$product->product->types->typeName}}</div>
+	    									@endif
+	    								@endforeach
+	    							</div>
+	    						</div>
+	    						<div id="qty{{$newId}}">
+	    							<label>Quantity:</label><br>
+	    						</div>
+	    					</div>
+	    					<div class="field">
+	    						<label>Services:</label>
+	    						<div id="serv" style="width:100%" class="ui multiple search selection dropdown">
+	    							<input type="hidden" name="packageServiceId"><i class="dropdown icon"></i>
+	    							<input class="search" autocomplete="off" tabindex="0">
+	    							<div class="default text">Select Services</div>
+	    							<div class="menu" tabindex="-1">
+	    								@foreach($service as $service)
+	    									@if($service->serviceIsActive==1)
+	    										<div class="item" data-value="{{ $service->serviceId }}">{{$service->serviceName}} - {{$service->categories->categoryName}}</div>
+	    									@endif
+	    								@endforeach
+	    							</div>
+	    						</div>
+	    					</div>
+	    				</div><br>
+	    				<div class="actions">
+	    					<i>Note: All with <span>*</span> are required fields</i>
+	    					<button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
+	    					<button type="submit" class="ui positive button"><i class="plus icon"></i>Save</button>
 	    				</div>
 					{!! Form::close() !!}
 				</div>
@@ -218,21 +296,81 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 		    $('#listType').DataTable();
-		    $('#rangestart').calendar({
-			  	type: 'date',
-			  	endCalendar: $('#rangeend')
-			});
-			$('#rangeend').calendar({
-			  	type: 'date',
-			  	startCalendar: $('#rangestart')
-			});
+		    $('#serv.ui.dropdown').dropdown();
+		    $('#add.ui.dropdown').dropdown({
+		    	onAdd: function(value,text,$addedChoice){
+		    		var prod = $addedChoice.attr('title');
+		    		$("#qty"+prod).append('<label id="'+value+'">'+text+'</label><input id="'+value+'" type="text" name="qty[]">');
+		    	},
+		    	onRemove: function(value, text, $removedChoice){
+		    		var prod = $removedChoice.attr('title');
+		    		$("#qty"+prod+" input[id="+value+"]").remove();
+		    		$("#qty"+prod+" label[id="+value+"]").remove();
+		    	}
+		    });
+		    $('.update.product.ui.dropdown').dropdown({
+		    	onAdd: function(value,text,$addedChoice){
+		    		var prod = $addedChoice.attr('title');
+		    		$("#qty"+prod).append('<label id="'+value+'">'+text+'</label><input id="'+value+'" type="text" name="qtys[]">');
+		    	},
+		    	onRemove: function(value, text, $removedChoice){
+		    		var prod = $removedChoice.attr('title');
+		    		$("#qty"+prod+" input[id="+value+"]").remove();
+		    		$("#qty"+prod+" label[id="+value+"]").remove();
+		    	}
+		    });
 		});
-		/*$('#create').click(function(){
-        	$('#modalNew').modal('show');    
-    	});*/
 		function modal(open){
 			$('#' + open + '').modal('show');
 		}
-		
+		function update(id){
+			$.ajaxSetup({
+		        headers: {
+		            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		        }
+			});
+			$.ajax({
+				type: "POST",
+				url: "{{url('maintenance/package/view')}}",
+				data: {'id':id},
+				dataType: "JSON",
+				success:function(package){
+					console.log(package.$package[0]);
+					$('#editPackageId').attr('value',package.$package[0].packageId);
+					$('#editPackageName').attr('value',package.$package[0].packageName);
+					$('#editPackageCost').attr('value',package.$package[0].packageCost);
+					$('#editPackageDesc').text(package.$package[0].packageDesc);
+					$('.update.product').attr('id','add'+id);
+					$('.menu.edit').children().attr('title',id);
+					$('.qty').attr('id','qty'+id);
+					var product = [];
+					for(var x=0;x<package.$package[0].product.length;x++){
+						if(package.$package[0].product[x].packagePIsActive==1){
+							if(package.$package[0].product[x].product.pvIsActive==1){
+								product.push(package.$package[0].product[x].product.pvId+"");
+							}
+						}
+					}
+					$('.update.product').dropdown('clear');
+					$('.update.product').dropdown('set selected',product);
+					for(var x=0;x<package.$package[0].product.length;x++){
+						if(package.$package[0].product[x].packagePIsActive==1){
+							$('#qty'+id+' input[id='+package.$package[0].product[x].packageProductId+']').attr('value',package.$package[0].product[x].packagePQty);
+						}
+					}
+					$('.update.service').attr('id','serv'+id);
+					var service = [];
+					for(var x=0;x<package.$package[0].service.length;x++){
+						if(package.$package[0].service[x].packageSIsActive==1){
+							if(package.$package[0].service[x].service.serviceIsActive==1){
+								service.push(package.$package[0].service[x].service.serviceId);
+							}
+						}
+					}
+					$('.update.service').dropdown('clear');
+					$('.update.service').dropdown('set selected',service);
+				}
+			});
+		}
 	</script>
 @stop

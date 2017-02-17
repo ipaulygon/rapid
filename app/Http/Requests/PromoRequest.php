@@ -26,6 +26,7 @@ class PromoRequest extends FormRequest
     {
         return [
             'promoName' => 'required|unique:promo',
+            'promoCost' => 'numeric|required',
             'promoStart' => 'date|required',
             'promoEnd' => 'date'
         ];
@@ -37,6 +38,8 @@ class PromoRequest extends FormRequest
             'promoName.unique'  =>  'Promo already exists.',
             'promoName.required' => 'Promo name is required.',
             'promoStart.required' => 'Start Date is required.',
+            'promoCost.numeric' => 'Cost must be valid monetary value',
+            'promoCost.required' => 'Cost is required',
         ];
     }
 
