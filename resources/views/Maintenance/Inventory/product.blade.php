@@ -372,7 +372,7 @@
 								$('#cost'+id+' input[id='+product.$product[0].variance[x].pvVarianceId+']').val(product.$product[0].variance[x].pvCost);
 							}
 						}
-					},700);
+					},600);
 					
 				}
 			});

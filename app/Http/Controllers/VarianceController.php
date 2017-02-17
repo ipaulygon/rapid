@@ -37,7 +37,7 @@ class VarianceController extends Controller
         $variance->save();
         $type = $request->input('types');
         $types = explode(',', $type);
-        if($types!=null || $types!=''){
+        if($type!=null || $type!=''){
             foreach($types as $typ) {
                 $tv = TypeVariance::create(array(
                     'tvTypeId' => $typ,
@@ -45,7 +45,6 @@ class VarianceController extends Controller
                     'tvIsActive' => 1
                     ));
                 $tv->save();
-                $x++;
             }
         }
         \Session::flash('flash_message','Variance successfully added.');
@@ -53,6 +52,10 @@ class VarianceController extends Controller
     }
 
     public function update(Request $request){
+        $this->validate($request, [
+            'editVarianceSize' => 'required',
+            'editVarianceUnitId' => 'required',
+        ]);
     	$checkvariances = Variance::all();
         $isAdded = false;
         foreach ($checkvariances as $variance) {
@@ -71,7 +74,7 @@ class VarianceController extends Controller
             $affectedRows = TypeVariance::where('tvVarianceId', '=', $request->input('editVarianceId'))->update(['tvIsActive' => 0]);
             $type = $request->input('editTypes');
             $types = explode(',', $type);
-            if($types!=null || $types!=''){
+            if($type!=null || $type!=''){
                 foreach($types as $typ) {
                     $tv = TypeVariance::create(array(
                         'tvTypeId' => $typ,
@@ -79,7 +82,6 @@ class VarianceController extends Controller
                         'tvIsActive' => 1
                         ));
                     $tv->save();
-                    $x++;
                 }
             }
             \Session::flash('flash_message','Variance successfully updated.');

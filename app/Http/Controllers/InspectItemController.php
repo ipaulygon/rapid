@@ -37,6 +37,10 @@ class InspectItemController extends Controller
     }
 
     public function update(Request $request){
+        $this->validate($request, [
+            'editInspectItemName' => 'required',
+            'editInspectItemTypeId' => 'required',
+        ]);
         $checkInspectItem = InspectItem::all();
         $isAdded = false;
         foreach ($checkInspectItem as $inspectItem) {

@@ -50,7 +50,7 @@ class PackageController extends Controller
         $serv = $request->input('packageServiceId');
         $servs = explode(",", $serv);
         $qty = $request->input('qty');
-        if($prods!=null || $prods!=''){
+        if($prod!=null || $prod!=''){
             $x = 0;
             foreach ($prods as $prods) {
                 $pp = PackageProduct::create(array(
@@ -63,7 +63,7 @@ class PackageController extends Controller
                 $x++;
             }
         }
-        if($servs!=null || $servs!=''){
+        if($serv!=null || $serv!=''){
             $x = 0;
             foreach ($servs as $servs) {
                 $ps = PackageService::create(array(
@@ -80,6 +80,10 @@ class PackageController extends Controller
     }
 
     public function update(Request $request){
+        $this->validate($request, [
+            'editPackageName' => 'required',
+            'editPackageCost' => 'numeric|required',
+        ]);
         $checkPackage = Package::all();
         $isAdded = false;
         foreach ($checkPackage as $package) {

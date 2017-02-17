@@ -64,6 +64,11 @@ class ProductController extends Controller
     }
 
     public function update(Request $request){
+        $this->validate($request, [
+            'editProductBrandId' => 'required',
+            'editProductTypeId' => 'required',
+            'editProductName' => 'required',
+        ]);
         $checkproducts = Product::all();
         $isAdded = false;
         foreach ($checkproducts as $product) {

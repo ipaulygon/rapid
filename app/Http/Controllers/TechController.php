@@ -52,6 +52,16 @@ class TechController extends Controller
     }
 
     public function update(Request $request){
+        $this->validate($request, [
+            'editTechPic' => 'image|mimes:jpeg,png,jpg,svg|max:2048',
+            'editTechFirst' => 'required',
+            'editTechLast' => 'required',
+            'editStreet' => 'required',
+            'editBrgy' => 'required',
+            'editCity' => 'required',
+            'editTechContact' => 'required|regex:/^\d{11}/',
+            'editTechEmail' => 'email',
+        ]);
         $checktechs = Technician::all();
         $isAdded = false;
         $file = $request->file('editTechPic');

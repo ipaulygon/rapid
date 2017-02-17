@@ -28,6 +28,7 @@ class ProductRequest extends FormRequest
             'productBrandId' => 'required',
             'productTypeId' => 'required',
             'productName' => 'required|unique_with:product,productBrandId','productTypeId',
+            //'cost' => 'numeric|required',
         ];
     }
 
@@ -37,7 +38,9 @@ class ProductRequest extends FormRequest
             'productName.unique_with'  =>  'Product already exists',
             'productBrand.required' => 'Product brand required',
             'productName.required' => 'Product name required',
-            'productType.required' => 'Product type required'
+            'productType.required' => 'Product type required',
+            // 'cost.numeric' => 'Cost must be a valid monetary value',
+            // 'cost.required' => 'Cost is required',
         ];
     }
 

@@ -34,6 +34,9 @@ class SupplierController extends Controller
     }
 
     public function update(Request $request){
+        $this->validate($request, [
+            'editSupplierName' => 'required',
+        ]);
     	$checksuppliers = Supplier::all();
         $isAdded = false;
         foreach ($checksuppliers as $supplier) {

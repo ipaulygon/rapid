@@ -34,6 +34,9 @@ class UnitController extends Controller
     }
 
     public function update(Request $request){
+        $this->validate($request, [
+            'editUnitName' => 'required',
+        ]);
     	$checkunits = Unit::all();
         $isAdded = false;
         foreach ($checkunits as $unit) {

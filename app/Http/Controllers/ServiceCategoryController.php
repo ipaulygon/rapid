@@ -34,6 +34,9 @@ class ServiceCategoryController extends Controller
     }
 
     public function update(Request $request){
+        $this->validate($request, [
+            'editCategoryName' => 'required',
+        ]);
         $checkCategory = ServiceCategory::all();
         $isAdded = false;
         foreach ($checkCategory as $category) {

@@ -37,12 +37,16 @@ class PromoController extends Controller
     }
 
     public function create(PromoRequest $request){
+        $end = trim($request->input('promoEnd'));
+        if($end=='' || $end==null){
+            $end = null;
+        }
         $promo = Promo::create(array(
                 'promoId' => $request->input('promoId'),
                 'promoName' => trim($request->input('promoName')),
                 'promoDesc' => trim($request->input('promoDesc')),
                 'promoStart' => trim($request->input('promoStart')),
-                'promoEnd' => trim($request->input('promoEnd')),
+                'promoEnd' => $end,
                 'promoCost' => trim($request->input('promoCost')),
                 'promoIsActive' => 1
             ));
@@ -52,7 +56,7 @@ class PromoController extends Controller
         $serv = $request->input('promoServiceId');
         $servs = explode(",", $serv);
         $qty = $request->input('qty');
-        if($prods!=null || $prods!=''){
+        if($prod!=null || $prod!=''){
             $x = 0;
             foreach ($prods as $prods) {
                 $pp = PromoProduct::create(array(
@@ -65,8 +69,7 @@ class PromoController extends Controller
                 $x++;
             }
         }
-        if($servs!=null || $servs!=''){
-            $x = 0;
+        if($serv!=null || $serv!=''){
             foreach ($servs as $servs) {
                 $ps = PromoService::create(array(
                     'promoSId' => $request->input('promoId'),
@@ -74,7 +77,6 @@ class PromoController extends Controller
                     'promoSIsActive' => 1
                     ));
                 $ps->save();
-                $x++;
             }
         }
         \Session::flash('flash_message','Promo successfully added.');
@@ -82,6 +84,11 @@ class PromoController extends Controller
     }
 
     public function update(Request $request){
+        $this->validate($request, [
+            'editPromoName' => 'required',
+            'editPromoCost' => 'numeric|required',
+            'editPromoStart' => 'required',
+        ]);
         $checkPromo = Promo::all();
         $isAdded = false;
         foreach ($checkPromo as $promo) {
@@ -91,11 +98,16 @@ class PromoController extends Controller
             }
         }
         if(!$isAdded){
+            $end = trim($request->input('editPromoEnd'));
+            if($end=='' || $end==null){
+                $end = null;
+            }
             $promo = Promo::find($request->input('editPromoId'));
             $promo->promoName = trim($request->input('editPromoName'));
             $promo->promoDesc = trim($request->input('editPromoDesc'));
             $promo->promoStart = trim($request->input('editPromoStart'));
-            $promo->promoEnd = trim($request->input('editPromoEnd'));
+            $promo->promoCost = trim($request->input('editPromoCost'));
+            $promo->promoEnd = $end;
             $promo->save();
             $prod = $request->input('editPromoProductId');
             $prods = explode(",", $prod);

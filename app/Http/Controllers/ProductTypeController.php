@@ -34,6 +34,9 @@ class ProductTypeController extends Controller
     }
 
     public function update(Request $request){
+        $this->validate($request, [
+            'editTypeName' => 'required',
+        ]);
     	$checkTypes = ProductType::all();
         $isAdded = false;
         foreach ($checkTypes as $type) {

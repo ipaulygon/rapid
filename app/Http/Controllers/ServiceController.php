@@ -44,6 +44,11 @@ class ServiceController extends Controller
     }
 
     public function update(Request $request){
+        $this->validate($request, [
+            'editServiceName' => 'required',
+            'editServiceCategoryId' => 'required',
+            'editServicePrice' => 'numeric|required',
+        ]);
     	$checkService = Service::all();
         $isAdded = false;
         foreach ($checkService as $serv) {

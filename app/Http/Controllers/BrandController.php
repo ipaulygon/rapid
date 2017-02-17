@@ -34,6 +34,9 @@ class BrandController extends Controller
     }
 
     public function update(Request $request){
+        $this->validate($request, [
+            'editBrandName' => 'required',
+        ]);
     	$checkbrands = Brand::all();
         $isAdded = false;
         foreach ($checkbrands as $brand) {

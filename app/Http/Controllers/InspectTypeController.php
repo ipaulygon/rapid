@@ -34,6 +34,9 @@ class InspectTypeController extends Controller
     }
 
     public function update(Request $request){
+        $this->validate($request, [
+            'editInspectTypeName' => 'required',
+        ]);
         $checkInspectType = InspectType::all();
         $isAdded = false;
         foreach ($checkInspectType as $inspectType) {
