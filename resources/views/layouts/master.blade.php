@@ -41,12 +41,12 @@
                     <a class="title"><i class="dropdown icon"></i>Inventory</a>
                     <div class="content">
                         <div class="ui form">
-                            <a href="/maintenance/supplier" class="item">Supplier</a>
-                            <a href="/maintenance/product-brand" class="item">Product Brand</a>
-                            <a href="/maintenance/product-type" class="item">Product Type</a>
-                            <a href="/maintenance/product-unit" class="item">Product Unit</a>
-                            <a href="/maintenance/product-variance" class="item">Product Variances</a>
-                            <a href="/maintenance/product" class="item">Product</a>
+                            <a href="{{URL::to('/maintenance/supplier')}}" class="item">Supplier</a>
+                            <a href="{{URL::to('/maintenance/product-brand')}}" class="item">Product Brand</a>
+                            <a href="{{URL::to('/maintenance/product-type')}}" class="item">Product Type</a>
+                            <a href="{{URL::to('/maintenance/product-unit')}}" class="item">Product Unit</a>
+                            <a href="{{URL::to('/maintenance/product-variance')}}" class="item">Product Variances</a>
+                            <a href="{{URL::to('/maintenance/product')}}" class="item">Product</a>
                         </div>
                     </div>
                 </div>
@@ -54,18 +54,18 @@
                     <a class="title"><i class="dropdown icon"></i>Car Care</a>
                     <div class="content">
                         <div class="ui form">
-                            <a href="/maintenance/service-category" class="item">Service Category</a>
-                            <a href="/maintenance/service" class="item">Service</a>
-                            <a href="/maintenance/inspect-type" class="item">Inspection Type</a>
-                            <a href="/maintenance/inspect-item" class="item">Inspection Item</a>
+                            <a href="{{URL::to('/maintenance/service-category')}}" class="item">Service Category</a>
+                            <a href="{{URL::to('/maintenance/service')}}" class="item">Service</a>
+                            <a href="{{URL::to('/maintenance/inspect-type')}}" class="item">Inspection Type</a>
+                            <a href="{{URL::to('/maintenance/inspect-item')}}" class="item">Inspection Item</a>
                         </div>
                     </div>
                 </div>
                 <div class="ui form">
-                    <a href="/maintenance/promo" class="item">Promo</a>
-                    <a href="/maintenance/discount" class="item">Discount</a>
-                    <a href="/maintenance/package" class="item">Package</a>
-                    <a href="/maintenance/technician" class="item">Technician</a>
+                    <a href="{{URL::to('/maintenance/promo')}}" class="item">Promo</a>
+                    <a href="{{URL::to('/maintenance/discount')}}" class="item">Discount</a>
+                    <a href="{{URL::to('/maintenance/package')}}" class="item">Package</a>
+                    <a href="{{URL::to('/maintenance/technician')}}" class="item">Technician</a>
                 </div>
             </div>
         </div>
@@ -86,7 +86,7 @@
                     <a class="title"><i class="dropdown icon"></i>Car Care</a>
                     <div class="content">
                         <div class="ui form">
-                            <a href="/transaction/inspect" class="item">Inspect Vehicle</a>
+                            <a href="{{URL::to('/transaction/inspect')}}" class="item">Inspect Vehicle</a>
                             <a href="" class="item">Customize Vehicle</a>
                             <a href="" class="item">Repair Vehicle</a>
                         </div>
@@ -128,12 +128,12 @@
                     <a class="title"><i class="dropdown icon"></i>Inventory</a>
                     <div class="content">
                         <div class="ui form">
-                            <a href="/maintenance/supplier" class="item">Supplier</a>
-                            <a href="/maintenance/product-brand" class="item">Product Brand</a>
-                            <a href="/maintenance/product-type" class="item">Product Type</a>
-                            <a href="/maintenance/product-unit" class="item">Product Unit</a>
-                            <a href="/maintenance/product-variance" class="item">Product Variances</a>
-                            <a href="/maintenance/product" class="item">Product</a>
+                            <a href="{{URL::to('/maintenance/supplier')}}" class="item">Supplier</a>
+                            <a href="{{URL::to('/maintenance/product-brand')}}" class="item">Product Brand</a>
+                            <a href="{{URL::to('/maintenance/product-type')}}" class="item">Product Type</a>
+                            <a href="{{URL::to('/maintenance/product-unit')}}" class="item">Product Unit</a>
+                            <a href="{{URL::to('/maintenance/product-variance')}}" class="item">Product Variances</a>
+                            <a href="{{URL::to('/maintenance/product')}}" class="item">Product</a>
                         </div>
                     </div>
                 </div>
@@ -141,18 +141,18 @@
                     <a class="title"><i class="dropdown icon"></i>Car Care</a>
                     <div class="content">
                         <div class="ui form">
-                            <a href="/maintenance/service-category" class="item">Service Category</a>
-                            <a href="/maintenance/service" class="item">Service</a>
-                            <a href="/maintenance/inspect-type" class="item">Inspection Type</a>
-                            <a href="/maintenance/inspect-item" class="item">Inspection Item</a>
+                            <a href="{{URL::to('/maintenance/service-category')}}" class="item">Service Category</a>
+                            <a href="{{URL::to('/maintenance/service')}}" class="item">Service</a>
+                            <a href="{{URL::to('/maintenance/inspect-type')}}" class="item">Inspection Type</a>
+                            <a href="{{URL::to('/maintenance/inspect-item')}}" class="item">Inspection Item</a>
                         </div>
                     </div>
                 </div>
                 <div class="ui form">
-                    <a href="/maintenance/promo" class="item">Promo</a>
-                    <a href="/maintenance/discount" class="item">Discount</a>
-                    <a href="/maintenance/package" class="item">Package</a>
-                    <a href="/maintenance/technician" class="item">Technician</a>
+                    <a href="{{URL::to('/maintenance/promo')}}" class="item">Promo</a>
+                    <a href="{{URL::to('/maintenance/discount')}}" class="item">Discount</a>
+                    <a href="{{URL::to('/maintenance/package')}}" class="item">Package</a>
+                    <a href="{{URL::to('/maintenance/technician')}}" class="item">Technician</a>
                 </div>
             </div>
         </div>
@@ -173,7 +173,7 @@
                     <a class="title"><i class="dropdown icon"></i>Car Care</a>
                     <div class="content">
                         <div class="ui form">
-                            <a href="/transaction/inspect" class="item">Inspect Vehicle</a>
+                            <a href="{{URL::to('/transaction/inspect')}}" class="item">Inspect Vehicle</a>
                             <a href="" class="item">Customize Vehicle</a>
                             <a href="" class="item">Repair Vehicle</a>
                         </div>
@@ -192,20 +192,15 @@
         <div class="item">
             <div class="header">Reports</div>
         </div>
-        <div classs="item">
-            <div class="content">
-                <div class="ui form">
-                    <a class="item" href="{{ url('/logout') }}"
-                        onclick="event.preventDefault();
-                                 document.getElementById('logout-form').submit();">
-                        Logout
-                    </a>
-
-                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                        {{ csrf_field() }}
-                    </form>
-                </div>
-            </div>
+        <div class="ui form">
+            <a class="item" href="{{ url('/logout') }}"
+                onclick="event.preventDefault();
+                         document.getElementById('logout-form').submit();">
+                Logout
+            </a>
+            <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                {{ csrf_field() }}
+            </form>
         </div>
     </div>
     <div id="main-content" class="pusher">
