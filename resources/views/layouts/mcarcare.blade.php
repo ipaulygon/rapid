@@ -93,7 +93,7 @@
                     </div>
                 </div>
                 <div class="item">
-                    <a class="title">Sales</a>
+                    <a class="title">Payments and Collections</a>
                 </div>
             </div>
         </div>
@@ -180,7 +180,7 @@
                     </div>
                 </div>
                 <div class="item">
-                    <a class="title">Sales</a>
+                    <a class="title">Payments and Collections</a>
                 </div>
             </div>
         </div>

@@ -73,10 +73,6 @@ class TechController extends Controller
         else{
             $date = date("Ymdhis");
             $extension = $request->file('editTechPic')->getClientOriginalExtension();
-            if($extension!="jpeg" || $extension!="jpg" || $extension!="png" || $extension!="svg"){
-                \Session::flash('error_message','Invalid image format. Update failed');
-                return redirect('maintenance/technician');
-            }
             $techPic = "pics/".$date.$id.'.'.$extension;
             $request->file('editTechPic')->move("pics",$techPic); 
         }
