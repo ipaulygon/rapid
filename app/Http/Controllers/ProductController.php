@@ -8,6 +8,8 @@ use App\Brand;
 use App\Variance;
 use App\ProductVariance;
 use App\TypeVariance;
+use App\Package;
+use App\Promo;
 
 use Illuminate\Http\Request;
 
@@ -20,17 +22,23 @@ class ProductController extends Controller
     }
 
     public function index(){
-    	$prod_max = \DB::table('product')->count('productId');
-        $prod_max = $prod_max + 1;
-        $newId = 'PROD'.str_pad($prod_max, 4, '0', STR_PAD_LEFT);
-        $first = Product::first();
     	$type = ProductType::get();
         $brand = Brand::get();
         $variance = Variance::with('unit')->orderBy('varianceSize')->get();
         $product = Product::with('types.variance.variance.unit')->with('brand')->with('variance.variance.unit')->get();
+        return view('Maintenance.Inventory.product',compact('product','type','brand','variance'));
+    }
+
+    public function createForm(){
+        $prod_max = \DB::table('product')->count('productId');
+        $prod_max = $prod_max + 1;
+        $newId = 'PROD'.str_pad($prod_max, 4, '0', STR_PAD_LEFT);
+        $type = ProductType::get();
+        $brand = Brand::get();
+        $variance = Variance::with('unit')->orderBy('varianceSize')->get();
+        $product = Product::with('types.variance.variance.unit')->with('brand')->with('variance.variance.unit')->get();
         $tv = TypeVariance::with('variance.unit')->get();
-        //$pv = ProductVariance::with('product')->with('variance')->orderBy('pvVarianceId')->get();
-        return view('Maintenance.Inventory.product',compact('first','product','type','brand','variance','tv','newId'));
+        return view('Maintenance.Inventory.product_form',compact('product','type','brand','variance','tv','newId'));
     }
 
     public function create(ProductRequest $request){
@@ -80,28 +88,59 @@ class ProductController extends Controller
             }
         }
         if(!$isAdded){
-            $product = Product::find($request->input('editProductId'));
+            $id = $request->input('editProductId');
+            $product = Product::find($id);
             $product->productBrandId = trim($request->input('editProductBrandId'));
             $product->productTypeId = trim($request->input('editProductTypeId'));
             $product->productName = trim($request->input('editProductName'));
             $product->productDesc = trim($request->input('editProductDesc'));
             $product->save();
-            $affectedRows = ProductVariance::where('pvProductId', '=', $request->input('editProductId'))->update(['pvIsActive' => 0]);
             $variance = $request->input('editVariance');
             $prodId = $request->input('editProductId');
             $variances = explode(',', $variance);
             $prices = $request->input('costs');
-            $x = 0;
-            if($variance!=null || $variance!=''){
+            //$affectedRows = ProductVariance::where('pvProductId', '=', $request->input('editProductId'))->update(['pvIsActive' => 0]);
+            $product_variance = ProductVariance::with('product')->where('pvProductId','=',$id)->where('pvIsActive','=',1)->count();
+            if($product_variance==0){
+                $x = 0;
+                if($variance!=null || $variance!=''){
+                    foreach($variances as $var) {
+                        $pv = ProductVariance::create(array(
+                            'pvProductId' => $request->input('editProductId'),
+                            'pvVarianceId' => $var,
+                            'pvCost' => $prices[$x],
+                            'pvIsActive' => 1
+                            ));
+                        $pv->save();
+                        $x++;
+                    }
+                }
+            }else{
+                $product_variance = ProductVariance::with('product')->where('pvProductId','=',$id)->where('pvIsActive','=',1)->get();
+                foreach($product_variance as $pv){
+                    $cost = $request->input($pv->pvVarianceId);
+                    if($cost!='' || $cost !=null){
+                        $prodVar = ProductVariance::where('pvProductId','=',$id)->where('pvVarianceId','=',$pv->pvVarianceId)->where('pvIsActive','=',1)->first();
+                        $prodVar->pvCost = $cost;
+                        $prodVar->save();
+                    }
+                    else{
+                        $prodVar = ProductVariance::where('pvProductId','=',$id)->where('pvVarianceId','=',$pv->pvVarianceId)->where('pvIsActive','=',1)->first();
+                        $prodVar->pvIsActive = 0;
+                        $prodVar->save();
+                        $prodPack = Package::with('product')->where('packageProductId','=',$pv->pvId)->where('packagePIsActive','=',1)->update('packagePIsActive','=',0);
+                        $prodPromo = Promo::with('product')->where('promoProductId','=',$pv->pvId)->where('promoPIsActive','=',1)->update('promoPIsActive','=',0);
+                    }
+                    $variances = array_diff($variances,array($pv->pvVarianceId));
+                }
                 foreach($variances as $var) {
                     $pv = ProductVariance::create(array(
                         'pvProductId' => $request->input('editProductId'),
                         'pvVarianceId' => $var,
-                        'pvCost' => $prices[$x],
+                        'pvCost' => $request->input($var),
                         'pvIsActive' => 1
                         ));
                     $pv->save();
-                    $x++;
                 }
             }
             \Session::flash('flash_message','Product successfully updated.');
@@ -126,9 +165,14 @@ class ProductController extends Controller
         return \Response::json(array('data'=>$data));
     }
 
-    public function view(Request $request){
-        $id = $request->input('id');
+    public function view($id){
         $product = Product::with('types.variance.variance.unit')->with('brand')->with('variance.variance.unit')->where('productId','=',$id)->get();
-        return \Response::json(array('$product'=>$product));
+        $type = ProductType::get();
+        $brand = Brand::get();
+        $variance = Variance::with('unit')->orderBy('varianceSize')->get();
+        $tv = TypeVariance::with('variance.unit')->get();
+        $pv = ProductVariance::with('variance.unit')->where('pvProductId','=',$id)->get();
+        return view('Maintenance.Inventory.product_update',compact('product','type','brand','variance','pv','tv'));
+        //return \Response::json(array('$product'=>$product));
     }
 }

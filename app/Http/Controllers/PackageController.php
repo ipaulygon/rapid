@@ -25,15 +25,23 @@ class PackageController extends Controller
     }
 
     public function index(){
-    	$package_max = \DB::table('package')->count('packageId');
-        $package_max = $package_max + 1;
-        $newId = 'PACKAGE'.str_pad($package_max, 4, '0', STR_PAD_LEFT); 
-        $dateNow = date("Y-m-d");
     	$package = Package::with('product.product.product.types')->with('product.product.product.brand')->with('product.product.variance.unit')->with('service.service.categories')->get();
         $product = ProductVariance::with('product.types')->with('product.brand')->with('variance.unit')->get();
     	$service = Service::with('categories')->get();
         //$pp = PackageProduct::with('product.product.brand')->with('product.product.types')->with('product.variance.unit')->get();
         return view('Maintenance.Sales.package',compact('package','product','service','dateNow','newId'));
+    }
+
+    public function createForm(){
+        $package_max = \DB::table('package')->count('packageId');
+        $package_max = $package_max + 1;
+        $newId = 'PACKAGE'.str_pad($package_max, 4, '0', STR_PAD_LEFT); 
+        $dateNow = date("Y-m-d");
+        $package = Package::with('product.product.product.types')->with('product.product.product.brand')->with('product.product.variance.unit')->with('service.service.categories')->get();
+        $product = ProductVariance::with('product.types')->with('product.brand')->with('variance.unit')->get();
+        $service = Service::with('categories')->get();
+        //$pp = PackageProduct::with('product.product.brand')->with('product.product.types')->with('product.variance.unit')->get();
+        return view('Maintenance.Sales.package_form',compact('package','product','service','dateNow','newId'));
     }
 
     public function create(PackageRequest $request){
@@ -146,9 +154,14 @@ class PackageController extends Controller
         return redirect('maintenance/package');
     }
 
-    public function view(Request $request){
-        $id = $request->input('id');
+    public function view($id){
         $package = Package::with('product.product.product.types')->with('product.product.product.brand')->with('product.product.variance.unit')->with('service.service.categories')->where('packageId','=',$id)->get();
-        return \Response::json(array('$package'=>$package));
+        $product = ProductVariance::with('product.types')->with('product.brand')->with('variance.unit')->get();
+        $service = Service::with('categories')->get();
+        $pp = PackageProduct::with('product.product.brand')->with('product.product.types')->with('product.variance.unit')->where('packagePId','=',$id)->get();
+        $pd = PackageProduct::with('product.product.brand')->with('product.product.types')->with('product.variance.unit')->where('packagePId','=',$id)->get();
+        $ps = PackageService::with('service.categories')->where('packageSId','=',$id)->get();
+        return view('Maintenance.Sales.package_update',compact('package','product','service','pp','ps','pd'));
+        //return \Response::json(array('$package'=>$package));
     }
 }

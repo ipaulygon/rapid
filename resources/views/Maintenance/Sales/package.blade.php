@@ -62,7 +62,7 @@
 
 	<h2>Maintenance - Package</h2>
 	<hr><br>
-	<button class="ui positive button" name="modalAdd" onclick="modal(this.name)"><i class="plus icon"></i>New Package</button>
+	<a href="{{URL::to('maintenance/package/form-create')}}" class="ui positive button" name="modalAdd"><i class="plus icon"></i>New Package</a>
 	<br><br>
 	<table id="listType" class="ui celled table">
 		<thead>
@@ -101,7 +101,7 @@
 							@endforeach
 						</td>
 						<td>
-							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="modalUpdate" id="{{$package->packageId}}" onclick="update(this.id),modal(this.name)"><i class="write icon"></i></button>
+							<a href="package/view/{{$package->packageId}}" class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="modalUpdate" id="{{$package->packageId}}"><i class="write icon"></i></a>
 							<button class="ui red basic circular icon button" data-tooltip="Deactivate Record" data-inverted="" name="del{{ $package->packageId }}" onclick="modal(this.name)"><i class="trash icon"></i></button>
 						</td>
 						<!--Modal for Deactivate-->
@@ -131,164 +131,6 @@
 			@endforeach
 		</tbody>
 	</table>
-	
-	<!-- Update Modal -->
-	<div class="ui modal" id="modalUpdate">
-		<div class="header">Update Package</div>
-		<div class="content">
-			<div class="description">
-				<div class="ui form">
-					{!! Form::open(['action' => 'PackageController@update']) !!}
-						<input type="hidden" name="editPackageId" id="editPackageId" readonly>
-	    				<div class="inline fields">
-	    					<div class="two wide field">
-	    						<label>Package<span>*</span></label>
-	    					</div>
-	    					<div class="six wide field">
-	    						<input type="text" name="editPackageName" id="editPackageName" placeholder="Package">
-	    					</div>
-	    					<div class="two wide field">
-	    						<label>Price<span>*</span></label>
-	    					</div>
-	    					<div class="six wide field">
-		    					<div class="ui labeled input">
-		    						<div class="ui label">P</div>
-		    						<input type="text" name="editPackageCost" id="editPackageCost" placeholder="100">
-		    					</div>
-	    					</div>
-	    				</div>
-	    				<div class="inline fields">
-	    					<div class="two wide field">
-	    						<label>Description</label>
-	    					</div>
-	    					<div class="fourteen wide field">
-	    						<textarea type="text" name="editPackageDesc" id="editPackageDesc" placeholder="Description"></textarea>
-	    					</div>
-	    				</div>
-	    				<div class="two fields">
-	    					<div class="field">
-	    						<label>Products:</label>
-	    						<div style="width:100%" class="ui multiple update search selection dropdown product">
-	    							<input type="hidden" name="editPackageProductId"><i class="dropdown icon"></i>
-	    							<input class="search" autocomplete="off" tabindex="0">
-	    							<div class="default text">Select Products</div>
-	    							<div class="menu edit" tabindex="-1">
-	    								@foreach($product as $products)
-	    									@if($products->pvIsActive==1)
-	    										<div class="item" data-value="{{ $products->pvId }}">{{$products->product->brand->brandName}} - {{$products->product->productName}}| {{$products->variance->varianceSize}} - {{$products->variance->unit->unitName}}| {{$products->product->types->typeName}}</div>
-	    									@endif
-	    								@endforeach
-	    							</div>
-	    						</div>
-	    						<div class="qty">
-	    							<label>Quantity:</label><br>
-	    						</div>
-	    					</div>
-	    					<div class="field">
-	    						<label>Services:</label>
-	    						<div id="serv" style="width:100%" class="ui multiple update search selection dropdown service">
-	    							<input type="hidden" name="editPackageServiceId"><i class="dropdown icon"></i>
-	    							<input class="search" autocomplete="off" tabindex="0">
-	    							<div class="default text">Select Services</div>
-	    							<div class="menu" tabindex="-1">
-	    								@foreach($service as $services)
-	    									@if($services->serviceIsActive==1)
-	    										<div class="item" data-value="{{ $services->serviceId }}">{{$services->serviceName}} - {{$services->categories->categoryName}}</div>
-	    									@endif
-	    								@endforeach
-	    							</div>
-	    						</div>
-	    					</div>
-	    				</div>
-	    				<div class="actions">
-	    					<i>Note: All with <span>*</span> are required fields</i>
-	    					<button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
-	    					<button type="submit" class="ui positive button"><i class="plus icon"></i>Update</button>
-	    				</div>
-					{!! Form::close() !!}
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!--Add Modal-->
-	<div class="ui modal" id="modalAdd">
-		<div class="header">New Package</div>
-		<div class="content">
-			<div class="description">
-				<div class="ui form">
-					{!! Form::open(['action' => 'PackageController@create']) !!}
-						<input type="hidden" name="packageId" value="{{ $newId }}" readonly>
-	    				<div class="inline fields">
-	    					<div class="two wide field">
-	    						<label>Package<span>*</span></label>
-	    					</div>
-	    					<div class="six wide field">
-	    						<input type="text" name="packageName" placeholder="Package">
-	    					</div>
-	    					<div class="two wide field">
-	    						<label>Price<span>*</span></label>
-	    					</div>
-	    					<div class="six wide field">
-		    					<div class="ui labeled input">
-		    						<div class="ui label">P</div>
-		    						<input type="text" name="packageCost" placeholder="100">
-		    					</div>
-	    					</div>
-	    				</div>
-	    				<div class="inline fields">
-	    					<div class="two wide field">
-	    						<label>Description</label>
-	    					</div>
-	    					<div class="fourteen wide field">
-	    						<textarea type="text" name="packageDesc" placeholder="Description"></textarea>
-	    					</div>
-	    				</div>
-	    				<div class="two fields">
-	    					<div class="field">
-	    						<label>Products:</label>
-	    						<div id="add" style="width:100%" class="ui multiple search selection dropdown">
-	    							<input type="hidden" name="packageProductId"><i class="dropdown icon"></i>
-	    							<input class="search" autocomplete="off" tabindex="0">
-	    							<div class="default text">Select Products</div>
-	    							<div class="menu" tabindex="-1">
-	    								@foreach($product as $product)
-	    									@if($product->pvIsActive==1)
-	    										<div class="item" title="{{$newId}}" data-value="{{ $product->pvId }}">{{$product->product->brand->brandName}} - {{$product->product->productName}}| {{$product->variance->varianceSize}} - {{$product->variance->unit->unitName}}| {{$product->product->types->typeName}}</div>
-	    									@endif
-	    								@endforeach
-	    							</div>
-	    						</div>
-	    						<div id="qty{{$newId}}">
-	    							<label>Quantity:</label><br>
-	    						</div>
-	    					</div>
-	    					<div class="field">
-	    						<label>Services:</label>
-	    						<div id="serv" style="width:100%" class="ui multiple search selection dropdown">
-	    							<input type="hidden" name="packageServiceId"><i class="dropdown icon"></i>
-	    							<input class="search" autocomplete="off" tabindex="0">
-	    							<div class="default text">Select Services</div>
-	    							<div class="menu" tabindex="-1">
-	    								@foreach($service as $service)
-	    									@if($service->serviceIsActive==1)
-	    										<div class="item" data-value="{{ $service->serviceId }}">{{$service->serviceName}} - {{$service->categories->categoryName}}</div>
-	    									@endif
-	    								@endforeach
-	    							</div>
-	    						</div>
-	    					</div>
-	    				</div><br>
-	    				<div class="actions">
-	    					<i>Note: All with <span>*</span> are required fields</i>
-	    					<button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
-	    					<button type="submit" class="ui positive button"><i class="plus icon"></i>Save</button>
-	    				</div>
-					{!! Form::close() !!}
-				</div>
-			</div>
-		</div>
-	</div>
 @stop
 
 

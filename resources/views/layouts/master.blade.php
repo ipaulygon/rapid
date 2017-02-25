@@ -62,9 +62,9 @@
                     </div>
                 </div>
                 <div class="ui form">
+                    <a href="{{URL::to('/maintenance/package')}}" class="item">Package</a>
                     <a href="{{URL::to('/maintenance/promo')}}" class="item">Promo</a>
                     <a href="{{URL::to('/maintenance/discount')}}" class="item">Discount</a>
-                    <a href="{{URL::to('/maintenance/package')}}" class="item">Package</a>
                     <a href="{{URL::to('/maintenance/technician')}}" class="item">Technician</a>
                 </div>
             </div>
@@ -149,9 +149,9 @@
                     </div>
                 </div>
                 <div class="ui form">
+                    <a href="{{URL::to('/maintenance/package')}}" class="item">Package</a>
                     <a href="{{URL::to('/maintenance/promo')}}" class="item">Promo</a>
                     <a href="{{URL::to('/maintenance/discount')}}" class="item">Discount</a>
-                    <a href="{{URL::to('/maintenance/package')}}" class="item">Package</a>
                     <a href="{{URL::to('/maintenance/technician')}}" class="item">Technician</a>
                 </div>
             </div>

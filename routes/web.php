@@ -51,25 +51,28 @@ Route::post('maintenance/product-variance/destroy', 'VarianceController@destroy'
 
 //Product
 Route::get('maintenance/product','ProductController@index');
+Route::get('maintenance/product/form-create','ProductController@createForm');
 Route::post('maintenance/product/create','ProductController@create');
 Route::post('maintenance/product/update','ProductController@update');
 Route::post('maintenance/product/destroy','ProductController@destroy');
 Route::post('maintenance/product/type','ProductController@type');
-Route::post('maintenance/product/view','ProductController@view');
+Route::get('maintenance/product/view/{id}','ProductController@view');
 
 //Promo
 Route::get('maintenance/promo','PromoController@index');
+Route::get('maintenance/promo/form-create','PromoController@createForm');
 Route::post('maintenance/promo/create','PromoController@create');
 Route::post('maintenance/promo/update','PromoController@update');
 Route::post('maintenance/promo/destroy','PromoController@destroy');
-Route::post('maintenance/promo/view','PromoController@view');
+Route::get('maintenance/promo/view/{id}','PromoController@view');
 
 //Package
 Route::get('maintenance/package','PackageController@index');
+Route::get('maintenance/package/form-create','PackageController@createForm');
 Route::post('maintenance/package/create','PackageController@create');
 Route::post('maintenance/package/update','PackageController@update');
 Route::post('maintenance/package/destroy','PackageController@destroy');
-Route::post('maintenance/package/view','PackageController@view');
+Route::get('maintenance/package/view/{id}','PackageController@view');
 
 //Discount
 Route::get('maintenance/discount','DiscountController@index');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Http\Requests\UnitRequest;
 use App\Unit;
+use App\Variance;
 
 use Illuminate\Http\Request;
 
@@ -59,10 +60,17 @@ class UnitController extends Controller
 
     public function destroy(Request $request){
         $id = $request->input('delUnitId');
-        $unit = Unit::find($request->input('delUnitId'));
-        $unit->unitIsActive = 0;
-        $unit->save();
-        \Session::flash('flash_message','Unit successfully deactivated.');
-        return redirect('maintenance/product-unit');
+        $variance_unit = Variance::with('unit')->where('varianceUnitId','=',$id)->where('varianceIsActive','=',1)->count();
+        if($variance_unit>0){
+            \Session::flash('error_message','Unit is still being used in variances. Deactivation failed');
+            return redirect('maintenance/product-unit');
+        }
+        else{
+            $unit = Unit::find($request->input('delUnitId'));
+            $unit->unitIsActive = 0;
+            $unit->save();
+            \Session::flash('flash_message','Unit successfully deactivated.');
+            return redirect('maintenance/product-unit');
+        }
     }
 }

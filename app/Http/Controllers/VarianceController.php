@@ -6,6 +6,7 @@ use App\Variance;
 use App\Unit;
 use App\ProductType;
 use App\TypeVariance;
+use App\ProductVariance;
 
 use Illuminate\Http\Request;
 
@@ -93,10 +94,19 @@ class VarianceController extends Controller
 
     public function destroy(Request $request){
         $id = $request->input('delVarianceId');
-        $variance = Variance::find($request->input('delVarianceId'));
-        $variance->varianceIsActive = 0;
-        $variance->save();
-        \Session::flash('flash_message','Variance successfully deactivated.');
-        return redirect('maintenance/product-variance');
+        $product_variance = ProductVariance::with('variance')->where('pvVarianceId','=',$id)->where('pvIsActive','=',1)->count();
+        if($product_variance>0){
+            \Session::flash('error_message','Variance is still being used in products. Deactivation failed');
+            return redirect('maintenance/product-variance');
+        }
+        else{
+            $variance = Variance::find($request->input('delVarianceId'));
+            $variance->varianceIsActive = 0;
+            $variance->save();
+            $affectedRows = TypeVariance::where('tvVarianceId', '=', $id)->update(['tvIsActive' => 0]);
+            \Session::flash('flash_message','Variance successfully deactivated.');
+            return redirect('maintenance/product-variance');
+        }
+        
     }
 }

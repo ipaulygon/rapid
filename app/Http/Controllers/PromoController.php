@@ -25,15 +25,21 @@ class PromoController extends Controller
     }
 
     public function index(){
-    	$promo_max = \DB::table('promo')->count('promoId');
-        $promo_max = $promo_max + 1;
-        $newId = 'PROMO'.str_pad($promo_max, 4, '0', STR_PAD_LEFT); 
-        $dateNow = date("Y-m-d");
     	$promo = Promo::with('product.product.product.types')->with('product.product.product.brand')->with('product.product.variance.unit')->with('service.service.categories')->get();
         $product = ProductVariance::with('product.types')->with('product.brand')->with('variance.unit')->get();
     	$service = Service::with('categories')->get();
-        //$pp = PromoProduct::with('product.product.brand')->with('product.product.types')->with('product.variance.unit')->get();
-        return view('Maintenance.Sales.promo',compact('promo','product','service','dateNow','newId'));
+        return view('Maintenance.Sales.promo',compact('newId','dateNow','promo','product','service'));
+    }
+
+    public function createForm(){
+        $promo_max = \DB::table('promo')->count('promoId');
+        $promo_max = $promo_max + 1;
+        $newId = 'PROMO'.str_pad($promo_max, 4, '0', STR_PAD_LEFT); 
+        $dateNow = date("Y-m-d");
+        $promo = Promo::with('product.product.product.types')->with('product.product.product.brand')->with('product.product.variance.unit')->with('service.service.categories')->get();
+        $product = ProductVariance::with('product.types')->with('product.brand')->with('variance.unit')->get();
+        $service = Service::with('categories')->get();
+        return view('Maintenance.Sales.promo_form',compact('promo','product','service','dateNow','newId'));
     }
 
     public function create(PromoRequest $request){
@@ -157,9 +163,14 @@ class PromoController extends Controller
         return redirect('maintenance/promo');
     }
 
-    public function view(Request $request){
-        $id = $request->input('id');
+    public function view($id){
         $promo = Promo::with('product.product.product.types')->with('product.product.product.brand')->with('product.product.variance.unit')->with('service.service.categories')->where('promoId','=',$id)->get();
-        return \Response::json(array('$promo'=>$promo));
+        $product = ProductVariance::with('product.types')->with('product.brand')->with('variance.unit')->get();
+        $service = Service::with('categories')->get();
+        $pp = PromoProduct::with('product.product.brand')->with('product.product.types')->with('product.variance.unit')->where('promoPId','=',$id)->get();
+        $pd = PromoProduct::with('product.product.brand')->with('product.product.types')->with('product.variance.unit')->where('promoPId','=',$id)->get();
+        $ps = PromoService::with('service.categories')->where('promoSId','=',$id)->get();
+        return view('Maintenance.Sales.promo_update',compact('promo','product','service','pp','ps','pd'));
+        //return \Response::json(array('$promo'=>$promo));
     }
 }

@@ -36,9 +36,9 @@ class ProductRequest extends FormRequest
     {
         return [
             'productName.unique_with'  =>  'Product already exists',
-            'productBrand.required' => 'Product brand required',
+            'productBrandId.required' => 'Product brand required',
             'productName.required' => 'Product name required',
-            'productType.required' => 'Product type required',
+            'productTypeId.required' => 'Product type required',
             // 'cost.numeric' => 'Cost must be a valid monetary value',
             // 'cost.required' => 'Cost is required',
         ];

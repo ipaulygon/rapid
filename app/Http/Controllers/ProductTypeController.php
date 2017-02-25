@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Http\Requests\ProductTypeRequest;
 use App\ProductType;
+use App\TypeVariance;
+use App\Product;
 
 use Illuminate\Http\Request;
 
@@ -59,10 +61,18 @@ class ProductTypeController extends Controller
 
     public function destroy(Request $request){
         $id = $request->input('delTypeId');
-        $type = ProductType::find($request->input('delTypeId'));
-        $type->typeIsActive = 0;
-        $type->save();
-        \Session::flash('flash_message','Product type successfully deactivated.');
-        return redirect('maintenance/product-type');
+        $product_type = Product::with('types')->where('productTypeId','=',$id)->where('productIsActive','=',1)->count();
+        if($product_type>0){
+            \Session::flash('error_message','Product type is still being used in products. Deactivation failed');
+            return redirect('maintenance/product-type');
+        }
+        else{
+            $type = ProductType::find($request->input('delTypeId'));
+            $type->typeIsActive = 0;
+            $type->save();
+            $affectedRows = TypeVariance::where('tvTypeId', '=', $id)->update(['tvIsActive' => 0]);
+            \Session::flash('flash_message','Product type successfully deactivated.');
+            return redirect('maintenance/product-type');
+        }
     }
 }

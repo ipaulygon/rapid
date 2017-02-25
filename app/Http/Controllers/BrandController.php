@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Http\Requests\BrandRequest;
 use App\Brand;
+use App\Product;
 
 use Illuminate\Http\Request;
 
@@ -59,10 +60,17 @@ class BrandController extends Controller
 
     public function destroy(Request $request){
         $id = $request->input('delBrandId');
-        $brand = Brand::find($request->input('delBrandId'));
-        $brand->brandIsActive = 0;
-        $brand->save();
-        \Session::flash('flash_message','Brand successfully deactivated.');
-        return redirect('maintenance/product-brand');
+        $product_brand = Product::with('brand')->where('productBrandId','=',$id)->where('productIsActive','=',1)->count();
+        if($product_brand>0){
+            \Session::flash('error_message','Brand is still being used in products. Deactivation failed');
+            return redirect('maintenance/product-brand');
+        }
+        else{
+            $brand = Brand::find($id);
+            $brand->brandIsActive = 0;
+            $brand->save();
+            \Session::flash('flash_message','Brand successfully deactivated.');
+            return redirect('maintenance/product-brand');
+        }
     }
 }
