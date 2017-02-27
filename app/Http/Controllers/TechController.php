@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Http\Requests\TechRequest;
 use App\Technician;
+use App\TechSkill;
+use App\Service;
 
 use Illuminate\Http\Request;
 
@@ -17,8 +19,9 @@ class TechController extends Controller
         $tech_max = \DB::table('technician')->count('techId');
         $tech_max = $tech_max + 1;
         $newId = 'TECH'.str_pad($tech_max, 4, '0', STR_PAD_LEFT); 
-        $technician = Technician::get();
-    	return view('Maintenance.technician',compact('technician','newId'));
+        $technician = Technician::with('skill.skill')->get();
+        $skills = Service::get();
+    	return view('Maintenance.technician',compact('technician','skills','newId'));
     }
 
     public function create(TechRequest $request){
@@ -47,6 +50,18 @@ class TechController extends Controller
             'techIsActive' => 1
             ));
         $tech->save();
+        $skill = $request->input('techSkillId');
+        $skills = explode(',', $skill);
+        if($skill!=null || $skill!=''){
+            foreach($skills as $skills) {
+                $ts = TechSkill::create(array(
+                    'tsTechId' => $id,
+                    'tvSkillId' => $skills,
+                    'tsIsActive' => 1
+                    ));
+                $ts->save();
+            }
+        }
         \Session::flash('flash_message','Technician successfully added.');
         return redirect('maintenance/technician');
     }
@@ -67,15 +82,6 @@ class TechController extends Controller
         $file = $request->file('editTechPic');
         $id = $request->input('editTechId');
         $techPic = "";
-        if($file == '' || $file == null){
-            $techPic = $request->input('currentPic');
-        }
-        else{
-            $date = date("Ymdhis");
-            $extension = $request->file('editTechPic')->getClientOriginalExtension();
-            $techPic = "pics/".$date.$id.'.'.$extension;
-            $request->file('editTechPic')->move("pics",$techPic); 
-        }
         foreach ($checktechs as $tech) {
             if(!strcasecmp($tech->techId, $request->input('editTechId')) == 0 
                 && strcmp($tech->techFirst, trim($request->input('editTechFirst'))) == 0
@@ -85,6 +91,15 @@ class TechController extends Controller
             }
         }
         if(!$isAdded){
+            if($file == '' || $file == null){
+                $techPic = $request->input('currentPic');
+            }
+            else{
+                $date = date("Ymdhis");
+                $extension = $request->file('editTechPic')->getClientOriginalExtension();
+                $techPic = "pics/".$date.$id.'.'.$extension;
+                $request->file('editTechPic')->move("pics",$techPic); 
+            }
             $tech = Technician::find($request->input('editTechId'));
             $tech->techFirst = trim($request->input('editTechFirst'));
             $tech->techMiddle = trim($request->input('editTechMiddle'));
@@ -96,6 +111,19 @@ class TechController extends Controller
             $tech->techEmail = trim($request->input('editTechEmail'));
             $tech->techPic = $techPic;
             $tech->save();
+            $affectedRows = TechSkill::where('tsTechId', '=', $id)->update(['tsIsActive' => 0]);
+            $skill = $request->input('editTechSkillId');
+            $skills = explode(',', $skill);
+            if($skill!=null || $skill!=''){
+                foreach($skills as $skills) {
+                    $ts = TechSkill::create(array(
+                        'tsTechId' => $id,
+                        'tsSkillId' => $skills,
+                        'tsIsActive' => 1
+                        ));
+                    $ts->save();
+                }
+            }
             \Session::flash('flash_message','Technician successfully updated.');
         }else{
             \Session::flash('error_message','Technician already exists. Update failed.');

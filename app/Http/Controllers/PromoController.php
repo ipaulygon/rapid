@@ -43,17 +43,27 @@ class PromoController extends Controller
     }
 
     public function create(PromoRequest $request){
-        $end = trim($request->input('promoEnd'));
-        if($end=='' || $end==null){
-            $end = null;
+        $promoStart = trim($request->input('promoStart'));
+        $promoEnd = trim($request->input('promoEnd'));
+        $promoSupplies = trim($request->input('promoSupplies'));
+        if($promoStart=='' || $promoStart==null){
+            $promoStart = null;
+        }
+        if($promoEnd=='' || $promoEnd==null){
+            $promoEnd = null;
+        }
+        if($promoSupplies=='' || $promoSupplies==null){
+            $promoSupplies = null;
         }
         $promo = Promo::create(array(
                 'promoId' => $request->input('promoId'),
                 'promoName' => trim($request->input('promoName')),
                 'promoDesc' => trim($request->input('promoDesc')),
-                'promoStart' => trim($request->input('promoStart')),
-                'promoEnd' => $end,
+                'promoStart' => $promoStart,
+                'promoEnd' => $promoEnd,
                 'promoCost' => trim($request->input('promoCost')),
+                'promoSupplies' => $promoSupplies,
+                'promoType' => trim($request->input('promoType')),
                 'promoIsActive' => 1
             ));
         $promo->save();
@@ -93,7 +103,9 @@ class PromoController extends Controller
         $this->validate($request, [
             'editPromoName' => 'required',
             'editPromoCost' => 'numeric|required',
-            'editPromoStart' => 'required',
+            'editPromoSupplies' => 'numeric',
+            'editPromoStart' => 'date',
+            'editPromoEnd' => 'date'
         ]);
         $checkPromo = Promo::all();
         $isAdded = false;
@@ -104,16 +116,26 @@ class PromoController extends Controller
             }
         }
         if(!$isAdded){
-            $end = trim($request->input('editPromoEnd'));
-            if($end=='' || $end==null){
-                $end = null;
+            $promoStart = trim($request->input('editPromoStart'));
+            $promoEnd = trim($request->input('editPromoEnd'));
+            $promoSupplies = trim($request->input('editPromoSupplies'));
+            if($promoStart=='' || $promoStart==null){
+                $promoStart = null;
+            }
+            if($promoEnd=='' || $promoEnd==null){
+                $promoEnd = null;
+            }
+            if($promoSupplies=='' || $promoSupplies==null){
+                $promoSupplies = null;
             }
             $promo = Promo::find($request->input('editPromoId'));
             $promo->promoName = trim($request->input('editPromoName'));
             $promo->promoDesc = trim($request->input('editPromoDesc'));
-            $promo->promoStart = trim($request->input('editPromoStart'));
+            $promo->promoStart = $promoStart;
             $promo->promoCost = trim($request->input('editPromoCost'));
-            $promo->promoEnd = $end;
+            $promo->promoEnd = $promoEnd;
+            $promo->promoType = trim($request->input('editPromoType'));
+            $promo->promoSupplies = $promoSupplies;
             $promo->save();
             $prod = $request->input('editPromoProductId');
             $prods = explode(",", $prod);

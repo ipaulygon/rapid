@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Http\Requests\InspectTypeRequest;
 use App\InspectType;
+use App\InspectItem;
 
 use Illuminate\Http\Request;
 
@@ -59,10 +60,17 @@ class InspectTypeController extends Controller
 
     public function destroy(Request $request){
         $id = $request->input('delInspectTypeId');
-        $inspectType = InspectType::find($request->input('delInspectTypeId'));
-        $inspectType->inspectTypeIsActive = 0;
-        $inspectType->save();
-        \Session::flash('flash_message','Inspection Type successfully deactivated.');
-        return redirect('maintenance/inspect-type');
+        $inspect_item = InspectItem::where('inspectItemTypeId','=',$id)->where('inspectItemIsActive','=',1)->count();
+        if($inspect_item>0){
+            \Session::flash('error_message','Inspection type is still being used in inspection items. Deactivation failed');
+            return redirect('maintenance/inspect-type');
+        }
+        else{
+            $inspectType = InspectType::find($request->input('delInspectTypeId'));
+            $inspectType->inspectTypeIsActive = 0;
+            $inspectType->save();
+            \Session::flash('flash_message','Inspection Type successfully deactivated.');
+            return redirect('maintenance/inspect-type');
+        }
     }
 }

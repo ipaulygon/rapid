@@ -65,13 +65,12 @@
 	<button class="ui positive button" name="modalNew" onclick="modal(this.name)"><i class="plus icon"></i>New Technician</button>
 	<br><br>
 	
-	<table id="listType" class="ui celled definition table">
+	<table id="listType" class="ui celled definition five column table">
 		<thead>
 			<th></th>
 			<th>Name</th>
-			<th>Newress</th>
+			<th>Skills</th>
 			<th>Contact</th>
-			<th>Email</th>
 			<th>Actions</th>
 		</thead>
 		<tbody>
@@ -80,9 +79,14 @@
 					<tr>
 						<td><img style="width: 150px;height:150px; object-fit: contain;" src="{{URL::asset($tech->techPic)}}"></td>
 						<td>{{$tech->techFirst}} {{$tech->techMiddle}} {{$tech->techLast}}</td>
-						<td>{{$tech->techStreet}} {{$tech->techBrgy}} {{$tech->techCity}}</td>
+						<td>
+							@foreach($tech->skill as $skill)
+								@if($skill->tsIsActive==1)
+									<li>{{$skill->skill->serviceName}}</li>
+								@endif
+							@endforeach
+						</td>
 						<td>{{$tech->techContact}}</td>
-						<td>{{$tech->techEmail}}</td>
 						<td>
 							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="edit{{ $tech->techId }}" onclick="modal(this.name)"><i class="write icon"></i></button>
 							<button class="ui red basic circular icon button" data-tooltip="Deactivate Record" data-inverted="" name="del{{ $tech->techId }}" onclick="modal(this.name)"><i class="trash icon"></i></button>
@@ -94,51 +98,72 @@
 									<div class="description">
 										<div class="ui form">								
 											<input type="hidden" name="editTechId" value="{{$tech->techId}}">
-											<div class="ui small centered card">
-												<div class="image">
-													<img id="{{$tech->techId}}" src="{{URL::asset($tech->techPic)}}">
-												</div>
-												<div class="content">
-													<input type="file" name="editTechPic" id="{{$tech->techId}}" onchange="readURLS(this,this.id)">
-													<input type="hidden" name="currentPic" value="{{$tech->techPic}}">
-												</div>
-											</div>
-											<div class="three fields">
-												<div class="field">
-													<label>First Name<span>*</span></label>
-													<input type="text" name="editTechFirst" placeholder="John" value="{{$tech->techFirst}}">
-												</div>
-												<div class="field">
-													<label>Middle Name</label>
-													<input type="text" name="editTechMiddle" placeholder="Cena" value="{{$tech->techMiddle}}">
-												</div>
-												<div class="field">
-													<label>Last Name<span>*</span></label>
-													<input type="text" name="editTechLast" placeholder="Doe" value="{{$tech->techLast}}">
-												</div>
-											</div>
-											<div class="three fields">
-												<div class="field">
-													<label>Street/Block<span>*</span></label>
-													<input type="text" name="editStreet" placeholder="Baker St." value="{{$tech->techStreet}}">
-												</div>
-												<div class="field">
-													<label>Brgy./Subd<span>*</span></label>
-													<input type="text" name="editBrgy" placeholder="Brgy. 546" value="{{$tech->techBrgy}}">
-												</div>
-												<div class="field">
-													<label>City<span>*</span></label>
-													<input type="text" name="editCity" placeholder="Manila City" value="{{$tech->techCity}}">
-												</div>
-											</div>
 											<div class="two fields">
-												<div class="field">
-													<label>Contact No.<span>*</span></label>
-													<input type="text" name="editTechContact" placeholder="Contact No." value="{{$tech->techContact}}">
-												</div>
-												<div class="field">
-													<label>Email</label>
-													<input type="email" name="editTechEmail" placeholder="Email" value="{{$tech->techEmail}}">
+												<div class="field" style="width:30%">
+													<div class="ui centered card">
+														<div class="image">
+															<img id="{{$tech->techId}}" style="width:200px;height:200px;" src="{{URL::asset($tech->techPic)}}">
+														</div>
+														<div class="content">
+															<input type="file" name="editTechPic" id="{{$tech->techId}}" onchange="readURLS(this,this.id)">
+															<input type="hidden" name="currentPic" value="{{$tech->techPic}}">
+														</div>
+													</div>
+												</div><br><br><br>
+												<div class="field" style="width:70%">
+													<div class="three fields">
+														<div class="field">
+															<label>First Name<span>*</span></label>
+															<input type="text" name="editTechFirst" placeholder="John" value="{{$tech->techFirst}}">
+														</div>
+														<div class="field">
+															<label>Middle Name</label>
+															<input type="text" name="editTechMiddle" placeholder="Cena" value="{{$tech->techMiddle}}">
+														</div>
+														<div class="field">
+															<label>Last Name<span>*</span></label>
+															<input type="text" name="editTechLast" placeholder="Doe" value="{{$tech->techLast}}">
+														</div>
+													</div>
+													<div class="three fields">
+														<div class="field">
+															<label>Street/Block<span>*</span></label>
+															<input type="text" name="editStreet" placeholder="Baker St." value="{{$tech->techStreet}}">
+														</div>
+														<div class="field">
+															<label>Brgy./Subd<span>*</span></label>
+															<input type="text" name="editBrgy" placeholder="Brgy. 546" value="{{$tech->techBrgy}}">
+														</div>
+														<div class="field">
+															<label>City<span>*</span></label>
+															<input type="text" name="editCity" placeholder="Manila City" value="{{$tech->techCity}}">
+														</div>
+													</div>
+													<div class="two fields">
+														<div class="field">
+															<label>Contact No.<span>*</span></label>
+															<input type="text" name="editTechContact" placeholder="Contact No." value="{{$tech->techContact}}">
+														</div>
+														<div class="field">
+															<label>Email</label>
+															<input type="email" name="editTechEmail" placeholder="Email" value="{{$tech->techEmail}}">
+														</div>
+													</div>
+													<div class="field">
+														<label>Skills</label>
+														<div id="editSkill{{$tech->techId}}" class="ui multiple search selection dropdown">
+							    							<input type="hidden" name="editTechSkillId"><i class="dropdown icon"></i>
+							    							<input class="search" autocomplete="off" tabindex="0">
+							    							<div class="default text">Select Skills</div>
+							    							<div class="menu" tabindex="-1">
+							    								@foreach($skills as $skill)
+							    									@if($skill->serviceIsActive==1)
+							    										<div class="item" data-value="{{ $skill->serviceId }}">{{ $skill->serviceName }}</div>
+							    									@endif
+							    								@endforeach
+							    							</div>
+							    						</div>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -149,6 +174,16 @@
 		        					<button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
 		        					<button type="submit" class="ui positive button"><i class="write icon"></i>Update</button>
 		        				</div>
+		        				<script type="text/javascript">
+		        					var array=[
+		        						@foreach($tech->skill as $skill)
+											@if($skill->tsIsActive==1)
+												'{{$skill->skill->serviceId}}',
+											@endif
+										@endforeach
+		        					];
+		        					$('#editSkill{{$tech->techId}}').dropdown('set selected',array);
+		        				</script>
 	        				{!! Form::close() !!}
 						</div>
 						<div class="ui basic modal" id="del{{ $tech->techId }}" style="text-align:center">
@@ -189,50 +224,71 @@
 				<div class="ui form">
 					{!! Form::open(['action' => 'TechController@create','files'=>true]) !!}
 						<input type="hidden" name="techId" value="{{$newId}}">
-						<div class="ui small centered card">
-							<div class="image">
-								<img id="blah" src="{{ asset('pics/steve1.jpg')}}">
-							</div>
-							<div class="content">
-								<input id="imgInp" type="file" name="techPic">
-							</div>
-						</div>
-						<div class="three fields">
-							<div class="field">
-								<label>First Name<span>*</span></label>
-								<input type="text" name="techFirst" placeholder="John">
-							</div>
-							<div class="field">
-								<label>Middle Name</label>
-								<input type="text" name="techMiddle" placeholder="Cena">
-							</div>
-							<div class="field">
-								<label>Last Name<span>*</span></label>
-								<input type="text" name="techLast" placeholder="Doe">
-							</div>
-						</div>
-						<div class="three fields">
-							<div class="field">
-								<label>Street/Block<span>*</span></label>
-								<input type="text" name="street" placeholder="Baker St.">
-							</div>
-							<div class="field">
-								<label>Brgy./Subd<span>*</span></label>
-								<input type="text" name="brgy" placeholder="Brgy. 546">
-							</div>
-							<div class="field">
-								<label>City<span>*</span></label>
-								<input type="text" name="city" placeholder="Manila City">
-							</div>
-						</div>
 						<div class="two fields">
-							<div class="field">
-								<label>Contact No.<span>*</span></label>
-								<input type="text" name="techContact" placeholder="0905xxxxxxx">
-							</div>
-							<div class="field">
-								<label>Email</label>
-								<input type="text" name="techEmail" placeholder="example@yahoo.com">
+							<div class="field" style="width:30%">
+								<div class="ui centered card">
+									<div class="image">
+										<img id="blah" style="width:200px;height:200px" src="{{ asset('pics/steve1.jpg')}}">
+									</div>
+									<div class="content">
+										<input id="imgInp" type="file" name="techPic">
+									</div>
+								</div>
+							</div><br><br><br>
+							<div class="field" style="width:70%">
+								<div class="three fields">
+									<div class="field">
+										<label>First Name<span>*</span></label>
+										<input type="text" name="techFirst" placeholder="John">
+									</div>
+									<div class="field">
+										<label>Middle Name</label>
+										<input type="text" name="techMiddle" placeholder="Cena">
+									</div>
+									<div class="field">
+										<label>Last Name<span>*</span></label>
+										<input type="text" name="techLast" placeholder="Doe">
+									</div>
+								</div>
+								<div class="three fields">
+									<div class="field">
+										<label>Street/Block<span>*</span></label>
+										<input type="text" name="street" placeholder="Baker St.">
+									</div>
+									<div class="field">
+										<label>Brgy./Subd<span>*</span></label>
+										<input type="text" name="brgy" placeholder="Brgy. 546">
+									</div>
+									<div class="field">
+										<label>City<span>*</span></label>
+										<input type="text" name="city" placeholder="Manila City">
+									</div>
+								</div>
+								<div class="two fields">
+									<div class="field">
+										<label>Contact No.<span>*</span></label>
+										<input type="text" name="techContact" placeholder="0905xxxxxxx">
+									</div>
+									<div class="field">
+										<label>Email</label>
+										<input type="text" name="techEmail" placeholder="example@yahoo.com">
+									</div>
+								</div>
+								<div class="field">
+									<label>Skills</label>
+									<div class="ui multiple search selection dropdown">
+		    							<input type="hidden" name="techSkillId"><i class="dropdown icon"></i>
+		    							<input class="search" autocomplete="off" tabindex="0">
+		    							<div class="default text">Select Skills</div>
+		    							<div class="menu" tabindex="-1">
+		    								@foreach($skills as $skill)
+		    									@if($skill->serviceIsActive==1)
+		    										<div class="item" data-value="{{ $skill->serviceId }}">{{ $skill->serviceName }}</div>
+		    									@endif
+		    								@endforeach
+		    							</div>
+		    						</div>
+								</div>
 							</div>
 						</div>
 	    				<div class="actions">
@@ -252,6 +308,7 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 		    $('#listType').DataTable();
+		    $('.ui.dropdown').dropdown();
 		});
 		function modal(open){
 			$('#' + open + '').modal('show');

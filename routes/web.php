@@ -114,3 +114,12 @@ Route::get('transaction/inspect','InspectController@index');
 Route::post('transaction/inspect/create','InspectController@create');
 Route::post('transaction/inspect/update','InspectController@update');
 Route::post('transaction/inspect/destroy','InspectController@destroy');
+
+//Utilities
+Route::get('/utilities/data-reactivation','ReactivationController@index');
+Route::post('/utilities/data-reactivation','ReactivationController@supplier');
+Route::post('/utilities/data-reactivation','ReactivationController@brand');
+Route::post('/utilities/data-reactivation','ReactivationController@producttype');
+Route::post('/utilities/data-reactivation','ReactivationController@unit');
+Route::post('/utilities/data-reactivation','ReactivationController@variance');
+Route::post('/utilities/data-reactivation','ReactivationController@product');

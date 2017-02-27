@@ -60,6 +60,23 @@
 		</script>
 	@endif
 
+	@if(Session::has('warning_message'))
+		<div class="ui small basic modal" style="text-align:center" id="warning_message">
+			<div class="ui icon header">
+				<i class="remove icon"></i>
+				Warning
+			</div>
+			<div class="content">
+				<em>{!! session('warning_message') !!}</em>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(document).ready(function (){
+				$('#warning_message').modal('show');
+			});
+		</script>
+	@endif
+
 	<h2>Maintenance - Product</h2>
 	<hr><br>
 	<!-- <button class="ui positive button" name="modalNew" onclick="modal(this.name)"><i class="plus icon"></i>New Product</button> -->
@@ -134,6 +151,9 @@
 		$(document).ready(function(){
 		    $('#list').DataTable();
 		});
+		function modal(open){
+			$('#' + open + '').modal('show');
+		}
 		function update(id){
 			$.ajaxSetup({
 		        headers: {

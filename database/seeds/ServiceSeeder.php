@@ -19,7 +19,15 @@ class ServiceSeeder extends Seeder
 				'serviceCategoryId' => 'SC001',
 				'servicePrice' => 500.00,
 				'serviceIsActive' => 1,
-            )
+            ),
+            array(
+                'serviceId' => 'SERV0002',
+                'serviceName' => 'Tune up',
+                'serviceDesc' => '',
+                'serviceCategoryId' => 'SC001',
+                'servicePrice' => 300.25,
+                'serviceIsActive' => 1,
+            ),
         );
         DB::table('service')->insert($service);
     }

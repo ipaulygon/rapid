@@ -8,8 +8,9 @@ use App\Brand;
 use App\Variance;
 use App\ProductVariance;
 use App\TypeVariance;
-use App\Package;
-use App\Promo;
+use App\PackageProduct;
+use App\PromoProduct;
+use App\ProductCost;
 
 use Illuminate\Http\Request;
 
@@ -64,6 +65,12 @@ class ProductController extends Controller
                     'pvIsActive' => 1
                     ));
                 $pv->save();
+                $latest = ProductVariance::orderBy('pvId','desc')->first();
+                $prodCost = ProductCost::create(array(
+                    'pcId' => $latest->pvId,
+                    'pcCost' => $prices[$x],
+                ));
+                $prodCost->save();
                 $x++;
             }
         }
@@ -112,38 +119,96 @@ class ProductController extends Controller
                             'pvIsActive' => 1
                             ));
                         $pv->save();
+                        $latest = ProductVariance::orderBy('pvId','desc')->first();
+                        $prodCost = ProductCost::create(array(
+                            'pcId' => $latest->pvId,
+                            'pcCost' => $prices[$x],
+                        ));
+                        $prodCost->save();
                         $x++;
                     }
                 }
             }else{
+                $warning = 0;
                 $product_variance = ProductVariance::with('product')->where('pvProductId','=',$id)->where('pvIsActive','=',1)->get();
-                foreach($product_variance as $pv){
-                    $cost = $request->input($pv->pvVarianceId);
-                    if($cost!='' || $cost !=null){
-                        $prodVar = ProductVariance::where('pvProductId','=',$id)->where('pvVarianceId','=',$pv->pvVarianceId)->where('pvIsActive','=',1)->first();
-                        $prodVar->pvCost = $cost;
-                        $prodVar->save();
+                if($variance!=null || $variance!=''){
+                    foreach($product_variance as $pv){
+                        $cost = $request->input($pv->pvVarianceId);
+                        if($cost!='' || $cost !=null){
+                            $prodVar = ProductVariance::where('pvProductId','=',$id)->where('pvVarianceId','=',$pv->pvVarianceId)->where('pvIsActive','=',1)->first();
+                            $prodVar->pvCost = $cost;
+                            $prodVar->save();
+                            $prodCost = ProductCost::create(array(
+                                'pcId' => $prodVar->pvId,
+                                'pcCost' => $cost,
+                            ));
+                            $prodCost->save();
+                        }
+                        else{
+                            $promo_product = PromoProduct::where('promoProductId','=',$pv->pvId)->where('promoPIsActive','=',1)->count();
+                            $package_product = PackageProduct::where('packageProductId','=',$pv->pvId)->where('packagePIsActive','=',1)->count(); 
+                            if($promo_product>0){
+                                $warning = 1;
+                            }
+                            if($package_product>0){
+                                $warning = 2;
+                            }
+                            if($promo_product>0 && $package_product>0){
+                                $warning = 3;
+                            }
+                            if($promo_product==0 && $package_product==0){
+                                $prodVar = ProductVariance::where('pvProductId','=',$id)->where('pvVarianceId','=',$pv->pvVarianceId)->where('pvIsActive','=',1)->update(['pvIsActive' => 0]);
+                            }
+                        }
+                        $variances = array_diff($variances,array($pv->pvVarianceId));
                     }
-                    else{
-                        $prodVar = ProductVariance::where('pvProductId','=',$id)->where('pvVarianceId','=',$pv->pvVarianceId)->where('pvIsActive','=',1)->first();
-                        $prodVar->pvIsActive = 0;
-                        $prodVar->save();
-                        $prodPack = Package::with('product')->where('packageProductId','=',$pv->pvId)->where('packagePIsActive','=',1)->update('packagePIsActive','=',0);
-                        $prodPromo = Promo::with('product')->where('promoProductId','=',$pv->pvId)->where('promoPIsActive','=',1)->update('promoPIsActive','=',0);
-                    }
-                    $variances = array_diff($variances,array($pv->pvVarianceId));
-                }
-                foreach($variances as $var) {
-                    $pv = ProductVariance::create(array(
-                        'pvProductId' => $request->input('editProductId'),
-                        'pvVarianceId' => $var,
-                        'pvCost' => $request->input($var),
-                        'pvIsActive' => 1
+                    foreach($variances as $var) {
+                        $pv = ProductVariance::create(array(
+                            'pvProductId' => $request->input('editProductId'),
+                            'pvVarianceId' => $var,
+                            'pvCost' => $request->input($var),
+                            'pvIsActive' => 1
+                            ));
+                        $pv->save();
+                        $latest = ProductVariance::orderBy('pvId','desc')->first();
+                        $prodCost = ProductCost::create(array(
+                            'pcId' => $pv->pvId,
+                            'pcCost' => $request->input($var),
                         ));
-                    $pv->save();
+                        $prodCost->save();
+                    }
+                }
+                else{
+                    foreach($product_variance as $pv){
+                        $promo_product = PromoProduct::where('promoProductId','=',$pv->pvId)->where('promoPIsActive','=',1)->count();
+                        $package_product = PackageProduct::where('packageProductId','=',$pv->pvId)->where('packagePIsActive','=',1)->count(); 
+                        if($promo_product>0){
+                            $warning = 1;
+                        }
+                        if($package_product>0){
+                            $warning = 2;
+                        }
+                        if($promo_product>0 && $package_product>0){
+                            $warning = 3;
+                        }
+                        if($promo_product==0 && $package_product==0){
+                            $prodVar = ProductVariance::where('pvProductId','=',$id)->where('pvVarianceId','=',$pv->pvVarianceId)->where('pvIsActive','=',1)->update(['pvIsActive' => 0]);
+                        }
+                    }
                 }
             }
-            \Session::flash('flash_message','Product successfully updated.');
+            if($warning==0){
+                \Session::flash('flash_message','Product successfully updated.');
+            }
+            if($warning==1){
+                \Session::flash('warning_message','Some of the variances were not updated/deactivated because it is used by promos. Product updated');
+            }
+            if($warning==2){
+                \Session::flash('warning_message','Some of the variances were not updated/deactivated because it is used by packages. Product updated');
+            }
+            if($warning==3){
+                \Session::flash('warning_message','Some of the variances were not updated/deactivated because it is used by promos and packages. Product updated');
+            }
         }else{
             \Session::flash('error_message','Product already exists. Update failed.');
         }
@@ -152,9 +217,26 @@ class ProductController extends Controller
 
     public function destroy(Request $request){
         $id = $request->input('delProductId');
+        $used = 0;
+        $product_variance = ProductVariance::where('pvProductId','=',$id)->where('pvIsActive','=',1)->get();
+        foreach ($product_variance as $pv) {
+            $package = PackageProduct::where('packageProductId','=',$pv->pvId)->where('packagePIsActive','=',1)->count();
+            if($package>0){
+                \Session::flash('error_message','Product is still being used in packages. Deactivation failed');
+                return redirect('maintenance/product');
+            }
+        }
+        foreach ($product_variance as $pv) {
+            $promo = PromoProduct::where('promoProductId','=',$pv->pvId)->where('promoPIsActive','=',1)->count();
+            if($promo>0){
+                \Session::flash('error_message','Product is still being used in promos. Deactivation failed');
+                return redirect('maintenance/product');
+            }
+        }
         $product = Product::find($request->input('delProductId'));
         $product->productIsActive = 0;
         $product->save();
+        $affectedRows = ProductVariance::where('pvProductId', '=', $id)->update(['pvIsActive' => 0]);
         \Session::flash('flash_message','Product successfully deactivated.');
         return redirect('maintenance/product');
     }

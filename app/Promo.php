@@ -16,7 +16,9 @@ class Promo extends Model
 								'promoStart',
 								'promoEnd',
 								'promoCost',
-								'promoIsActive'
+								'promoSupplies',
+								'promoIsActive',
+								'promoType'
 								//
 								);
 	public function product(){

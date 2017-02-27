@@ -1,4 +1,4 @@
-@extends('layouts.maintenance')
+@extends('layouts.master')
 
 @section('content')
 	<!--Errors-->	

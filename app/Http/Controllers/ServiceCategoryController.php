@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Http\Requests\ServiceCategoryRequest;
 use App\ServiceCategory;
+use App\Service;
 
 use Illuminate\Http\Request;
 
@@ -59,10 +60,17 @@ class ServiceCategoryController extends Controller
 
     public function destroy(Request $request){
         $id = $request->input('delCategoryId');
-        $category = ServiceCategory::find($request->input('delCategoryId'));
-        $category->categoryIsActive = 0;
-        $category->save();
-        \Session::flash('flash_message','ServiceCategory successfully deactivated.');
-        return redirect('maintenance/service-category');
+        $service_category = Service::with('categories')->where('serviceCategoryId','=',$id)->count();
+        if($service_category>0){
+            \Session::flash('error_message','Category is still being used in services. Deactivation failed');
+            return redirect('maintenance/service-category');
+        }
+        else{
+            $category = ServiceCategory::find($request->input('delCategoryId'));
+            $category->categoryIsActive = 0;
+            $category->save();
+            \Session::flash('flash_message','Service category successfully deactivated.');
+            return redirect('maintenance/service-category');
+        }
     }
 }

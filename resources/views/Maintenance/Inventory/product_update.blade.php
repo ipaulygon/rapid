@@ -100,7 +100,7 @@
 				</div>
 			</div>
 			<hr>
-			<i>Note: All with <span>*</span> are required fields. <b>All variances that are removed will also be removed in packages and promos<b>.</i>
+			<i>Note:<br> All with <span>*</span> are required fields. <br>All variances that are removed will also be removed in packages and promos.<br>Items inside the transaction will not be deleted.</i>
 			<div style="float:right">
 				<a href="{{URL::to('/maintenance/product')}}" type="reset" class="ui negative button"><i class="arrow left icon"></i>Back</a>
 				<button type="submit" class="ui positive button"><i class="plus icon"></i>Update</button>
@@ -123,7 +123,7 @@
 		    	onRemove: function(value, text, $removedChoice){
 		    		var prod = $removedChoice.attr('title');
 		    		$("#cost"+prod+" div[id="+value+"]").remove();
-		    		$("#cost"+prod+" input[id="+value+"]").remove();
+		    		$("#cost"+prod+" input[id=hidden"+value+"]").remove();
 		    		// $("#cost"+prod+" label[id="+value+"]").remove();
 		    	}
 		    });

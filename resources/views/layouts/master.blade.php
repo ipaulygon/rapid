@@ -12,12 +12,16 @@
 
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="{{asset('css/semantic.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/jquery-ui.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/jquery-ui.structure.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/jquery-ui.theme.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/dataTables.jqueryui.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/dataTables.semanticui.css')}}">
 
     <!-- Scripts -->
     <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery-3.1.1.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery-ui.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/semantic.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.dataTables.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/dataTables.jqueryui.js') }}"></script>
@@ -105,6 +109,14 @@
         <div class="item">
             <div class="header">Reports</div>
         </div>
+        <div class="item">
+            <div class="header">Utilities</div>
+            <div class="ui vertical accordion inverted">
+                <div class="ui form">
+                    <a href="{{URL::to('/utilities/data-reactivation')}}" class="item">Data Reactivation</a>
+                </div>
+            </div>
+        </div>
         <div class="ui form">
             <a class="item" href="{{ url('/logout') }}"
                 onclick="event.preventDefault();
@@ -191,6 +203,14 @@
         <!--Reports-->
         <div class="item">
             <div class="header">Reports</div>
+        </div>
+        <div class="item">
+            <div class="header">Utilities</div>
+            <div class="ui vertical accordion inverted">
+                <div class="ui form">
+                    <a href="{{URL::to('/utilities/data-reactivation')}}" class="item">Data Reactivation</a>
+                </div>
+            </div>
         </div>
         <div class="ui form">
             <a class="item" href="{{ url('/logout') }}"

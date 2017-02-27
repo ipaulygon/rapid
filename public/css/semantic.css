@@ -25049,8 +25049,10 @@ Floated Menu / Item
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
-  width: 290px;
-  min-height: 0px;
+  /*width: 290px;
+  min-height: 0px;*/
+  width: 200px;
+  height: 200px;
   background: #FFFFFF;
   padding: 0em;
   border: none;
@@ -25065,6 +25067,10 @@ Floated Menu / Item
 
 .ui.card {
   margin: 1em 0em;
+}
+
+.smallcard{
+  width: 150px;
 }
 
 .ui.cards > .card a,

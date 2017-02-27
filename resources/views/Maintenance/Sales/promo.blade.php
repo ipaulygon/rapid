@@ -89,7 +89,7 @@
 						<td>
 							@foreach($promo->product as $pp)
 								@if($pp->promoPIsActive==1)
-									<li>{{$pp->product->product->brand->brandName}} - {{$pp->product->product->productName}}| {{$pp->product->variance->varianceSize}} - {{$pp->product->variance->unit->unitName}}|{{$pp->product->product->types->typeName}} // {{$pp->promoPQty}} pcs</li>
+									<li>{{$pp->product->product->brand->brandName}} - {{$pp->product->product->productName}}| {{$pp->product->variance->varianceSize}} - {{$pp->product->variance->unit->unitName}}|{{$pp->product->product->types->typeName}} <br> x {{$pp->promoPQty}} pcs</li>
 								@endif
 							@endforeach
 						</td>
@@ -231,7 +231,9 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 		    $('#listType').DataTable();
-		    $('#serv.ui.dropdown').dropdown();
 		});
+		function modal(open){
+			$('#' + open + '').modal('show');
+		}
 	</script>
 @stop

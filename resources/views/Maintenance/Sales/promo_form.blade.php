@@ -1,4 +1,4 @@
-@extends('layouts.maintenance')
+@extends('layouts.master')
 
 @section('content')
 	<!--Errors-->	
@@ -46,16 +46,56 @@
 			</div>
 			<div class="inline fields">
 				<div class="two wide field">
+					<label>Promo Type</label>
+				</div>
+				<div class="six wide field">
+					<div class="grouped fields">
+						<div class="field">
+							<div class="ui radio checkbox">
+								<input type="radio" name="promoType" value="1" checked="" onchange="types(this.value)">
+								<label>Date based</label>
+							</div>
+						</div>
+						<div class="field">
+							<div class="ui radio checkbox">
+								<input type="radio" name="promoType" value="2" onchange="types(this.value)">
+								<label>Supply based</label>
+							</div>
+						</div>
+						<div class="field">
+							<div class="ui radio checkbox">
+								<input type="radio" name="promoType" value="3" onchange="types(this.value)">
+								<label>Date and supply based</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="two wide field">
+					<label>Supply</label>
+				</div>
+				<div class="six wide field">
+					<div class="ui right labeled input">
+						<input id="supplies" type="text" name="promoSupplies" placeholder="Pieces">
+						<div class="ui label">
+							pcs.
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="inline fields">
+				<div class="two wide field">
 					<label>Start Date<span>*</span></label>
 				</div>
 				<div class="six wide field">
-					<input type="date" name="promoStart" placeholder="Start Date" min="{{$dateNow}}">
+					<input id="start" type="hidden" name="promoStart">
+					<input class="start" type="text" name="start" placeholder="Start Date" onchange="date(this.value,this.name)">
 				</div>
 				<div class="two wide field">
 					<label>End Date</label>
 				</div>
 				<div class="six wide field">
-					<input type="date" name="promoEnd" placeholder="End Date">
+					<input id="end" type="hidden" name="promoEnd">
+					<input class="end" type="text" name="end" placeholder="End Date" onchange="date(this.value,this.name)">
 				</div>
 			</div>
 			<div class="inline fields">
@@ -116,6 +156,8 @@
 		$(document).ready(function(){
 		    $('#listType').DataTable();
 		    $('#serv.ui.dropdown').dropdown();
+		    $('#supplies').attr("disabled",true);
+		    $('#supplies').val(0);
 		    $('#add.ui.dropdown').dropdown({
 		    	onAdd: function(value,text,$addedChoice){
 		    		var prod = $addedChoice.attr('title');
@@ -126,6 +168,68 @@
 		    		$("#qty"+prod+" div[id="+value+"]").remove();
 				}
 		    });
+		    $( function() {
+			    var dateFormat = "MM d, yy",
+			    	from = $( ".start" ).datepicker({
+			    		dateFormat: "MM d, yy",
+			    		changeMonth: true,
+			          	minDate: new Date(),
+			        }).on( "change", function() {
+						to.datepicker( "option", "minDate", getDate( this ) );
+			        }),
+			    	to = $( ".end" ).datepicker({
+			    		minDate: new Date(),
+			        	changeMonth: true,
+			        	dateFormat: "MM d, yy",
+			     	}).on( "change", function() {
+			        	from.datepicker( "option", "maxDate", getDate( this ) );
+			      	});
+			 
+			    function getDate( element ) {
+			    	var date;
+			      	try {
+			        	date = $.datepicker.parseDate( dateFormat, element.value );
+			      	} catch( error ) {
+			        	date = null;
+			      	}
+			      return date;
+			    }
+			});
 		});
+		function date(date,name){
+			var oldDate = new Date(date);
+			var month = oldDate.getMonth()+1;
+			if(month<10){
+				month = "0"+month;
+			}
+			var day = oldDate.getDate();
+			if(day<10){
+				day = "0"+day;
+			}
+			var year = oldDate.getFullYear();
+			var newDate = year+"-"+month+"-"+day;
+			$("#"+name).val(newDate);
+		}
+		function types(type){
+			if(type==1){
+				$('#supplies').attr("disabled",true);
+				$('#supplies').attr("value",0);
+				$('.start').attr("disabled",false);
+				$('.end').attr("disabled",false);
+				$('#supplies').val('');
+				$('.start').val('');
+				$('.end').val('');
+			}if(type==2){
+				$('#supplies').attr("disabled",false);
+				$('.start').attr("disabled",true);
+				$('#start').val('');
+				$('.end').attr("disabled",true);
+				$('#end').val('');
+			}if(type==3){
+				$('#supplies').attr("disabled",false);
+				$('.start').attr("disabled",false);
+				$('.end').attr("disabled",false);
+			}
+		}
 	</script>
 @stop

@@ -18,7 +18,7 @@ class CreateProductCostTable extends Migration
             $table->unsignedInteger('pcId');
             $table->float('pcCost',8,2);
             $table->timestamps();
-            $table->primary('pcId');
+            $table->primary(['pcId','pcCost','created_at']);
             $table->foreign('pcId')
                   ->references('pvId')->on('product_variance')
                   ->onUpdate('cascade')

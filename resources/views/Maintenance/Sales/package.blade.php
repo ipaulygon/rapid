@@ -89,7 +89,7 @@
 						<td>
 							@foreach($package->product as $pp)
 								@if($pp->packagePIsActive==1)
-									<li>{{$pp->product->product->brand->brandName}} - {{$pp->product->product->productName}}| {{$pp->product->variance->varianceSize}} - {{$pp->product->variance->unit->unitName}}|{{$pp->product->product->types->typeName}} // {{$pp->packagePQty}} pcs</li>
+									<li>{{$pp->product->product->brand->brandName}} - {{$pp->product->product->productName}}| {{$pp->product->variance->varianceSize}} - {{$pp->product->variance->unit->unitName}}|{{$pp->product->product->types->typeName}} <br> x {{$pp->packagePQty}} pcs</li>
 								@endif
 							@endforeach
 						</td>
@@ -138,29 +138,6 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 		    $('#listType').DataTable();
-		    $('#serv.ui.dropdown').dropdown();
-		    $('#add.ui.dropdown').dropdown({
-		    	onAdd: function(value,text,$addedChoice){
-		    		var prod = $addedChoice.attr('title');
-		    		$("#qty"+prod).append('<label id="'+value+'">'+text+'</label><input id="'+value+'" type="text" name="qty[]">');
-		    	},
-		    	onRemove: function(value, text, $removedChoice){
-		    		var prod = $removedChoice.attr('title');
-		    		$("#qty"+prod+" input[id="+value+"]").remove();
-		    		$("#qty"+prod+" label[id="+value+"]").remove();
-		    	}
-		    });
-		    $('.update.product.ui.dropdown').dropdown({
-		    	onAdd: function(value,text,$addedChoice){
-		    		var prod = $addedChoice.attr('title');
-		    		$("#qty"+prod).append('<label id="'+value+'">'+text+'</label><input id="'+value+'" type="text" name="qtys[]">');
-		    	},
-		    	onRemove: function(value, text, $removedChoice){
-		    		var prod = $removedChoice.attr('title');
-		    		$("#qty"+prod+" input[id="+value+"]").remove();
-		    		$("#qty"+prod+" label[id="+value+"]").remove();
-		    	}
-		    });
 		});
 		function modal(open){
 			$('#' + open + '').modal('show');

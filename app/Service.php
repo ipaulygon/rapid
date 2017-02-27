@@ -22,4 +22,7 @@ class Service extends Model
 	{
 		return $this->belongsTo('App\ServiceCategory','serviceCategoryId');
 	}
+	public function skill(){
+		return $this->hasMany('App\TechSkill','tsSkillId');
+	}
 }

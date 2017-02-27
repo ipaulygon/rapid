@@ -13,7 +13,7 @@ class PromoServiceSeeder extends Seeder
     {
         $promos = array (
             array(
-            	'promoSId' => 'PROMO0002',
+            	'promoSId' => 'PROMO0001',
 				'promoServiceId' => 'SERV0001',
 				'promoSIsActive' => 1,
             ),

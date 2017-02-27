@@ -7,6 +7,7 @@ use App\Unit;
 use App\ProductType;
 use App\TypeVariance;
 use App\ProductVariance;
+use App\Product;
 
 use Illuminate\Http\Request;
 
@@ -67,22 +68,72 @@ class VarianceController extends Controller
         	}
         }
         if(!$isAdded){
-            $variance = Variance::find($request->input('editVarianceId'));
+            $id = $request->input('editVarianceId');
+            $variance = Variance::find($id);
             $variance->varianceSize = trim($request->input('editVarianceSize'));
             $variance->varianceUnitId = trim($request->input('editVarianceUnitId'));
             $variance->varianceDesc = trim($request->input('editVarianceDesc'));
             $variance->save();
-            $affectedRows = TypeVariance::where('tvVarianceId', '=', $request->input('editVarianceId'))->update(['tvIsActive' => 0]);
+            //$affectedRows = TypeVariance::where('tvVarianceId', '=', $request->input('editVarianceId'))->update(['tvIsActive' => 0]);
             $type = $request->input('editTypes');
             $types = explode(',', $type);
-            if($type!=null || $type!=''){
-                foreach($types as $typ) {
-                    $tv = TypeVariance::create(array(
-                        'tvTypeId' => $typ,
-                        'tvVarianceId' => $request->input('editVarianceId'),
-                        'tvIsActive' => 1
-                        ));
-                    $tv->save();
+            $type_variance = TypeVariance::where('tvVarianceId','=',$id)->where('tvIsActive','=',1)->count();
+            if($type_variance==0){
+                if($type!=null || $type!=''){
+                    foreach($types as $typ) {
+                        $tv = TypeVariance::create(array(
+                            'tvTypeId' => $typ,
+                            'tvVarianceId' => $id,
+                            'tvIsActive' => 1
+                            ));
+                        $tv->save();
+                    }
+                }
+            }
+            else{
+                $isUsed = false;
+                $type_variance = TypeVariance::where('tvVarianceId','=',$id)->where('tvIsActive','=',1)->get();
+                if($type!=null || $type!=''){
+                    foreach($type_variance as $tv){
+                        if(!in_array($tv->tvTypeId, $types)){
+                            $product = Product::where('productIsActive','=',1)->where('productTypeId','=',$tv->tvTypeId)->count();
+                            if($product>0){
+                                $isUsed = true;
+                            }
+                            else{
+                                $tvd = TypeVariance::where('tvVarianceId','=',$id)->where('tvTypeId','=',$tv->tvTypeId)->where('tvIsActive','=',1)->update(['tvIsActive' => 0]);
+                            }
+                        }
+                        $types = array_diff($types,array($tv->tvTypeId));
+                    }
+                    foreach($types as $typ){
+                        $tv = TypeVariance::create(array(
+                            'tvTypeId' => $typ,
+                            'tvVarianceId' => $id,
+                            'tvIsActive' => 1
+                            ));
+                        $tv->save();
+                    }
+                }
+                else{
+                    $type_variance = TypeVariance::where('tvVarianceId','=',$id)->where('tvIsActive','=',1)->get();
+                    foreach($type_variance as $tv){
+                        $product = Product::where('productIsActive','=',1)->where('productTypeId','=',$tv->tvTypeId)->count();
+                        if($product>0){
+                            $isUsed = true;
+                        }
+                        else{
+                            $tvd = TypeVariance::where('tvVarianceId','=',$id)->where('tvTypeId','=',$tv->tvTypeId)->where('tvIsActive','=',1)->update(['tvIsActive' => 0]);
+                        }
+                    }
+                }
+                if($isUsed){
+                    \Session::flash('warning_message','Some of the types were not updated/deactivated because it is used by products. Variance updated');
+                    return redirect('maintenance/product-variance');
+                }
+                else{
+                    \Session::flash('warning_message','Some of the types were not updated/deactivated because it is used by products. Variance updated');
+                    return redirect('maintenance/product-variance');
                 }
             }
             \Session::flash('flash_message','Variance successfully updated.');

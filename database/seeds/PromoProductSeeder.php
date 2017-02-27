@@ -13,13 +13,13 @@ class PromoProductSeeder extends Seeder
     {
         $promos = array (
             array(
-            	'promoPId' => 'PROMO0002',
+            	'promoPId' => 'PROMO0001',
 				'promoProductId' => 1,
 				'promoPQty' => 1,
 				'promoPIsActive' => 1,
             ),
             array(
-                'promoPId' => 'PROMO0002',
+                'promoPId' => 'PROMO0001',
                 'promoProductId' => 2,
                 'promoPQty' => 1,
                 'promoPIsActive' => 1,

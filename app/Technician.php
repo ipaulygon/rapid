@@ -23,4 +23,7 @@ class Technician extends Model
 								'techIsActive'
 								//
 								);
+	public function skill(){
+		return $this->hasMany('App\TechSkill','tsTechId');
+	}
 }

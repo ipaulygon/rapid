@@ -5,6 +5,8 @@ use App\Http\Requests\ServiceRequest;
 use App\Service;
 use App\ServiceCost;
 use App\ServiceCategory;
+use App\PackageService;
+use App\PromoService;
 
 use Illuminate\Http\Request;
 
@@ -80,6 +82,16 @@ class ServiceController extends Controller
 
     public function destroy(Request $request){
         $id = $request->input('delServiceId');
+        $package_service = PackageService::where('packageServiceId','=',$id)->where('packageSIsActive','=',1)->count();
+        if($package_service>0){
+            \Session::flash('error_message','Service is still being used in packages. Deactivation failed');
+            return redirect('maintenance/service');
+        }
+        $promo_service = PromoService::where('promoServiceId','=',$id)->where('promoSIsActive','=',1)->count();
+        if($promo_service>0){
+            \Session::flash('error_message','Service is still being used in promos. Deactivation failed');
+            return redirect('maintenance/service');
+        }
         $serv = Service::find($request->input('delServiceId'));
         $serv->serviceIsActive = 0;
         $serv->save();

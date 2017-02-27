@@ -27,7 +27,8 @@ class PromoRequest extends FormRequest
         return [
             'promoName' => 'required|unique:promo',
             'promoCost' => 'numeric|required',
-            'promoStart' => 'date|required',
+            'promoSupplies' => 'numeric',
+            'promoStart' => 'date',
             'promoEnd' => 'date'
         ];
     }
@@ -37,7 +38,8 @@ class PromoRequest extends FormRequest
         return [
             'promoName.unique'  =>  'Promo already exists.',
             'promoName.required' => 'Promo name is required.',
-            'promoStart.required' => 'Start Date is required.',
+            'promoStart.date' => 'Start date must be a valid date.',
+            'promoEnd.date' => 'End date must be a valid date.',
             'promoCost.numeric' => 'Cost must be valid monetary value',
             'promoCost.required' => 'Cost is required',
         ];

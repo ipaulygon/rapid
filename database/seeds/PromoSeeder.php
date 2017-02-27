@@ -14,21 +14,14 @@ class PromoSeeder extends Seeder
         $promos = array (
             array(
             	'promoId' => 'PROMO0001',
-				'promoName' => 'Buy 1 Take 1 Mobil Techron',
+				'promoName' => 'Buy 1 Take 1 - Mobil Techron',
 				'promoDesc' => '',
-				'promoStart' => '2017-02-4',
-				'promoEnd' => '2017-02-28',
+				'promoStart' => '2017-03-08',
+				'promoEnd' => '2017-03-28',
                 'promoCost' => 300.00,
+                'promoSupplies' => null,
 				'promoIsActive' => 1,
-            ),
-            array(
-                'promoId' => 'PROMO0002',
-                'promoName' => 'Buy 1 Take 1',
-                'promoDesc' => '',
-                'promoStart' => '2017-02-4',
-                'promoEnd' => '2017-02-28',
-                'promoCost' => 500.26,
-                'promoIsActive' => 1,
+                'promoType' => 1,
             ),
         );
         DB::table('promo')->insert($promos);
