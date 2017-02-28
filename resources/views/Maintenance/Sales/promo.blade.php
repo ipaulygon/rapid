@@ -62,7 +62,7 @@
 
 	<h2>Maintenance - Promo</h2>
 	<hr><br>
-	<a href="{{URL::to('maintenance/promo/form-create')}}" class="ui positive button" name="modalAdd"><i class="plus icon"></i>New Promo</a>
+	<a href="{{URL::to('maintenance/promo/form-create')}}" class="ui green button" name="modalAdd"><i class="plus icon"></i>New Promo</a>
 	<br><br>
 	<table id="listType" class="ui celled table">
 		<thead>
@@ -122,7 +122,7 @@
 								</div>
 								<div class="actions">
 			        				<button type="submit" class="ui negative button"><i class="trash icon"></i>Deactivate</button>
-			        				<button type="reset" class="ui positive button"><i class="plane icon"></i>Cancel</button>
+			        				<button type="reset" class="ui green button"><i class="remove icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
 						</div>
@@ -131,99 +131,6 @@
 			@endforeach
 		</tbody>
 	</table>
-	
-	<!-- Update Modal -->
-	<div class="ui modal" id="modalUpdate">
-		<div class="header">Update Promo</div>
-		<div class="content">
-			<div class="description">
-				<div class="ui form">
-					{!! Form::open(['action' => 'PromoController@update']) !!}
-						<input type="hidden" name="editPromoId" id="editPromoId" readonly>
-	    				<div class="inline fields">
-	    					<div class="two wide field">
-	    						<label>Promo<span>*</span></label>
-	    					</div>
-	    					<div class="six wide field">
-	    						<input type="text" name="editPromoName" id="editPromoName" placeholder="Promo">
-	    					</div>
-	    					<div class="two wide field">
-	    						<label>Price<span>*</span></label>
-	    					</div>
-	    					<div class="six wide field">
-		    					<div class="ui labeled input">
-		    						<div class="ui label">P</div>
-		    						<input type="text" name="editPromoCost" id="editPromoCost" placeholder="100">
-		    					</div>
-	    					</div>
-	    				</div>
-	    				<div class="inline fields">
-	    					<div class="two wide field">
-	    						<label>Start Date<span>*</span></label>
-	    					</div>
-	    					<div class="six wide field">
-	    						<input type="date" name="editPromoStart" id="editPromoStart" placeholder="Start Date">
-	    					</div>
-	    					<div class="two wide field">
-	    						<label>End Date</label>
-	    					</div>
-	    					<div class="six wide field">
-	    						<input type="date" name="editPromoEnd" id="editPromoEnd" placeholder="End Date">
-	    					</div>
-	    				</div>
-	    				<div class="inline fields">
-	    					<div class="two wide field">
-	    						<label>Description</label>
-	    					</div>
-	    					<div class="fourteen wide field">
-	    						<textarea type="text" name="editPromoDesc" id="editPromoDesc" placeholder="Description"></textarea>
-	    					</div>
-	    				</div>
-	    				<div class="two fields">
-	    					<div class="field">
-	    						<label>Products:</label>
-	    						<div style="width:100%" class="ui multiple update search selection dropdown product">
-	    							<input type="hidden" name="editPromoProductId"><i class="dropdown icon"></i>
-	    							<input class="search" autocomplete="off" tabindex="0">
-	    							<div class="default text">Select Products</div>
-	    							<div class="menu edit" tabindex="-1">
-	    								@foreach($product as $products)
-	    									@if($products->pvIsActive==1)
-	    										<div class="item" data-value="{{ $products->pvId }}">{{$products->product->brand->brandName}} - {{$products->product->productName}}| {{$products->variance->varianceSize}} - {{$products->variance->unit->unitName}}| {{$products->product->types->typeName}}</div>
-	    									@endif
-	    								@endforeach
-	    							</div>
-	    						</div>
-	    						<div class="qty">
-	    							<label>Quantity:</label><br>
-	    						</div>
-	    					</div>
-	    					<div class="field">
-	    						<label>Services:</label>
-	    						<div id="serv" style="width:100%" class="ui multiple update search selection dropdown service">
-	    							<input type="hidden" name="editPromoServiceId"><i class="dropdown icon"></i>
-	    							<input class="search" autocomplete="off" tabindex="0">
-	    							<div class="default text">Select Services</div>
-	    							<div class="menu" tabindex="-1">
-	    								@foreach($service as $services)
-	    									@if($services->serviceIsActive==1)
-	    										<div class="item" data-value="{{ $services->serviceId }}">{{$services->serviceName}} - {{$services->categories->categoryName}}</div>
-	    									@endif
-	    								@endforeach
-	    							</div>
-	    						</div>
-	    					</div>
-	    				</div>
-	    				<div class="actions">
-	    					<i>Note: All with <span>*</span> are required fields</i>
-	    					<button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
-	    					<button type="submit" class="ui positive button"><i class="plus icon"></i>Update</button>
-	    				</div>
-					{!! Form::close() !!}
-				</div>
-			</div>
-		</div>
-	</div>
 @stop
 
 
@@ -233,7 +140,9 @@
 		    $('#listType').DataTable();
 		});
 		function modal(open){
-			$('#' + open + '').modal('show');
+			$('#' + open + '').modal('show').modal({
+				closable: false,
+			});
 		}
 	</script>
 @stop

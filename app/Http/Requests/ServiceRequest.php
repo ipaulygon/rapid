@@ -27,7 +27,7 @@ class ServiceRequest extends FormRequest
         return [
             'serviceName' => 'required|unique:service',
             'serviceCategoryId' => 'required',
-            'servicePrice' => 'numeric|required'
+            'servicePrice' => 'numeric|required|between:0,99999999.99'
         ];
     }
 

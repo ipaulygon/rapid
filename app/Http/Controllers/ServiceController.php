@@ -50,7 +50,7 @@ class ServiceController extends Controller
         $this->validate($request, [
             'editServiceName' => 'required',
             'editServiceCategoryId' => 'required',
-            'editServicePrice' => 'numeric|required',
+            'editServicePrice' => 'numeric|required|between:0,99999999.99',
         ]);
     	$checkService = Service::all();
         $isAdded = false;

@@ -62,7 +62,7 @@
 
 	<h2>Maintenance - Brand</h2>
 	<hr><br>
-	<button class="ui positive button" name="modalNew" onclick="modal(this.name)"><i class="plus icon"></i>New Brand</button>
+	<button class="ui green button" name="modalNew" onclick="modal(this.name)"><i class="plus icon"></i>New Brand</button>
 	<br><br>
 	<table id="listType" class="ui celled three column table">
 		<thead>
@@ -114,7 +114,7 @@
 								<div class="actions">
 									<i>Note: All with <span>*</span> are required fields</i>
 		        					<button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
-		        					<button type="submit" class="ui positive button"><i class="write icon"></i>Update</button>
+		        					<button type="submit" class="ui green button"><i class="write icon"></i>Update</button>
 		        				</div>
 	        				{!! Form::close() !!}
 						</div>
@@ -136,7 +136,7 @@
 								</div>
 								<div class="actions">
 			        				<button type="submit" class="ui negative button"><i class="trash icon"></i>Deactivate</button>
-			        				<button type="reset" class="ui positive button"><i class="plane icon"></i>Cancel</button>
+			        				<button type="reset" class="ui positive button"><i class="remove icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
 						</div>
@@ -173,7 +173,7 @@
 	    				<div class="actions">
 	    					<i>Note: All with <span>*</span> are required fields</i>
 	    					<button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
-	    					<button type="submit" class="ui positive button"><i class="plus icon"></i>Save</button>
+	    					<button type="submit" class="ui green button"><i class="plus icon"></i>Save</button>
 	    				</div>
 					{!! Form::close() !!}
 				</div>
@@ -187,12 +187,21 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 		    $('#listType').DataTable();
+		    $('.ui.form').form({
+			    fields: {
+			    	brandName: 'empty',
+			  	}
+			});
+			$('.ui.small.modal').form({
+			    fields: {
+			    	editBrandName: 'empty',
+			  	}
+			});
 		});
-		/*$('#create').click(function(){
-        	$('#modalNew').modal('show');    
-    	});*/
 		function modal(open){
-			$('#' + open + '').modal('show');
+			$('#' + open + '').modal('show').modal({
+				closable: false,
+			});
 		}
 	</script>
 @stop

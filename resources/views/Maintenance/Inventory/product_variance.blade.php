@@ -79,7 +79,7 @@
 
 	<h2>Maintenance - Product Variance</h2>
 	<hr><br>
-	<button class="ui positive button" name="modalNew" onclick="modal(this.name)"><i class="plus icon"></i>New Variance</button>
+	<button class="ui green button" name="modalNew" onclick="modal(this.name)"><i class="plus icon"></i>New Variance</button>
 	<br><br>
 	<table id="list" class="ui celled five column table">
 		<thead>
@@ -177,7 +177,7 @@
 								<div class="actions">
 									<i>Note: All with <span>*</span> are required fields</i>
 		        					<button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
-		        					<button type="submit" class="ui positive button"><i class="write icon"></i>Update</button>
+		        					<button type="submit" class="ui green button"><i class="write icon"></i>Update</button>
 		        				</div>
 		        				<script type="text/javascript">
 		        					var array=[
@@ -210,7 +210,7 @@
 								</div>
 								<div class="actions">
 			        				<button type="submit" class="ui negative button"><i class="trash icon"></i>Deactivate</button>
-			        				<button type="reset" class="ui positive button"><i class="plane icon"></i>Cancel</button>
+			        				<button type="reset" class="ui positive button"><i class="remove icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
 						</div>
@@ -283,7 +283,7 @@
 	    				<div class="actions">
 	    					<i>Note: All with <span>*</span> are required fields</i>
 	    					<button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
-	    					<button type="submit" class="ui positive button"><i class="plus icon"></i>Save</button>
+	    					<button type="submit" class="ui green button"><i class="plus icon"></i>Save</button>
 	    				</div>
 					{!! Form::close() !!}
 				</div>
@@ -298,9 +298,23 @@
 		$(document).ready(function(){
 		    $('#list').DataTable();
 		    $('.ui.dropdown').dropdown();
+		    $('.ui.form').form({
+			    fields: {
+			    	varianceSize: 'empty',
+			    	varianceUnitId: 'empty',
+			  	}
+			});
+			$('.ui.small.modal').form({
+			    fields: {
+			    	editVarianceSize: 'empty',
+			    	editVarianceUnitId: 'empty',
+			  	}
+			});
 		});
 		function modal(open){
-			$('#' + open + '').modal('show');
+			$('#' + open + '').modal('show').modal({
+				closable: false,
+			});
 		}
 	</script>
 @stop

@@ -62,7 +62,7 @@
 
 	<h2>Maintenance - Service</h2>
 	<hr><br>
-	<button class="ui positive button" name="modalNew" onclick="modal(this.name)"><i class="plus icon"></i>New Service</button>
+	<button class="ui green button" name="modalNew" onclick="modal(this.name)"><i class="plus icon"></i>New Service</button>
 	<br><br>
 	<table id="list" class="ui five column celled table">
 		<thead>
@@ -130,7 +130,7 @@
 												<div class="six wide field">
 													<div class="ui labeled input">
 														<div class="ui label">P</div>
-														<input type="text" name="editServicePrice" value="{{ $serv->servicePrice }}" placeholder="Price">
+														<input type="text" name="editServicePrice" value="{{ $serv->servicePrice }}" placeholder="Price" maxlength="8">
 														<input type="hidden" name="currentServicePrice" value="{{$serv->service}}">
 													</div>
 												</div>
@@ -149,7 +149,7 @@
 								<div class="actions">
 									<i>Note: All with <span>*</span> are required fields</i>
 		        					<button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
-		        					<button type="submit" class="ui positive button"><i class="write icon"></i>Update</button>
+		        					<button type="submit" class="ui green button"><i class="write icon"></i>Update</button>
 		        				</div>
 	        				{!! Form::close() !!}
 						</div>
@@ -175,7 +175,7 @@
 								</div>
 								<div class="actions">
 			        				<button type="submit" class="ui negative button"><i class="trash icon"></i>Deactivate</button>
-			        				<button type="reset" class="ui positive button"><i class="plane icon"></i>Cancel</button>
+			        				<button type="reset" class="ui positive button"><i class="remove icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
 						</div>
@@ -190,8 +190,8 @@
 		<div class="header">New Service</div>
 		<div class="content">
 			<div class="description">
-				{!! Form::open(['action' => 'ServiceController@create']) !!}
-					<div class="ui form">
+				<div class="ui form">
+					{!! Form::open(['action' => 'ServiceController@create']) !!}
 						<div class="inline fields">
 	    					<input type="hidden" name="serviceId" value="{{ $newId }}" readonly>
 	    					<div class="two wide field">
@@ -225,7 +225,7 @@
 							<div class="six wide field">
 								<div class="ui labeled input">
 									<div class="ui label">P</div>
-									<input type="text" name="servicePrice" placeholder="Price">
+									<input type="text" name="servicePrice" placeholder="Price" maxlength="8">
 								</div>
 							</div>
 	    				</div>
@@ -237,13 +237,13 @@
 	    						<textarea type="text" name="serviceDesc"></textarea>
 	    					</div>
 	    				</div>
-					</div>
-					<div class="actions">
-						<i>Note: All with <span>*</span> are required fields</i>
-						<button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
-						<button type="submit" class="ui positive button"><i class="write icon"></i>Save</button>
-					</div>
-				{!! Form::close() !!}
+	    				<div class="actions">
+							<i>Note: All with <span>*</span> are required fields</i>
+							<button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
+							<button type="submit" class="ui green button"><i class="write icon"></i>Save</button>
+						</div>
+					{!! Form::close() !!}
+				</div>
 			</div>
 		</div>
 	</div>
@@ -255,12 +255,25 @@
 		$(document).ready(function(){
 		    $('#list').DataTable();
 		    $('.ui.dropdown').dropdown();
+		    $('.ui.form').form({
+			    fields: {
+			    	serviceName: 'empty',
+			    	serviceCategoryId: 'empty',
+			    	servicePrice: 'empty',
+			  	}
+			});
+			$('.ui.small.modal').form({
+			    fields: {
+			    	editServiceName: 'empty',
+			    	editServiceCategoryId: 'empty',
+			    	editServicePrice: 'empty',
+			  	}
+			});
 		});
-		/*$('#create').click(function(){
-        	$('#modalNew').modal('show');    
-    	});*/
 		function modal(open){
-			$('#' + open + '').modal('show');
+			$('#' + open + '').modal('show').modal({
+				closable: false,
+			});
 		}
 	</script>
 @stop

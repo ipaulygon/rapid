@@ -134,7 +134,7 @@
 								</div>
 								<div class="actions">
 			        				<button type="submit" class="ui negative button"><i class="trash icon"></i>Deactivate</button>
-			        				<button type="reset" class="ui positive button"><i class="plane icon"></i>Cancel</button>
+			        				<button type="reset" class="ui positive button"><i class="remove icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
 						</div>
@@ -152,7 +152,9 @@
 		    $('#list').DataTable();
 		});
 		function modal(open){
-			$('#' + open + '').modal('show');
+			$('#' + open + '').modal('show').modal({
+				closable: false,
+			});
 		}
 		function update(id){
 			$.ajaxSetup({

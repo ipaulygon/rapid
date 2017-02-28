@@ -31,7 +31,7 @@ class TechRequest extends FormRequest
             'street' => 'required',
             'brgy' => 'required',
             'city' => 'required',
-            'techContact' => 'required|regex:/^\d{11}/',
+            'techContact' => 'required|regex:/^\d{11}$/',
             'techEmail' => 'email',
         ];
     }

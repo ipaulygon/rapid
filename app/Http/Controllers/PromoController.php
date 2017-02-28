@@ -102,7 +102,7 @@ class PromoController extends Controller
     public function update(Request $request){
         $this->validate($request, [
             'editPromoName' => 'required',
-            'editPromoCost' => 'numeric|required',
+            'editPromoCost' => 'required|numeric|between:0,99999999.99',
             'editPromoSupplies' => 'numeric',
             'editPromoStart' => 'date',
             'editPromoEnd' => 'date'

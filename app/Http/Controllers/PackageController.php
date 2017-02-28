@@ -90,7 +90,7 @@ class PackageController extends Controller
     public function update(Request $request){
         $this->validate($request, [
             'editPackageName' => 'required',
-            'editPackageCost' => 'numeric|required',
+            'editPackageCost' => 'required|numeric|between:0,99999999.99',
         ]);
         $checkPackage = Package::all();
         $isAdded = false;

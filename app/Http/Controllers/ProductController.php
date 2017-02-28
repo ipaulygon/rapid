@@ -108,6 +108,7 @@ class ProductController extends Controller
             $prices = $request->input('costs');
             //$affectedRows = ProductVariance::where('pvProductId', '=', $request->input('editProductId'))->update(['pvIsActive' => 0]);
             $product_variance = ProductVariance::with('product')->where('pvProductId','=',$id)->where('pvIsActive','=',1)->count();
+            $warning = 0;
             if($product_variance==0){
                 $x = 0;
                 if($variance!=null || $variance!=''){

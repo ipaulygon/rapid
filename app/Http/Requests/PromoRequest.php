@@ -26,7 +26,7 @@ class PromoRequest extends FormRequest
     {
         return [
             'promoName' => 'required|unique:promo',
-            'promoCost' => 'numeric|required',
+            'promoCost' => 'required|numeric|between:0,99999999.99',
             'promoSupplies' => 'numeric',
             'promoStart' => 'date',
             'promoEnd' => 'date'
@@ -42,6 +42,7 @@ class PromoRequest extends FormRequest
             'promoEnd.date' => 'End date must be a valid date.',
             'promoCost.numeric' => 'Cost must be valid monetary value',
             'promoCost.required' => 'Cost is required',
+            'promoCost.max' => 'Max value of cost is 8 digits',
         ];
     }
 

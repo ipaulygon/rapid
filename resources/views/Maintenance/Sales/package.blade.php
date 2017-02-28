@@ -62,7 +62,7 @@
 
 	<h2>Maintenance - Package</h2>
 	<hr><br>
-	<a href="{{URL::to('maintenance/package/form-create')}}" class="ui positive button" name="modalAdd"><i class="plus icon"></i>New Package</a>
+	<a href="{{URL::to('maintenance/package/form-create')}}" class="ui green button" name="modalAdd"><i class="plus icon"></i>New Package</a>
 	<br><br>
 	<table id="listType" class="ui celled table">
 		<thead>
@@ -122,7 +122,7 @@
 								</div>
 								<div class="actions">
 			        				<button type="submit" class="ui negative button"><i class="trash icon"></i>Deactivate</button>
-			        				<button type="reset" class="ui positive button"><i class="plane icon"></i>Cancel</button>
+			        				<button type="reset" class="ui positive button"><i class="remove icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
 						</div>
@@ -140,7 +140,9 @@
 		    $('#listType').DataTable();
 		});
 		function modal(open){
-			$('#' + open + '').modal('show');
+			$('#' + open + '').modal('show').modal({
+				closable: false,
+			});
 		}
 		function update(id){
 			$.ajaxSetup({

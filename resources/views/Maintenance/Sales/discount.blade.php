@@ -62,7 +62,7 @@
 
 	<h2>Maintenance - Discount</h2>
 	<hr><br>
-	<button class="ui positive button" name="modalNew" onclick="modal(this.name)"><i class="plus icon"></i>New Discount</button>
+	<button class="ui green button" name="modalNew" onclick="modal(this.name)"><i class="plus icon"></i>New Discount</button>
 	<br><br>
 	<table id="list" class="ui celled three column table">
 		<thead>
@@ -114,7 +114,7 @@
 								<div class="actions">
 									<i>Note: All with <span>*</span> are required fields</i>
 		        					<button type="reset" class="ui negative button"><i class="remove icon"></i>Clear</button>
-		        					<button type="submit" class="ui positive button"><i class="write icon"></i>Update</button>
+		        					<button type="submit" class="ui green button"><i class="write icon"></i>Update</button>
 		        				</div>
 	        				{!! Form::close() !!}
 						</div>
@@ -138,7 +138,7 @@
 								</div>
 								<div class="actions">
 			        				<button type="submit" class="ui negative button"><i class="trash icon"></i>Deactivate</button>
-			        				<button type="reset" class="ui positive button"><i class="plane icon"></i>Cancel</button>
+			        				<button type="reset" class="ui positive button"><i class="remove icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
 						</div>
@@ -175,7 +175,7 @@
 	    				<div class="actions">
 	    					<i>Note: All with <span>*</span> are required fields</i>
 	    					<button type="reset" class="ui negative button"><i class="remove icon"></i>Clear</button>
-	    					<button type="submit" class="ui positive button"><i class="plus icon"></i>New</button>
+	    					<button type="submit" class="ui green button"><i class="plus icon"></i>Save</button>
 	    				</div>
 					{!! Form::close() !!}
 				</div>
@@ -189,12 +189,23 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 		    $('#list').DataTable();
+		    $('.ui.form').form({
+			    fields: {
+			    	discountName: 'empty',
+			    	discountRate: 'empty',
+			  	}
+			});
+			$('.ui.small.modal').form({
+			    fields: {
+			    	editDiscountName: 'empty',
+			    	editDiscountRate: 'empty',
+			  	}
+			});
 		});
-		/*$('#create').click(function(){
-        	$('#modalNew').modal('show');    
-    	});*/
 		function modal(open){
-			$('#' + open + '').modal('show');
+			$('#' + open + '').modal('show').modal({
+				closable: false
+			});
 		}
 	</script>
 @stop

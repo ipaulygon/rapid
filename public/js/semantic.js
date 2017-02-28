@@ -9512,7 +9512,7 @@ $.fn.modal.settings = {
   context    : 'body',
 
   queue      : false,
-  duration   : 500,
+  duration   : 300,
   offset     : 0,
   transition : 'scale',
 

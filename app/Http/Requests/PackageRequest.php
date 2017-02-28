@@ -26,7 +26,7 @@ class PackageRequest extends FormRequest
     {
         return [
             'packageName' => 'required|unique:package',
-            'packageCost' => 'numeric|required',
+            'packageCost' => 'required|numeric|between:0,99999999.99',
         ];
     }
     public function messages()
@@ -36,6 +36,7 @@ class PackageRequest extends FormRequest
             'packageName.required' => 'Package name is required.',
             'packageCost.numeric' => 'Cost must be valid monetary value',
             'packageCost.required' => 'Cost is required',
+            'packageCost.max' => 'Max value of cost is 8 digits',
         ];
     }
 

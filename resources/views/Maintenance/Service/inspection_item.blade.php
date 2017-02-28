@@ -62,7 +62,7 @@
 
 	<h2>Maintenance - Inspection Item</h2>
 	<hr><br>
-	<button class="ui positive button" name="modalNewItem" onclick="modal(this.name)"><i class="plus icon"></i>New Inspection Item</button>
+	<button class="ui green button" name="modalNewItem" onclick="modal(this.name)"><i class="plus icon"></i>New Inspection Item</button>
 	<br><br>
 	<table id="list" class="ui celled four column table">
 		<thead>
@@ -133,7 +133,7 @@
 								<div class="actions">
 									<i>Note: All with <span>*</span> are required fields</i>
 		        					<button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
-		        					<button type="submit" class="ui positive button"><i class="write icon"></i>Update</button>
+		        					<button type="submit" class="ui green button"><i class="write icon"></i>Update</button>
 		        				</div>
 	        				{!! Form::close() !!}
 						</div>
@@ -156,7 +156,7 @@
 								</div>
 								<div class="actions">
 			        				<button type="submit" class="ui negative button"><i class="trash icon"></i>Deactivate</button>
-			        				<button type="reset" class="ui positive button"><i class="plane icon"></i>Cancel</button>
+			        				<button type="reset" class="ui positive button"><i class="remove icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
 						</div>
@@ -210,7 +210,7 @@
                         <div class="actions">
                             <i>Note: All with <span>*</span> are required fields</i>
                             <button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
-                            <button type="submit" class="ui positive button"><i class="plus icon"></i>Save</button>
+                            <button type="submit" class="ui green button"><i class="plus icon"></i>Save</button>
                         </div>
                     {!! Form::close() !!}
                 </div>
@@ -227,12 +227,23 @@
 		    $('#listItem').DataTable();
 		    $('.menu .item').tab();
 		    $('.ui.dropdown').dropdown();
+		    $('.ui.form').form({
+			    fields: {
+			    	inspectItemName: 'empty',
+			    	inspectItemTypeId: 'empty',
+			  	}
+			});
+			$('.ui.small.modal').form({
+			    fields: {
+			    	editInspectItemName: 'empty',
+			    	editInspectItemTypeId: 'empty',
+			  	}
+			});
 		});
-		/*$('#create').click(function(){
-        	$('#modalNew').modal('show');    
-    	});*/
 		function modal(open){
-			$('#' + open + '').modal('show');
+			$('#' + open + '').modal('show').modal({
+				closable: false,
+			});
 		}
 	</script>
 @stop

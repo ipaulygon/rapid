@@ -26,7 +26,7 @@ class DiscountRequest extends FormRequest
     {
         return [
             'discountName' => 'required|unique:discount',
-            'discountRate' => 'numeric|required', 
+            'discountRate' => 'numeric|required|between:0,99', 
         ];
     }
 

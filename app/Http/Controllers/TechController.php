@@ -74,7 +74,7 @@ class TechController extends Controller
             'editStreet' => 'required',
             'editBrgy' => 'required',
             'editCity' => 'required',
-            'editTechContact' => 'required|regex:/^\d{11}/',
+            'editTechContact' => 'required|numeric|regex:/^\d{11}$/',
             'editTechEmail' => 'email',
         ]);
         $checktechs = Technician::all();

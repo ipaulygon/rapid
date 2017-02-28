@@ -145,7 +145,7 @@
 			<i>Note: All with <span>*</span> are required fields</i>
 			<div style="float:right">
 				<a href="{{URL::to('/maintenance/promo')}}" type="reset" class="ui negative button"><i class="arrow left icon"></i>Back</a>
-				<button type="submit" class="ui positive button"><i class="plus icon"></i>Save</button>
+				<button type="submit" class="ui green button"><i class="plus icon"></i>Save</button>
 			</div>
 		{!! Form::close() !!}
 	</div>
@@ -161,13 +161,19 @@
 		    $('#add.ui.dropdown').dropdown({
 		    	onAdd: function(value,text,$addedChoice){
 		    		var prod = $addedChoice.attr('title');
-		    		$("#qty"+prod).append('<div id="'+value+'"><label id="'+value+'">'+text+'</label><div class="ui right labeled input"><input id="'+value+'" type="text" name="qty[]"><div class="ui label">pieces</div></div></div>');
+		    		$("#qty"+prod).append('<div id="'+value+'"><label id="'+value+'">'+text+'</label><div class="ui right labeled input"><input id="'+value+'" type="text" name="qty[]" required onkeypress="return validate(event,this.id)" maxlength="3" data-content="Only numerical values are allowed"><div class="ui label">pieces</div></div></div>');
 		    	},
 		    	onRemove: function(value, text, $removedChoice){
 		    		var prod = $removedChoice.attr('title');
 		    		$("#qty"+prod+" div[id="+value+"]").remove();
 				}
 		    });
+		    $('.ui.form').form({
+			    fields: {
+			    	promoName: 'empty',
+			    	promoCost: 'empty',
+			  	}
+			});
 		    $( function() {
 			    var dateFormat = "MM d, yy",
 			    	from = $( ".start" ).datepicker({
@@ -231,5 +237,18 @@
 				$('.end').attr("disabled",false);
 			}
 		}
+		function validate(event, idx) {
+            var char = String.fromCharCode(event.which);
+            var patt = /\d/;
+            var res = patt.test(char);
+            if (!res) {
+                $("input[id="+idx+"]").popup('show');
+                return false;
+            }
+            else {
+                $("input[id="+idx+"]").popup('hide');
+                
+            }
+        }
 	</script>
 @stop

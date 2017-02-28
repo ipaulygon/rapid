@@ -117,7 +117,7 @@
 		    $('.add.ui.dropdown').dropdown({
 		    	onAdd: function(value,text,$addedChoice){
 		    		var prod = $addedChoice.attr('title');
-		    		$("#cost"+prod).append('<div id="'+value+'" class="inline fields"><div class="four wide field"><label id="'+value+'">'+text+'</label></div><div class="twelve wide field"><div class="ui labeled input"><div class="ui label">Php</div><input id="'+value+'" type="text" name="costs[]" onchange="change(this.id)"></div></div></div>');
+		    		$("#cost"+prod).append('<div id="'+value+'" class="inline fields"><div class="four wide field"><label id="'+value+'">'+text+'</label></div><div class="twelve wide field"><div class="ui labeled input"><div class="ui label">Php</div><input id="'+value+'" type="text" name="costs[]" onchange="change(this.id)" required onkeypress="return validate(event,this.id)" maxlength="8" data-content="Only numerical values are allowed"></div></div></div>');
 		    		$("#cost"+prod).append('<input id="hidden'+value+'" type="hidden" name="'+value+'">');
 		    	},
 		    	onRemove: function(value, text, $removedChoice){
@@ -127,6 +127,13 @@
 		    		// $("#cost"+prod+" label[id="+value+"]").remove();
 		    	}
 		    });
+		    $('.ui.form').form({
+			    fields: {
+			    	editProductName: 'empty',
+			    	editProductBrandId: 'empty',
+			    	editProductTypeId: 'empty',
+			  	}
+			});
 		    var variances = [
 		    	@foreach($pv as $var)
 		    		@if($var->pvIsActive==1)
@@ -170,5 +177,18 @@
 				}
 			});
 		}
+		function validate(event, idx) {
+            var char = String.fromCharCode(event.which);
+            var patt = /^\d*\.?\d*$/g;
+            var res = patt.test(char);
+            if (!res) {
+                $("input[id="+idx+"]").popup('show');
+                return false;
+            }
+            else {
+                $("input[id="+idx+"]").popup('hide');
+                
+            }
+        }
 	</script>
 @stop
