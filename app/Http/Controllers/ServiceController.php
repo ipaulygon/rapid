@@ -7,6 +7,7 @@ use App\ServiceCost;
 use App\ServiceCategory;
 use App\PackageService;
 use App\PromoService;
+use App\TechSkill;
 
 use Illuminate\Http\Request;
 
@@ -90,6 +91,11 @@ class ServiceController extends Controller
         $promo_service = PromoService::where('promoServiceId','=',$id)->where('promoSIsActive','=',1)->count();
         if($promo_service>0){
             \Session::flash('error_message','Service is still being used in promos. Deactivation failed');
+            return redirect('maintenance/service');
+        }
+        $tech_skill = TechSkill::where('tsSkillId','=',$id)->where('tsIsActive','=',1)->count();
+        if($tech_skill>0){
+            \Session::flash('error_message','Service is still being used in technician skills. Deactivation failed');
             return redirect('maintenance/service');
         }
         $serv = Service::find($request->input('delServiceId'));

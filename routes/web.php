@@ -123,3 +123,11 @@ Route::post('/utilities/data-reactivation','ReactivationController@producttype')
 Route::post('/utilities/data-reactivation','ReactivationController@unit');
 Route::post('/utilities/data-reactivation','ReactivationController@variance');
 Route::post('/utilities/data-reactivation','ReactivationController@product');
+Route::post('/utilities/data-reactivation','ReactivationController@category');
+Route::post('/utilities/data-reactivation','ReactivationController@service');
+Route::post('/utilities/data-reactivation','ReactivationController@inspecttype');
+Route::post('/utilities/data-reactivation','ReactivationController@inspectitem');
+Route::post('/utilities/data-reactivation','ReactivationController@package');
+Route::post('/utilities/data-reactivation','ReactivationController@promo');
+Route::post('/utilities/data-reactivation','ReactivationController@discount');
+Route::post('/utilities/data-reactivation','ReactivationController@tech');

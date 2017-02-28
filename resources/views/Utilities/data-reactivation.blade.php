@@ -290,13 +290,357 @@
 		</table>
 	</div>
 	<div class="ui tab" data-tab="carcare">
-		Second
+		<!-- Category -->
+		<h3>Service Category</h3>
+		<table id="category" class="ui celled table">
+			<thead>
+				<tr>
+					<th>Service Category</th>
+					<th>Description</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach($service_category as $category)
+					@if($category->categoryIsActive==0)
+						<td>{{$category->categoryName}}</td>
+						<td>{{$category->categoryDesc}}</td>
+						<td>
+							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$category->categoryId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
+						</td>
+						<div class="ui small basic modal" id="refresh{{$category->categoryId}}" style="text-align:center">
+							<div class="ui icon header">
+								<i class="refresh icon"></i>
+								Reactivate
+							</div>
+							{!! Form::open(['action' => 'ReactivationController@category']) !!}
+								<div class="content">
+									<div class="description">
+										<input type="hidden" name="categoryId" value="{{$category->categoryId }}">
+										<p>
+											<label>Service Category: {{$category->categoryName}}</label><br>
+											<label>Description: {{$category->categoryDesc}}</label>
+										</p>
+									</div>
+								</div>
+								<div class="actions">
+			        				<button type="submit" class="ui positive button"><i class="refresh icon"></i>Reactivate</button>
+			        				<button type="reset" class="ui negative button"><i class="remove icon"></i>Cancel</button>
+			        			</div>
+							{!! Form::close() !!}
+						</div>
+					@endif
+				@endforeach
+			</tbody>
+		</table>
+		<!-- Service -->
+		<h3>Service</h3>
+		<table id="service" class="ui celled table">
+			<thead>
+				<tr>
+					<th>Service</th>
+					<th>Description</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach($service as $service)
+					@if($service->serviceIsActive==0)
+						<td>{{$service->serviceName}}</td>
+						<td>{{$service->serviceDesc}}</td>
+						<td>
+							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$service->serviceId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
+						</td>
+						<div class="ui small basic modal" id="refresh{{$service->serviceId}}" style="text-align:center">
+							<div class="ui icon header">
+								<i class="refresh icon"></i>
+								Reactivate
+							</div>
+							{!! Form::open(['action' => 'ReactivationController@service']) !!}
+								<div class="content">
+									<div class="description">
+										<input type="hidden" name="serviceId" value="{{$service->serviceId }}">
+										<p>
+											<label>Service: {{$service->serviceName}}</label><br>
+											<label>Description: {{$service->serviceDesc}}</label>
+										</p>
+									</div>
+								</div>
+								<div class="actions">
+			        				<button type="submit" class="ui positive button"><i class="refresh icon"></i>Reactivate</button>
+			        				<button type="reset" class="ui negative button"><i class="remove icon"></i>Cancel</button>
+			        			</div>
+							{!! Form::close() !!}
+						</div>
+					@endif
+				@endforeach
+			</tbody>
+		</table>
+		<!-- Inspect Type -->
+		<h3>Inspect Type</h3>
+		<table id="inspectType" class="ui celled table">
+			<thead>
+				<tr>
+					<th>Inspect Type</th>
+					<th>Description</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach($inspect_type as $inspectType)
+					@if($inspectType->inspectTypeIsActive==0)
+						<td>{{$inspectType->inspectTypeName}}</td>
+						<td>{{$inspectType->inspectTypeDesc}}</td>
+						<td>
+							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$inspectType->inspectTypeId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
+						</td>
+						<div class="ui small basic modal" id="refresh{{$inspectType->inspectTypeId}}" style="text-align:center">
+							<div class="ui icon header">
+								<i class="refresh icon"></i>
+								Reactivate
+							</div>
+							{!! Form::open(['action' => 'ReactivationController@inspecttype']) !!}
+								<div class="content">
+									<div class="description">
+										<input type="hidden" name="inspectTypeId" value="{{$inspectType->inspectTypeId }}">
+										<p>
+											<label>Inspect Type: {{$inspectType->inspectTypeName}}</label><br>
+											<label>Description: {{$inspectType->inspectTypeDesc}}</label>
+										</p>
+									</div>
+								</div>
+								<div class="actions">
+			        				<button type="submit" class="ui positive button"><i class="refresh icon"></i>Reactivate</button>
+			        				<button type="reset" class="ui negative button"><i class="remove icon"></i>Cancel</button>
+			        			</div>
+							{!! Form::close() !!}
+						</div>
+					@endif
+				@endforeach
+			</tbody>
+		</table>
+		<!-- Inspect Item -->
+		<h3>Inspect Item</h3>
+		<table id="inspectItem" class="ui celled table">
+			<thead>
+				<tr>
+					<th>Inspect Item</th>
+					<th>Description</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach($inspect_item as $inspectItem)
+					@if($inspectItem->inspectItemIsActive==0)
+						<td>{{$inspectItem->inspectItemName}}</td>
+						<td>{{$inspectItem->inspectItemDesc}}</td>
+						<td>
+							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$inspectItem->inspectItemId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
+						</td>
+						<div class="ui small basic modal" id="refresh{{$inspectItem->inspectItemId}}" style="text-align:center">
+							<div class="ui icon header">
+								<i class="refresh icon"></i>
+								Reactivate
+							</div>
+							{!! Form::open(['action' => 'ReactivationController@inspectitem']) !!}
+								<div class="content">
+									<div class="description">
+										<input type="hidden" name="inspectItemId" value="{{$inspectItem->inspectItemId }}">
+										<p>
+											<label>Inspect Item: {{$inspectItem->inspectItemName}}</label><br>
+											<label>Description: {{$inspectItem->inspectItemDesc}}</label>
+										</p>
+									</div>
+								</div>
+								<div class="actions">
+			        				<button type="submit" class="ui positive button"><i class="refresh icon"></i>Reactivate</button>
+			        				<button type="reset" class="ui negative button"><i class="remove icon"></i>Cancel</button>
+			        			</div>
+							{!! Form::close() !!}
+						</div>
+					@endif
+				@endforeach
+			</tbody>
+		</table>
 	</div>
 	<div class="ui tab" data-tab="sales">
-		Third
+		<!-- Package -->
+		<h3>Package</h3>
+		<table id="package" class="ui celled table">
+			<thead>
+				<tr>
+					<th>Package</th>
+					<th>Description</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach($package as $package)
+					@if($package->packageIsActive==0)
+						<td>{{$package->packageName}}</td>
+						<td>{{$package->packageDesc}}</td>
+						<td>
+							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$package->packageId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
+						</td>
+						<div class="ui small basic modal" id="refresh{{$package->packageId}}" style="text-align:center">
+							<div class="ui icon header">
+								<i class="refresh icon"></i>
+								Reactivate
+							</div>
+							{!! Form::open(['action' => 'ReactivationController@package']) !!}
+								<div class="content">
+									<div class="description">
+										<input type="hidden" name="packageId" value="{{$package->packageId }}">
+										<p>
+											<label>Package: {{$package->packageName}}</label><br>
+											<label>Description: {{$package->packageDesc}}</label>
+										</p>
+									</div>
+								</div>
+								<div class="actions">
+			        				<button type="submit" class="ui positive button"><i class="refresh icon"></i>Reactivate</button>
+			        				<button type="reset" class="ui negative button"><i class="remove icon"></i>Cancel</button>
+			        			</div>
+							{!! Form::close() !!}
+						</div>
+					@endif
+				@endforeach
+			</tbody>
+		</table>
+		<!-- Promo -->
+		<h3>Promo</h3>
+		<table id="promo" class="ui celled table">
+			<thead>
+				<tr>
+					<th>Promo</th>
+					<th>Description</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach($promo as $promo)
+					@if($promo->promoIsActive==0)
+						<td>{{$promo->promoName}}</td>
+						<td>{{$promo->promoDesc}}</td>
+						<td>
+							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$promo->promoId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
+						</td>
+						<div class="ui small basic modal" id="refresh{{$promo->promoId}}" style="text-align:center">
+							<div class="ui icon header">
+								<i class="refresh icon"></i>
+								Reactivate
+							</div>
+							{!! Form::open(['action' => 'ReactivationController@promo']) !!}
+								<div class="content">
+									<div class="description">
+										<input type="hidden" name="promoId" value="{{$promo->promoId }}">
+										<p>
+											<label>Promo: {{$promo->promoName}}</label><br>
+											<label>Description: {{$promo->promoDesc}}</label>
+										</p>
+									</div>
+								</div>
+								<div class="actions">
+			        				<button type="submit" class="ui positive button"><i class="refresh icon"></i>Reactivate</button>
+			        				<button type="reset" class="ui negative button"><i class="remove icon"></i>Cancel</button>
+			        			</div>
+							{!! Form::close() !!}
+						</div>
+					@endif
+				@endforeach
+			</tbody>
+		</table>
+		<!-- Discount -->
+		<h3>Discount</h3>
+		<table id="discount" class="ui celled table">
+			<thead>
+				<tr>
+					<th>Discount</th>
+					<th>Description</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach($discount as $discount)
+					@if($discount->discountIsActive==0)
+						<td>{{$discount->discountName}}</td>
+						<td>{{$discount->discountDesc}}</td>
+						<td>
+							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$discount->discountId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
+						</td>
+						<div class="ui small basic modal" id="refresh{{$discount->discountId}}" style="text-align:center">
+							<div class="ui icon header">
+								<i class="refresh icon"></i>
+								Reactivate
+							</div>
+							{!! Form::open(['action' => 'ReactivationController@discount']) !!}
+								<div class="content">
+									<div class="description">
+										<input type="hidden" name="discountId" value="{{$discount->discountId }}">
+										<p>
+											<label>Discount: {{$discount->discountName}}</label><br>
+											<label>Description: {{$discount->discountDesc}}</label>
+										</p>
+									</div>
+								</div>
+								<div class="actions">
+			        				<button type="submit" class="ui positive button"><i class="refresh icon"></i>Reactivate</button>
+			        				<button type="reset" class="ui negative button"><i class="remove icon"></i>Cancel</button>
+			        			</div>
+							{!! Form::close() !!}
+						</div>
+					@endif
+				@endforeach
+			</tbody>
+		</table>
 	</div>
 	<div class="ui tab" data-tab="tech">
-		Third
+		<!-- Tech -->
+		<h3>Technician</h3>
+		<table id="tech" class="ui celled definition table">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Technician</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach($technician as $tech)
+					@if($tech->techIsActive==0)
+						<td><img style="width: 150px;height:150px; object-fit: contain;" src="{{URL::asset($tech->techPic)}}"></td>
+						<td>{{$tech->techFirst}} {{$tech->techMiddle}} {{$tech->techLast}}</td>
+						<td>
+							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$tech->techId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
+						</td>
+						<div class="ui small basic modal" id="refresh{{$tech->techId}}" style="text-align:center">
+							<div class="ui icon header">
+								<i class="refresh icon"></i>
+								Reactivate
+							</div>
+							{!! Form::open(['action' => 'ReactivationController@tech']) !!}
+								<div class="content">
+									<div class="description">
+										<input type="hidden" name="techId" value="{{$tech->techId}}">
+										<div class="ui small centered card">
+											<div class="image">
+												<img src="{{asset($tech->techPic)}}">
+											</div>
+										</div>
+										<p>{{$tech->techFirst}} {{$tech->techMiddle}} {{$tech->techLast}}</p>
+										<p>{{$tech->techContact}}</p>
+									</div>
+								</div>
+								<div class="actions">
+			        				<button type="submit" class="ui positive button"><i class="refresh icon"></i>Reactivate</button>
+			        				<button type="reset" class="ui negative button"><i class="remove icon"></i>Cancel</button>
+			        			</div>
+							{!! Form::close() !!}
+						</div>
+					@endif
+				@endforeach
+			</tbody>
+		</table>
 	</div>
 @stop
 
@@ -329,6 +673,46 @@
 		    	"info": false,
 		    });
 		    $('#product').DataTable({
+		    	"pageLength": 100,
+		    	"paging": false,
+		    	"info": false,
+		    });
+		    $('#category').DataTable({
+		    	"pageLength": 100,
+		    	"paging": false,
+		    	"info": false,
+		    });
+		    $('#service').DataTable({
+		    	"pageLength": 100,
+		    	"paging": false,
+		    	"info": false,
+		    });
+		    $('#inspectType').DataTable({
+		    	"pageLength": 100,
+		    	"paging": false,
+		    	"info": false,
+		    });
+		    $('#inspectItem').DataTable({
+		    	"pageLength": 100,
+		    	"paging": false,
+		    	"info": false,
+		    });
+		    $('#package').DataTable({
+		    	"pageLength": 100,
+		    	"paging": false,
+		    	"info": false,
+		    });
+		    $('#promo').DataTable({
+		    	"pageLength": 100,
+		    	"paging": false,
+		    	"info": false,
+		    });
+		    $('#discount').DataTable({
+		    	"pageLength": 100,
+		    	"paging": false,
+		    	"info": false,
+		    });
+		    $('#tech').DataTable({
 		    	"pageLength": 100,
 		    	"paging": false,
 		    	"info": false,

@@ -136,6 +136,7 @@ class TechController extends Controller
         $tech = Technician::find($request->input('delTechId'));
         $tech->techIsActive = 0;
         $tech->save();
+        $techSkill = TechSkill::where('tsTechId', '=', $id)->update(['tsIsActive' => 0]);
         \Session::flash('flash_message','Technician successfully deactivated.');
         return redirect('maintenance/technician');
     }
