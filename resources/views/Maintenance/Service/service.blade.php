@@ -1,4 +1,4 @@
-@extends('layouts.mcarcare')
+@extends('layouts.master')
 
 @section('content')	
 	<!--New-->	
@@ -253,6 +253,10 @@
 @section('scripts')
 	<script type="text/javascript">
 		$(document).ready(function(){
+			$('#msTitle').attr('class','title active');
+			$('#msContent').attr('class','content active');
+			$('#smsTitle').attr('class','title active');
+			$('#smsContent').attr('class','content active');
 		    $('#list').DataTable();
 		    $('.ui.dropdown').dropdown();
 		    $('.ui.form').form({

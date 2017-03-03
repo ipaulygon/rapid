@@ -24,8 +24,8 @@ class CreateVehicleTable extends Migration
             $table->integer('vehicleEngine');
             $table->double('vehicleMileage', 15, 8);
             $table->boolean('vehicleIsActive');
-            $table->timestamps();
             $table->primary('vehicleId');
+            $table->timestamps();
             $table->foreign('vehicleMakeId')
                   ->references('makeId')->on('vehicle_make')
                   ->onUpdate('cascade')

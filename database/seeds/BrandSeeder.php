@@ -24,6 +24,12 @@ class BrandSeeder extends Seeder
 				'brandDesc' => '',
 				'brandIsActive' => 1,
             ),
+            array(
+                'brandId' => 'BRAND0003',
+                'brandName' => 'Bando',
+                'brandDesc' => '',
+                'brandIsActive' => 1,
+            ),
         );
         DB::table('brand')->insert($brand);
     }

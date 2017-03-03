@@ -26,6 +26,34 @@ class VarianceSeeder extends Seeder
                 'varianceUnitId' => 'UNIT001',
                 'varianceIsActive' => 1,
             ),
+            array(
+                'varianceId' => 'VAR0003',
+                'varianceSize' => '3PK630',
+                'varianceDesc' => '',
+                'varianceUnitId' => 'UNIT001',
+                'varianceIsActive' => 1,
+            ),
+            array(
+                'varianceId' => 'VAR0004',
+                'varianceSize' => '3PK645',
+                'varianceDesc' => '',
+                'varianceUnitId' => 'UNIT001',
+                'varianceIsActive' => 1,
+            ),
+            array(
+                'varianceId' => 'VAR0005',
+                'varianceSize' => '3PK675',
+                'varianceDesc' => '',
+                'varianceUnitId' => 'UNIT001',
+                'varianceIsActive' => 1,
+            ),
+            array(
+                'varianceId' => 'VAR0006',
+                'varianceSize' => '3PK750',
+                'varianceDesc' => '',
+                'varianceUnitId' => 'UNIT001',
+                'varianceIsActive' => 1,
+            ),
         );
         DB::table('variance')->insert($variance);
     }

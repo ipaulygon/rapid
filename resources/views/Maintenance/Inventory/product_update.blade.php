@@ -1,4 +1,4 @@
-@extends('layouts.maintenance')
+@extends('layouts.master')
 
 @section('content')
 	<!--Errors-->	
@@ -112,6 +112,10 @@
 @section('scripts')
 	<script type="text/javascript">
 		$(document).ready(function(){
+			$('#miTitle').attr('class','title active');
+			$('#miContent').attr('class','content active');
+			$('#smiTitle').attr('class','title active');
+			$('#smiContent').attr('class','content active');
 		    $('#brand.ui.dropdown').dropdown();
 		    $('#type.ui.dropdown').dropdown();
 		    $('.add.ui.dropdown').dropdown({

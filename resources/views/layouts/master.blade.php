@@ -42,8 +42,8 @@
             <div class="header">Maintenance</div>
             <div class="ui vertical accordion inverted fluid">
                 <div class="item">
-                    <a class="title"><i class="dropdown icon"></i>Inventory</a>
-                    <div class="content">
+                    <a id="miTitle" class="title"><i class="dropdown icon"></i>Inventory</a>
+                    <div id="miContent" class="content">
                         <div class="ui form">
                             <a href="{{URL::to('/maintenance/supplier')}}" class="item">Supplier</a>
                             <a href="{{URL::to('/maintenance/product-brand')}}" class="item">Product Brand</a>
@@ -55,8 +55,8 @@
                     </div>
                 </div>
                 <div class="item">
-                    <a class="title"><i class="dropdown icon"></i>Car Care</a>
-                    <div class="content">
+                    <a id="msTitle" class="title"><i class="dropdown icon"></i>Car Care</a>
+                    <div id="msContent" class="content">
                         <div class="ui form">
                             <a href="{{URL::to('/maintenance/service-category')}}" class="item">Service Category</a>
                             <a href="{{URL::to('/maintenance/service')}}" class="item">Service</a>
@@ -78,11 +78,11 @@
             <div class="header">Transaction</div>
             <div class="ui vertical accordion inverted">
                 <div class="item">
-                    <a class="title"><i class="dropdown icon"></i>Inventory</a>
-                    <div class="content">
+                    <a id="tiTitle" class="title"><i class="dropdown icon"></i>Inventory</a>
+                    <div id="tiContent" class="content">
                         <div class="ui form">
-                            <a href="" class="item">Order Supplies</a>
-                            <a href="" class="item">Accept Delivery</a>
+                            <a href="{{URL::to('/transaction/order-supply')}}" class="item">Order Supplies</a>
+                            <a href="" class="item">Receive Deliveries</a>
                         </div>
                     </div>
                 </div>
@@ -137,8 +137,8 @@
             <div class="header">Maintenance</div>
             <div class="ui vertical accordion inverted fluid">
                 <div class="item">
-                    <a class="title"><i class="dropdown icon"></i>Inventory</a>
-                    <div class="content">
+                    <a id="smiTitle" class="title"><i class="dropdown icon"></i>Inventory</a>
+                    <div id="smiContent" class="content">
                         <div class="ui form">
                             <a href="{{URL::to('/maintenance/supplier')}}" class="item">Supplier</a>
                             <a href="{{URL::to('/maintenance/product-brand')}}" class="item">Product Brand</a>
@@ -150,8 +150,8 @@
                     </div>
                 </div>
                 <div class="item">
-                    <a class="title"><i class="dropdown icon"></i>Car Care</a>
-                    <div class="content">
+                    <a id="smsTitle" class="title"><i class="dropdown icon"></i>Car Care</a>
+                    <div id="smsContent" class="content">
                         <div class="ui form">
                             <a href="{{URL::to('/maintenance/service-category')}}" class="item">Service Category</a>
                             <a href="{{URL::to('/maintenance/service')}}" class="item">Service</a>
@@ -173,11 +173,11 @@
             <div class="header">Transaction</div>
             <div class="ui vertical accordion inverted">
                 <div class="item">
-                    <a class="title"><i class="dropdown icon"></i>Inventory</a>
-                    <div class="content">
+                    <a id="stiTitle" class="title"><i class="dropdown icon"></i>Inventory</a>
+                    <div id="stiContent" class="content">
                         <div class="ui form">
-                            <a href="" class="item">Order Supplies</a>
-                            <a href="" class="item">Accept Delivery</a>
+                            <a href="{{URL::to('/transaction/order-supply')}}" class="item">Order Supplies</a>
+                            <a href="" class="item">Receive Deliveries</a>
                         </div>
                     </div>
                 </div>
@@ -236,6 +236,9 @@
         </div>
         <div class="ui container" id="main">
             @yield('content')
+            <br>
+            <hr>
+            &copy;<?php echo(date('Y')) ?> - RAPIDS 
         </div>
     </div>
     @yield('scripts')

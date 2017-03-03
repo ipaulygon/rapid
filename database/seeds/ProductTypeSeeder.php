@@ -24,6 +24,12 @@ class ProductTypeSeeder extends Seeder
 				'typeDesc' => 'Krudo',
 				'typeIsActive' => 1,
             ),
+            array(
+                'typeId' => 'TYPE003',
+                'typeName' => 'Belt',
+                'typeDesc' => '',
+                'typeIsActive' => 1,
+            ),
         );
         DB::table('product_type')->insert($types);
     }

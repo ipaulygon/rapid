@@ -62,7 +62,7 @@
 
 	<h2>Transaction - Inspection</h2>
 	<hr><br>
-	<button class="ui positive button" name="modalCreate" onclick="modal(this.name)"><i class="plus icon"></i>Add Inspection</button>
+	<button class="ui green button" name="modalCreate" onclick="modal(this.name)"><i class="plus icon"></i>Add Inspection</button>
 	<br><br>
 	<table id="listType" class="ui celled table">
 		<thead>
@@ -111,10 +111,16 @@
 							<div class="three fields">
 								<div class="field">
 									<label>Vehicle Id<span>*</span></label>
-									<div id="vehicleId" class="ui search">
-										<input type="text" name="vehicleId" placeholder="WMX-289" autocomplete="off">
-										<div class="results"></div>
-									</div>
+									<div class="ui search selection dropdown">
+		    							<input type="hidden" name="vehicleId"><i class="dropdown icon"></i>
+		    							<input class="search" autocomplete="off" tabindex="0">
+		    							<div class="default text">XXX 000 / AAA 1234 </div>
+		    							<div class="menu" tabindex="-1">
+		    								@foreach($vehicle as $vehicle)
+		    									<div class="item" data-value="{{ $vehicle->vehicleId }}">{{ $cat->categoryName }}</div>
+		    								@endforeach
+		    							</div>
+		    						</div>
 								</div>
 								<div class="field">
 									<label>Vehicle Make<span>*</span></label>
@@ -222,7 +228,7 @@
 	    				<div class="actions">
 	    					<i>Note: All with <span>*</span> are required fields</i>
 	    					<button type="reset" class="ui negative button"><i class="remove icon"></i>Clear</button>
-	    					<button type="submit" class="ui positive button"><i class="plus icon"></i>Create</button>
+	    					<button type="submit" class="ui green button"><i class="plus icon"></i>Create</button>
 	    				</div>
 					{!! Form::close() !!}
 				</div>

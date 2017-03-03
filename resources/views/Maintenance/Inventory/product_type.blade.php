@@ -1,4 +1,4 @@
-@extends('layouts.maintenance')
+@extends('layouts.master')
 
 @section('content')	
 	<!--New-->	
@@ -186,6 +186,10 @@
 @section('scripts')
 	<script type="text/javascript">
 		$(document).ready(function(){
+			$('#miTitle').attr('class','title active');
+			$('#miContent').attr('class','content active');
+			$('#smiTitle').attr('class','title active');
+			$('#smiContent').attr('class','content active');
 		    $('#listType').DataTable();
 		    $('.ui.form').form({
 			    fields: {

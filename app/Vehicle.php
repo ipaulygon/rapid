@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Vehicle extends Model
 {
     protected $table = 'vehicle';
-    public $incrementing = false;
-    protected $primaryKey = 'vehicleId';
 	protected $fillable = array(
 								'vehicleId',
 								'vehiclePlate',
@@ -21,4 +19,10 @@ class Vehicle extends Model
 								'vehicleIsActive'
 								//
 								);
+	public function make(){
+		return $this->belongsTo('App\VehicleMake','vehicleMakeId');
+	}
+	public function model(){
+		return $this->belongsTo('App\VehicleModel','vehicleModelId');
+	}
 }

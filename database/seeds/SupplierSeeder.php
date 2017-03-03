@@ -24,6 +24,12 @@ class SupplierSeeder extends Seeder
 				'supplierDesc' => '',
 				'supplierIsActive' => 1,
             ),
+            array(
+                'supplierId' => 'SUPP0003',
+                'supplierName' => 'Bando',
+                'supplierDesc' => '',
+                'supplierIsActive' => 1,
+            ),
         );
         DB::table('supplier')->insert($supplier);
     }

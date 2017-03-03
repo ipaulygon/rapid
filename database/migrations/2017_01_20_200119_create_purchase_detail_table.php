@@ -18,6 +18,8 @@ class CreatePurchaseDetailTable extends Migration
             $table->string('purchaseHDId');
             $table->unsignedInteger('purchaseDVarianceId');
             $table->integer('purchaseDQty');
+            $table->text('purchaseDRemarks')->nullable();
+            $table->timestamps();
             $table->foreign('purchaseHDId')
                   ->references('purchaseHId')->on('purchase_header')
                   ->onUpdate('cascade')

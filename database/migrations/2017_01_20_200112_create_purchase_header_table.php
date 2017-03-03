@@ -17,7 +17,8 @@ class CreatePurchaseHeaderTable extends Migration
             $table->engine = 'InnoDB';
             $table->string('purchaseHId');
             $table->string('purchaseHSupplierId');
-            $table->boolean('purchaseIsActive');
+            $table->boolean('purchaseHIsActive');
+            $table->text('purchaseHDesc');
             $table->timestamps();
             $table->primary('purchaseHId');
             $table->foreign('purchaseHSupplierId')

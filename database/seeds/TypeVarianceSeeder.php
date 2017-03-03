@@ -32,6 +32,26 @@ class TypeVarianceSeeder extends Seeder
 				'tvVarianceId' => 'VAR0002',
 				'tvIsActive' => 1,
             ),
+            array(
+                'tvTypeId' => 'TYPE003',
+                'tvVarianceId' => 'VAR0003',
+                'tvIsActive' => 1,
+            ),
+            array(
+                'tvTypeId' => 'TYPE003',
+                'tvVarianceId' => 'VAR0004',
+                'tvIsActive' => 1,
+            ),
+            array(
+                'tvTypeId' => 'TYPE003',
+                'tvVarianceId' => 'VAR0005',
+                'tvIsActive' => 1,
+            ),
+            array(
+                'tvTypeId' => 'TYPE003',
+                'tvVarianceId' => 'VAR0006',
+                'tvIsActive' => 1,
+            ),
         );
         DB::table('type_variance')->insert($tv);
     }
