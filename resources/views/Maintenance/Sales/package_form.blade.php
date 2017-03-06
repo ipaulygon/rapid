@@ -26,6 +26,7 @@
 
 	<div class="ui form">
 		{!! Form::open(['action' => 'PackageController@create']) !!}
+			<div class="ui error message"></div>
 			<input type="hidden" name="packageId" value="{{ $newId }}" readonly>
 			<div class="inline fields">
 				<div class="two wide field">

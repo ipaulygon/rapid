@@ -154,6 +154,7 @@
 				<div class="ui form">
 					{!! Form::open(['action' => 'ProductTypeController@create']) !!}
 						<input type="hidden" name="typeId" value="{{ $newId }}" readonly>
+	    				<div class="ui error message"></div>
 	    				<div class="inline fields">
 	    					<div class="two wide field">
 	    						<label>Product Type<span>*</span></label>

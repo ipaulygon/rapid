@@ -154,6 +154,7 @@
 				<div class="ui form">
 					{!! Form::open(['action' => 'ServiceCategoryController@create']) !!}
 						<input type="hidden" name="categoryId" value="{{$newId}}" readonly>
+	    				<div class="ui error message"></div>
 	    				<div class="inline fields">
 	    					<div class="two wide field">
 	    						<label>Service Category<span>*</span></label>

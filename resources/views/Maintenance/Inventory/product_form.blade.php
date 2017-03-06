@@ -27,6 +27,7 @@
 	<div class="ui form">
 		{!! Form::open(['action' => 'ProductController@create']) !!}
 			<input type="hidden" name="productId" value="{{ $newId }}" readonly>
+			<div class="ui error message"></div>
 			<div class="inline fields">
 				<div class="two wide field">
 					<label>Brand<span>*</span></label>
@@ -79,7 +80,7 @@
 					<textarea type="text" name="productDesc" placeholder="Description" rows="3"></textarea>
 				</div>
 			</div>
-			<div class="two fields">
+			<div class="three fields">
 				<div class="field">
 					<label>Variances</label>
 					<div id="add{{$newId}}" style="width:100%" class="ui multiple add search selection dropdown">
@@ -90,6 +91,9 @@
 					</div>
 				</div>
 				<div id="cost{{$newId}}" class="field">
+					
+				</div>
+				<div id="qty{{$newId}}" class="field">
 					
 				</div>
 			</div>
@@ -115,11 +119,13 @@
 		    $('.add.ui.dropdown').dropdown({
 		    	onAdd: function(value,text,$addedChoice){
 		    		var prod = $addedChoice.attr('title');
-		    		$("#cost"+prod).append('<div id="'+value+'" class="inline fields"><div class="four wide field"><label id="'+value+'">'+text+'</label></div><div class="twelve wide field"><div class="ui labeled input"><div class="ui label">Php</div><input id="'+value+'" type="text" name="cost[]" required onkeypress="return validate(event,this.id)" maxlength="8" data-content="Only numerical values are allowed"></div></div></div>');
+		    		$("#cost"+prod).append('<div id="'+value+'" class="field"><label id="'+value+'">'+text+'</label><div class="ui labeled input"><div class="ui label">Php</div><input id="cost'+value+'" type="text" name="cost[]" required onkeypress="return validate(event,this.id)" maxlength="8" data-content="Only numerical values are allowed"></div></div>');
+					$("#qty"+prod).append('<div id="'+value+'" class="field"><label id="'+value+'">'+text+'</label><div class="ui right labeled input"><input id="qty'+value+'" type="text" name="qty[]" required onkeypress="return validated(event,this.id)" maxlength="3" data-content="Only numerical values are allowed"><div class="ui label">pcs</div></div></div>');
 		    	},
 		    	onRemove: function(value, text, $removedChoice){
 		    		var prod = $removedChoice.attr('title');
 		    		$("#cost"+prod+" div[id="+value+"]").remove();
+					$("#qty"+prod+" div[id="+value+"]").remove();
 		    		/*$("#cost"+prod+" input[id="+value+"]").remove();
 		    		$("#cost"+prod+" label[id="+value+"]").remove();*/
 		    	}
@@ -129,6 +135,7 @@
 			    	productName: 'empty',
 			    	productBrandId: 'empty',
 			    	productTypeId: 'empty',
+					cost: 'empty'
 			  	}
 			});
 		});
@@ -159,6 +166,18 @@
 		function validate(event, idx) {
             var char = String.fromCharCode(event.which);
             var patt = /^\d*\.?\d*$/;
+            var res = patt.test(char);
+            if (!res) {
+                $("input[id="+idx+"]").popup('show');
+                return false;
+            }
+            else {
+                $("input[id="+idx+"]").popup('hide');
+            }
+        }
+		function validated(event, idx) {
+            var char = String.fromCharCode(event.which);
+            var patt = /\d/;
             var res = patt.test(char);
             if (!res) {
                 $("input[id="+idx+"]").popup('show');

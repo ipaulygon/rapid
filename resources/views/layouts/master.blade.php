@@ -48,7 +48,7 @@
                             <a href="{{URL::to('/maintenance/supplier')}}" class="item">Supplier</a>
                             <a href="{{URL::to('/maintenance/product-brand')}}" class="item">Product Brand</a>
                             <a href="{{URL::to('/maintenance/product-type')}}" class="item">Product Type</a>
-                            <a href="{{URL::to('/maintenance/product-unit')}}" class="item">Product Unit</a>
+                            <a href="{{URL::to('/maintenance/product-unit')}}" class="item">Product UOM</a>
                             <a href="{{URL::to('/maintenance/product-variance')}}" class="item">Product Variances</a>
                             <a href="{{URL::to('/maintenance/product')}}" class="item">Product</a>
                         </div>
@@ -87,8 +87,8 @@
                     </div>
                 </div>
                 <div class="item">
-                    <a class="title"><i class="dropdown icon"></i>Car Care</a>
-                    <div class="content">
+                    <a id="tsTitle" class="title"><i class="dropdown icon"></i>Car Care</a>
+                    <div id="tsContent" class="content">
                         <div class="ui form">
                             <a href="{{URL::to('/transaction/inspect')}}" class="item">Inspect Vehicle</a>
                             <a href="" class="item">Customize Vehicle</a>
@@ -143,7 +143,7 @@
                             <a href="{{URL::to('/maintenance/supplier')}}" class="item">Supplier</a>
                             <a href="{{URL::to('/maintenance/product-brand')}}" class="item">Product Brand</a>
                             <a href="{{URL::to('/maintenance/product-type')}}" class="item">Product Type</a>
-                            <a href="{{URL::to('/maintenance/product-unit')}}" class="item">Product Unit</a>
+                            <a href="{{URL::to('/maintenance/product-unit')}}" class="item">Product UOM</a>
                             <a href="{{URL::to('/maintenance/product-variance')}}" class="item">Product Variances</a>
                             <a href="{{URL::to('/maintenance/product')}}" class="item">Product</a>
                         </div>
@@ -182,8 +182,8 @@
                     </div>
                 </div>
                 <div class="item">
-                    <a class="title"><i class="dropdown icon"></i>Car Care</a>
-                    <div class="content">
+                    <a id="stsTitle" class="title"><i class="dropdown icon"></i>Car Care</a>
+                    <div id="stsContent" class="content">
                         <div class="ui form">
                             <a href="{{URL::to('/transaction/inspect')}}" class="item">Inspect Vehicle</a>
                             <a href="" class="item">Customize Vehicle</a>
@@ -230,7 +230,7 @@
                     <i class="content icon"></i>
                 </a>
                 <div class="item">
-                    Title goes here
+                    Rapide Sales with Service Management Application
                 </div>
             </div>
         </div>

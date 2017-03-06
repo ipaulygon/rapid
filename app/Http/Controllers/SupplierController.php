@@ -14,18 +14,21 @@ class SupplierController extends Controller
     }
 
     public function index(){
+        $title = "Maintenance - Supplier";
     	$supp_max = \DB::table('supplier')->count('supplierId');
         $supp_max = $supp_max + 1;
         $newId = 'SUPP'.str_pad($supp_max, 4, '0', STR_PAD_LEFT); 
     	$supplier = Supplier::get();
-    	return view('Maintenance.Inventory.supplier',compact('supplier','newId'));
+    	return view('Maintenance.Inventory.supplier',compact('title','supplier','newId'));
     }
 
     public function create(SupplierRequest $request){
         $supplier = Supplier::create(array(
             'supplierId' => $request->input('supplierId'),
             'supplierName' => trim($request->input('supplierName')),
-            'supplierDesc' => trim($request->input('supplierDesc')),
+            'supplierPerson' => trim($request->input('supplierPerson')),
+            'supplierContact' => trim($request->input('supplierContact')),
+            'supplierAddress' => trim($request->input('supplierAddress')),
             'supplierIsActive' => 1
             ));
         $supplier->save();
@@ -36,6 +39,8 @@ class SupplierController extends Controller
     public function update(Request $request){
         $this->validate($request, [
             'editSupplierName' => 'required',
+            'editSupplierPerson' => 'required',
+            'editSupplierContact' => 'required|numeric|regex:/^\d{11}$/',
         ]);
     	$checksuppliers = Supplier::all();
         $isAdded = false;
@@ -48,7 +53,9 @@ class SupplierController extends Controller
         if(!$isAdded){
             $supplier = Supplier::find($request->input('editSupplierId'));
             $supplier->supplierName = trim($request->input('editSupplierName'));
-            $supplier->supplierDesc = trim($request->input('editSupplierDesc'));
+            $supplier->supplierPerson = trim($request->input('editSupplierPerson'));
+            $supplier->supplierContact = trim($request->input('editSupplierContact'));
+            $supplier->supplierAddress = trim($request->input('editSupplierAddress'));
             $supplier->save();
             \Session::flash('flash_message','Supplier successfully updated.');
         }else{

@@ -34,6 +34,7 @@ class ServiceController extends Controller
             'serviceCategoryId' => $request->input('serviceCategoryId'),
             'serviceDesc' => trim($request->input('serviceDesc')),
             'servicePrice' => trim($request->input('servicePrice')),
+            'serviceSize' => trim($request->input('serviceSize')),
             'serviceIsActive' => 1
             ));
         $serv->save();
@@ -50,13 +51,15 @@ class ServiceController extends Controller
         $this->validate($request, [
             'editServiceName' => 'required',
             'editServiceCategoryId' => 'required',
+            'editServiceSize' => 'required',
             'editServicePrice' => 'numeric|required|between:0,99999999.99',
         ]);
     	$checkService = Service::all();
         $isAdded = false;
         foreach ($checkService as $serv) {
         	if(!strcasecmp($serv->serviceId, $request->input('editServiceId')) == 0 
-        		&& strcasecmp($serv->serviceName, trim($request->input('editServiceName'))) == 0){
+        		&& strcasecmp($serv->serviceName, trim($request->input('editServiceName'))) == 0
+                && strcasecmp($serv->serviceSize, trim($request->input('editServiceSize'))) == 0){
         		$isAdded = true;
         	}
         }
@@ -66,6 +69,7 @@ class ServiceController extends Controller
             $serv->serviceDesc = trim($request->input('editServiceDesc'));
             $serv->serviceCategoryId = $request->input('editServiceCategoryId');
             $serv->servicePrice = trim($request->input('editServicePrice'));
+            $serv->serviceSize = trim($request->input('editServiceSize'));
             $serv->save();
             if($serv->servicePrice!=$request->input('currentServicePrice')){
                 $servCost = ServiceCost::create(array(

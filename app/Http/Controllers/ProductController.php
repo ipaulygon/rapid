@@ -83,6 +83,7 @@ class ProductController extends Controller
             'editProductBrandId' => 'required',
             'editProductTypeId' => 'required',
             'editProductName' => 'required',
+            'costs.*' => 'numeric|required|between:0,99999999.99',
         ]);
         $checkproducts = Product::all();
         $isAdded = false;

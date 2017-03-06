@@ -19,7 +19,8 @@ class CreateProductVarianceTable extends Migration
             $table->string('pvProductId');
             $table->string('pvVarianceId');
             $table->float('pvCost',8,2)->nullable();
-            $table->tinyInteger('pvIsActive');
+            $table->integer('pvThreshold');
+            $table->boolean('pvIsActive');
             $table->timestamps();
             $table->foreign('pvProductId')
                   ->references('productId')->on('product')

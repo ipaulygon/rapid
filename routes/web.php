@@ -138,3 +138,4 @@ Route::get('transaction/order-supply-form','OrderSupplyController@createForm');
 Route::post('transaction/order-supply/create','OrderSupplyController@create');
 Route::get('transaction/order-supply-form/{id}','OrderSupplyController@updateForm');
 Route::post('transaction/order-supply/update','OrderSupplyController@update');
+Route::get('transaction/order-supply-pdf/{id}','OrderSupplyController@view');

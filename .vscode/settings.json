@@ -1,0 +1,8 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "editor.fontSize": 14,
+     "workbench.editor.showTabs": true,
+     "workbench.editor.enablePreview": true,
+     "workbench.editor.enablePreviewFromQuickOpen": true,
+     "workbench.editor.openPositioning": "left"
+}   

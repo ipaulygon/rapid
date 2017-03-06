@@ -64,13 +64,14 @@
 	<hr><br>
 	<button class="ui green button" name="modalNew" onclick="modal(this.name)"><i class="plus icon"></i>New Service</button>
 	<br><br>
-	<table id="list" class="ui five column celled table">
+	<table id="list" class="ui six column celled table">
 		<thead>
 			<tr>
 				<th>Service</th>
 				<th>Description</th>
+				<th>Service Size</th>
 				<th>Category</th>
-				<th class="right aligned">Price</th>
+				<th class="right aligned">Price (Php)</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
@@ -80,12 +81,19 @@
 				<?php  
 					$price = $serv->servicePrice;
 					$price = number_format($price,2);
+					$size = $serv->serviceSize;
+					if($size==1){
+						$size = "Sedan";
+					}else{
+						$size = "Large Vehicle";
+					}
 				?>
 					<tr>
 						<td>{{ $serv->serviceName }}</td>
 						<td>{{ $serv->serviceDesc }}</td>
+						<td>{{ $size }}</td>
 						<td>{{ $serv->categories->categoryName }}</td>
-						<td class="right aligned">Php {{ $price }}</td>
+						<td class="right aligned">{{ $price }}</td>
 						<td>
 							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="edit{{ $serv->serviceId }}" onclick="modal(this.name)"><i class="write icon"></i></button>
 							<button class="ui red basic circular icon button" data-tooltip="Deactivate Record" data-inverted="" name="del{{ $serv->serviceId }}" onclick="modal(this.name)"><i class="trash icon"></i></button>
@@ -106,35 +114,42 @@
 						    						<input type="text" name="editServiceName" value="{{ $serv->serviceName }}" placeholder="Service">
 						    					</div>
 						    				</div>
-						    				<div class="inline fields">
-						    					<div class="two wide field">
-						    						<label>Service Category<span>*</span></label>
-						    					</div>
-						    					<div class="six wide field">
-						    						<div class="ui search selection dropdown">
-						    							<input type="hidden" name="editServiceCategoryId" value="{{ $serv->categories->categoryName }}"><i class="dropdown icon"></i>
-						    							<input class="search" autocomplete="off" tabindex="0">
-						    							<div class="default text">Select Category</div>
-						    							<div class="menu" tabindex="-1">
-						    								@foreach($category as $cat)
-						    									@if($cat->categoryIsActive==1)
-						    										<div class="item" data-value="{{ $cat->categoryId }}">{{ $cat->categoryName }}</div>
-						    									@endif
-						    								@endforeach
-						    							</div>
-						    						</div>
-						    					</div>
-						    					<div class="two wide field">
-													<label>Price<span>*</span></label>
+						    				<div class="three fields">
+												<div class="field">
+													<label>Service Category<span>*</span></label>
+													<div class="ui search selection dropdown">
+														<input type="hidden" name="editServiceCategoryId" value="{{ $serv->serviceCategoryId }}"><i class="dropdown icon"></i>
+														<input class="search" autocomplete="off" tabindex="0">
+														<div class="default text">Select Category</div>
+														<div class="menu" tabindex="-1">
+															@foreach($category as $cat)
+																@if($cat->categoryIsActive==1)
+																	<div class="item" data-value="{{ $cat->categoryId }}">{{ $cat->categoryName }}</div>
+																@endif
+															@endforeach
+														</div>
+													</div>
 												</div>
-												<div class="six wide field">
+												<div class="field">
+													<label>Price<span>*</span></label>
 													<div class="ui labeled input">
 														<div class="ui label">P</div>
 														<input type="text" name="editServicePrice" value="{{ $serv->servicePrice }}" placeholder="Price" maxlength="8">
-														<input type="hidden" name="currentServicePrice" value="{{$serv->service}}">
 													</div>
 												</div>
-						    				</div>
+												<div class="field">
+													<label>Service Size<span>*</span></label>
+													<div class="ui search selection dropdown">
+														<input type="hidden" name="editServiceSize" value="{{ $serv->serviceSize }}"><i class="dropdown icon"></i>
+														<input class="search" autocomplete="off" tabindex="0">
+														<div class="default text">Select Size</div>
+														<div class="menu" tabindex="-1">
+															<div class="item" data-value="1">Sedan</div>
+															<div class="item" data-value="2">Large Vehicle</div>
+														</div>
+													</div>
+												</div>
+											</div>
 						    				<div class="inline fields">
 						    					<div class="two wide field">
 						    						<label>Description</label>
@@ -186,12 +201,13 @@
 	</table>
 	
 	<!--New Modal-->
-	<div class="ui small modal" id="modalNew">
+	<div class="ui modal" id="modalNew">
 		<div class="header">New Service</div>
 		<div class="content">
 			<div class="description">
 				<div class="ui form">
 					{!! Form::open(['action' => 'ServiceController@create']) !!}
+						<div class="ui error message"></div>
 						<div class="inline fields">
 	    					<input type="hidden" name="serviceId" value="{{ $newId }}" readonly>
 	    					<div class="two wide field">
@@ -201,11 +217,9 @@
 	    						<input type="text" name="serviceName" placeholder="Service">
 	    					</div>
 	    				</div>
-	    				<div class="inline fields">
-	    					<div class="two wide field">
-	    						<label>Service Category<span>*</span></label>
-	    					</div>
-	    					<div class="six wide field">
+	    				<div class="three fields">
+	    					<div class="field">
+								<label>Service Category<span>*</span></label>
 	    						<div class="ui search selection dropdown">
 	    							<input type="hidden" name="serviceCategoryId"><i class="dropdown icon"></i>
 	    							<input class="search" autocomplete="off" tabindex="0">
@@ -219,14 +233,24 @@
 	    							</div>
 	    						</div>
 	    					</div>
-	    					<div class="two wide field">
+							<div class="field">
 								<label>Price<span>*</span></label>
-							</div>
-							<div class="six wide field">
 								<div class="ui labeled input">
 									<div class="ui label">P</div>
 									<input type="text" name="servicePrice" placeholder="Price" maxlength="8">
 								</div>
+							</div>
+							<div class="field">
+								<label>Service Size<span>*</span></label>
+								<div class="ui search selection dropdown">
+	    							<input type="hidden" name="serviceSize"><i class="dropdown icon"></i>
+	    							<input class="search" autocomplete="off" tabindex="0">
+	    							<div class="default text">Select Size</div>
+	    							<div class="menu" tabindex="-1">
+	    								<div class="item" data-value="1">Sedan</div>
+		    							<div class="item" data-value="2">Large Vehicle</div>
+	    							</div>
+	    						</div>
 							</div>
 	    				</div>
 	    				<div class="inline fields">
@@ -264,6 +288,7 @@
 			    	serviceName: 'empty',
 			    	serviceCategoryId: 'empty',
 			    	servicePrice: 'empty',
+					serviceSize: 'empty'
 			  	}
 			});
 			$('.ui.small.modal').form({
@@ -271,6 +296,7 @@
 			    	editServiceName: 'empty',
 			    	editServiceCategoryId: 'empty',
 			    	editServicePrice: 'empty',
+					editServiceSize: 'empty'
 			  	}
 			});
 		});

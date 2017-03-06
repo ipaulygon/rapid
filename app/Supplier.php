@@ -12,7 +12,9 @@ class Supplier extends Model
 	protected $fillable = array(
 								'supplierId',
 								'supplierName',
-								'supplierDesc',
+								'supplierPerson',
+								'supplierContact',
+								'supplierAddress',
 								'supplierIsActive'
 								//
 								);

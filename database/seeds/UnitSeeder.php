@@ -14,14 +14,14 @@ class UnitSeeder extends Seeder
         $unit = array (
             array(
             	'unitId' => 'UNIT001',
-				'unitName' => 'Piece',
-				'unitDesc' => '',
+				'unitName' => 'pc',
+				'unitDesc' => 'Piece',
 				'unitIsActive' => 1,
             ),
             array(
             	'unitId' => 'UNIT002',
-				'unitName' => 'Pack',
-				'unitDesc' => '',
+				'unitName' => 'pack',
+				'unitDesc' => 'Pack',
 				'unitIsActive' => 1,
             ),
         );

@@ -78,7 +78,7 @@
 					<td>{{$order->purchaseHId}}</td>
 					<td>{{$order->purchaseHDesc}}</td>
 					<td>
-						<button class="ui blue basic circular icon button" data-tooltip="View PDF" data-inverted="" name="{{$order->purchaseHId }}"><i class="eye icon"></i></button>
+						<a href="order-supply-pdf/{{$order->purchaseHId}}" class="ui blue basic circular icon button" data-tooltip="View PDF" data-inverted="" name="{{$order->purchaseHId }}"><i class="eye icon"></i></a>
 						<a href="order-supply-form/{{$order->purchaseHId}}" class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted=""><i class="write icon"></i></a>
 					</td>
 				</tr>

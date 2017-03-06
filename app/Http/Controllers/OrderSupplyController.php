@@ -10,6 +10,7 @@ use App\Supplier;
 use App\OrderSupplyHeader;
 use App\OrderSupplyDetail;
 use App\Http\Requests\OrderSupplyRequest;
+use PDF;
 
 use Illuminate\Http\Request;
 
@@ -96,5 +97,11 @@ class OrderSupplyController extends Controller
         }
         \Session::flash('flash_message','Purchase order successfully updated.');
         return redirect('transaction/order-supply');
+    }
+
+    public function view($id){
+        $pdf = PDF::loadView('pdf.order-supply-pdf')
+        ->setPaper('Letter');
+        return $pdf->stream();
     }
 }

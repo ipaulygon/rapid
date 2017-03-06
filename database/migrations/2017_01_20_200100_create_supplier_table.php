@@ -17,7 +17,9 @@ class CreateSupplierTable extends Migration
             $table->engine = 'InnoDB';
             $table->string('supplierId');
             $table->string('supplierName');
-            $table->text('supplierDesc')->nullable();
+            $table->string('supplierPerson');
+            $table->string('supplierContact');
+            $table->text('supplierAddress')->nullable();
             $table->boolean('supplierIsActive');
             $table->timestamps();
             $table->primary('supplierId');

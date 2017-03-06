@@ -25,8 +25,9 @@ class ServiceRequest extends FormRequest
     public function rules()
     {
         return [
-            'serviceName' => 'required|unique:service',
+            'serviceName' => 'required|unique_with:service,serviceSize',
             'serviceCategoryId' => 'required',
+            'serviceSize' => 'required',
             'servicePrice' => 'numeric|required|between:0,99999999.99'
         ];
     }
@@ -38,7 +39,8 @@ class ServiceRequest extends FormRequest
             'serviceName.required' => 'Service name is required',
             'serviceCategoryId.required' => 'Category is required',
             'servicePrice.required' => 'Price is required',
-            'servicePrice.numeric' => 'Price must be numeric'
+            'servicePrice.numeric' => 'Price must be numeric',
+            'serviceName.unique_with' => 'Service already exists',
         ];
     }
 

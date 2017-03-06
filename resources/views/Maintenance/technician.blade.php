@@ -223,6 +223,7 @@
 			<div class="description">
 				<div class="ui form">
 					{!! Form::open(['action' => 'TechController@create','files'=>true]) !!}
+						<div class="ui error message"></div>
 						<input type="hidden" name="techId" value="{{$newId}}">
 						<div class="two fields">
 							<div class="field" style="width:30%">

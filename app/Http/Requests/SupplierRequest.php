@@ -25,7 +25,9 @@ class SupplierRequest extends FormRequest
     public function rules()
     {
         return [
-            'supplierName' => 'required|unique:supplier' 
+            'supplierName' => 'required|unique:supplier',
+            'supplierPerson' => 'required',
+            'supplierContact' => 'required|regex:/^\d{11}$/',
         ];
     }
 
@@ -33,7 +35,10 @@ class SupplierRequest extends FormRequest
     {
         return [
             'supplierName.unique'  =>  'Supplier already exists.',
-            'supplierName.required' => 'Supplier is required'
+            'supplierName.required' => 'Supplier is required',
+            'supplierPerson.required' => 'Supplier contact person is required',
+            'supplierContact.required' => 'Supplier contact no. is required',
+            'supplierContact.regex' => 'Invalid format of contact No.',
         ];
     }
 

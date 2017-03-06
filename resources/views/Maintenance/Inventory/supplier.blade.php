@@ -64,11 +64,13 @@
 	<hr><br>
 	<button class="ui green button" name="modalNew" onclick="modal(this.name)"><i class="plus icon"></i>New Supplier</button>
 	<br><br>
-	<table id="listType" class="ui celled three column table">
+	<table id="listType" class="ui celled five column table">
 		<thead>
 			<tr>
 				<th>Supplier</th>
-				<th>Description</th>
+				<th>Contact Person</th>
+				<th>Contact No.</th>
+				<th>Address</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
@@ -77,7 +79,9 @@
 				@if($supplier->supplierIsActive==1)
 					<tr>
 						<td>{{ $supplier->supplierName }}</td>
-						<td>{{ $supplier->supplierDesc }}</td>
+						<td>{{ $supplier->supplierPerson }}</td>
+						<td>{{ $supplier->supplierContact }}</td>
+						<td>{{ $supplier->supplierAddress }}</td>
 						<td>
 							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="edit{{ $supplier->supplierId }}" onclick="modal(this.name)"><i class="write icon"></i></button>
 							<button class="ui red basic circular icon button" data-tooltip="Deactivate Record" data-inverted="" name="del{{ $supplier->supplierId }}" onclick="modal(this.name)"><i class="trash icon"></i></button>
@@ -85,7 +89,7 @@
 						<!--Modal for Update-->
 						<div class="ui small modal" id="edit{{ $supplier->supplierId }}">
 							<div class="header">Update Supplier</div>
-							{!! Form::open(['action' => 'SupplierController@update']) !!}	
+							{!! Form::open(['action' => 'SupplierController@update']) !!}
 								<div class="content">
 									<div class="description">
 										<div class="ui form">								
@@ -101,11 +105,25 @@
 					        					</div>
 					        				</div>
 					        				<div class="inline fields">
+						    					<div class="two wide field">
+						    						<label>Contact Person<span>*</span></label>
+						    					</div>
+						    					<div class="six wide field">
+						    						<input type="text" name="editSupplierPerson" value="{{ $supplier->supplierPerson }}" placeholder="Contact Person">
+						    					</div>
+						    					<div class="two wide field">
+						    						<label>Contact No.<span>*</span></label>
+						    					</div>
+						    					<div class="six wide field">
+						    						<input type="text" name="editSupplierContact" value="{{ $supplier->supplierContact }}" placeholder="Contact No.">
+						    					</div>
+						    				</div>
+					        				<div class="inline fields">
 					        					<div class="two wide field">
-					        						<label>Description</label>
+					        						<label>Address</label>
 					        					</div>
 					        					<div class="fourteen wide field">
-					        						<textarea type="text" name="editSupplierDesc" placeholder="Description">{{ $supplier->supplierDesc }}</textarea>
+					        						<textarea type="text" name="editSupplierAddress" placeholder="Address">{{ $supplier->supplierAddress }}</textarea>
 					        					</div>
 					        				</div>
 										</div>
@@ -130,7 +148,10 @@
 										<input type="hidden" name="delSupplierId" value="{{ $supplier->supplierId }}">
 										<p>
 											<label>Supplier: {{$supplier->supplierName}}</label><br>
-											<label>Description: {{$supplier->supplierDesc}}</label>
+											<label>Contact Person: {{$supplier->supplierPerson}}</label>
+											<label>Contact No: {{$supplier->supplierContact}}</label>
+											<label></label>
+											<label>Address: {{$supplier->supplierAddress}}</label>
 										</p>
 									</div>
 								</div>
@@ -154,6 +175,7 @@
 				<div class="ui form">
 					{!! Form::open(['action' => 'SupplierController@create']) !!}
 						<input type="hidden" name="supplierId" value="{{ $newId }}" readonly>
+						<div class="ui error message"></div>
 	    				<div class="inline fields">
 	    					<div class="two wide field">
 	    						<label>Supplier<span>*</span></label>
@@ -164,10 +186,24 @@
 	    				</div>
 	    				<div class="inline fields">
 	    					<div class="two wide field">
-	    						<label>Description</label>
+	    						<label>Contact Person<span>*</span></label>
+	    					</div>
+	    					<div class="six wide field">
+	    						<input type="text" name="supplierPerson" placeholder="Contact Person">
+	    					</div>
+	    					<div class="two wide field">
+	    						<label>Contact No.<span>*</span></label>
+	    					</div>
+	    					<div class="six wide field">
+	    						<input type="text" name="supplierContact" placeholder="Contact No.">
+	    					</div>
+	    				</div>
+	    				<div class="inline fields">
+	    					<div class="two wide field">
+	    						<label>Address</label>
 	    					</div>
 	    					<div class="fourteen wide field">
-	    						<textarea type="text" name="supplierDesc" placeholder="Description"></textarea>
+	    						<textarea type="text" name="supplierAddress" placeholder="Address" rows="2"></textarea>
 	    					</div>
 	    				</div>
 	    				<div class="actions">
@@ -194,11 +230,15 @@
 		    $('.ui.form').form({
 			    fields: {
 			    	supplierName: 'empty',
+					supplierPerson: 'empty',
+					supplierContact: 'empty',
 			  	}
 			});
 			$('.ui.small.modal').form({
 			    fields: {
 			    	editSupplierName: 'empty',
+					editSupplierPerson: 'empty',
+					editSupplierContact: 'empty',
 			  	}
 			});
 		});

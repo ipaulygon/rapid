@@ -15,19 +15,25 @@ class SupplierSeeder extends Seeder
             array(
             	'supplierId' => 'SUPP0001',
 				'supplierName' => 'Caltex',
-				'supplierDesc' => '',
+                'supplierPerson' => 'Juan Dela Cruz',
+                'supplierContact' => '09054090523',
+				'supplierAddress' => '',
 				'supplierIsActive' => 1,
             ),
             array(
             	'supplierId' => 'SUPP0002',
 				'supplierName' => 'Mobil',
-				'supplierDesc' => '',
+                'supplierPerson' => 'Juan Dela Paz',
+                'supplierContact' => '09054090523',
+				'supplierAddress' => '',
 				'supplierIsActive' => 1,
             ),
             array(
                 'supplierId' => 'SUPP0003',
                 'supplierName' => 'Bando',
-                'supplierDesc' => '',
+                'supplierPerson' => 'Juan Dela Fuente',
+                'supplierContact' => '09054090523',
+                'supplierAddress' => '',
                 'supplierIsActive' => 1,
             ),
         );

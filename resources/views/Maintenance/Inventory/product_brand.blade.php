@@ -154,6 +154,7 @@
 				<div class="ui form">
 					{!! Form::open(['action' => 'BrandController@create']) !!}
 						<input type="hidden" name="brandId" value="{{ $newId }}" readonly>
+						<div class="ui error message"></div>
 	    				<div class="inline fields">
 	    					<div class="two wide field">
 	    						<label>Brand<span>*</span></label>

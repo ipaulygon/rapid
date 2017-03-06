@@ -228,6 +228,7 @@
 				<div class="ui form">
 					{!! Form::open(['action' => 'VarianceController@create']) !!}
 						<input type="hidden" name="varianceId" value="{{ $newId }}" readonly>
+	    				<div class="ui error message"></div>
 	    				<div class="inline fields">
 	    					<div class="two wide field">
 	    						<label>Size<span>*</span></label>

@@ -60,9 +60,9 @@
 		</script>
 	@endif
 
-	<h2>Maintenance - Product Unit</h2>
+	<h2>Maintenance - Product Unit of Measurement</h2>
 	<hr><br>
-	<button class="ui green button" name="modalNew" onclick="modal(this.name)"><i class="plus icon"></i>New Unit</button>
+	<button class="ui green button" name="modalNew" onclick="modal(this.name)"><i class="plus icon"></i>New Unit of Measurement</button>
 	<br><br>
 	<table id="listType" class="ui celled three column table">
 		<thead>
@@ -84,7 +84,7 @@
 						</td>
 						<!--Modal for Update-->
 						<div class="ui small modal" id="edit{{ $unit->unitId }}">
-							<div class="header">Update Unit</div>
+							<div class="header">Update Unit of Measurement</div>
 							{!! Form::open(['action' => 'UnitController@update']) !!}	
 								<div class="content">
 									<div class="description">
@@ -129,7 +129,7 @@
 									<div class="description">
 										<input type="hidden" name="delUnitId" value="{{ $unit->unitId }}">
 										<p>
-											<label>Unit: {{$unit->unitName}}</label><br>
+											<label>Unit of Measurement: {{$unit->unitName}}</label><br>
 											<label>Description: {{$unit->unitDesc}}</label>
 										</p>
 									</div>
@@ -148,15 +148,16 @@
 	
 	<!--New Modal-->
 	<div class="ui small modal" id="modalNew">
-		<div class="header">New Unit</div>
+		<div class="header">New Unit of Measurement</div>
 		<div class="content">
 			<div class="description">
 				<div class="ui form">
 					{!! Form::open(['action' => 'UnitController@create']) !!}
 						<input type="hidden" name="unitId" value="{{ $newId }}" readonly>
+	    				<div class="ui error message"></div>
 	    				<div class="inline fields">
 	    					<div class="two wide field">
-	    						<label>Unit<span>*</span></label>
+	    						<label>UOM<span>*</span></label>
 	    					</div>
 	    					<div class="fourteen wide field">
 	    						<input type="text" name="unitName" placeholder="Unit">
