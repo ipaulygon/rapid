@@ -68,8 +68,7 @@
 		<thead>
 			<tr>
 				<th>Package</th>
-				<th class="right aligned">Price</th>
-				<th>Description</th>
+				<th class="right aligned">Price (PhP)</th>
 				<th>Products</th>
 				<th>Services</th>
 				<th>Actions</th>
@@ -84,8 +83,7 @@
 							$price = number_format($price,2);
 						?>
 						<td>{{ $package->packageName }}</td>
-						<td class="right aligned">Php {{ $price }}</td>
-						<td>{{ $package->packageDesc }}</td>
+						<td class="right aligned">{{ $price }}</td>
 						<td>
 							@foreach($package->product as $pp)
 								@if($pp->packagePIsActive==1)

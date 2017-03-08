@@ -16,6 +16,7 @@ class PromoServiceSeeder extends Seeder
             	'promoSId' => 'PROMO0001',
 				'promoServiceId' => 'SERV0001',
 				'promoSIsActive' => 1,
+                'promoSIsFree' => 1,
             ),
         );
         DB::table('promo_service')->insert($promos);

@@ -29,7 +29,8 @@ class PromoRequest extends FormRequest
             'promoCost' => 'required|numeric|between:0,99999999.99',
             'promoSupplies' => 'numeric',
             'promoStart' => 'date',
-            'promoEnd' => 'date'
+            'promoEnd' => 'date',
+            'qty.*' => 'required|numeric|between:0,999'
         ];
     }
 
@@ -43,6 +44,8 @@ class PromoRequest extends FormRequest
             'promoCost.numeric' => 'Cost must be valid monetary value',
             'promoCost.required' => 'Cost is required',
             'promoCost.max' => 'Max value of cost is 8 digits',
+            'qty.*.required' => 'Quantity is required',
+            'qty.*.numeric' => 'Quantity must be numeric',
         ];
     }
 

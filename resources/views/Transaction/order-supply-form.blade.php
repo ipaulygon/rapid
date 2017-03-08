@@ -92,10 +92,10 @@
 			</table>
 			<div class="inline fields">
 				<div class="two wide field">
-					<label>Total cost:</label>
+					<label>Total cost: PhP</label>
 				</div>
 				<div class="eight wide field">
-					<input id="totalCost" style="border:none;color:red" type="text" name="totalCost" value="PHP 0.00" readonly>
+					<input id="totalCost" style="border:none;color:red" type="text" name="totalCost" value="0.00" readonly>
 					<input id="totalCosts" style="border:none;color:red" type="hidden" name="totalCosts" value="0" readonly>
 				</div>
 			</div>
@@ -156,7 +156,7 @@
 			var minus = $('input[id=total'+idx+']').val();
 			$('input[id=total'+idx+']').val(computed);
 			var total = eval($('#totalCosts').val()+"+"+computed+"-"+minus).toFixed(2);
-			$('#totalCost').val("PHP "+total.toLocaleString('en_PH'));
+			$('#totalCost').val(total.toLocaleString('en_PH'));
 			$('#totalCosts').val(total);
 		}
 		function removeRow(value){

@@ -18,6 +18,7 @@ class CreatePromoServiceTable extends Migration
             $table->string('promoSId');
             $table->string('promoServiceId');
             $table->boolean('promoSIsActive');
+            $table->boolean('promoSIsFree');
             $table->timestamps();
             $table->foreign('promoSId')
                   ->references('promoId')->on('promo')

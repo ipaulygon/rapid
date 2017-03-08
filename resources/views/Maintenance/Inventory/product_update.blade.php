@@ -79,7 +79,7 @@
 					<textarea type="text" name="editProductDesc" placeholder="Description" rows="3">{{$product[0]->productDesc}}</textarea>
 				</div>
 			</div>
-			<div class="two fields">
+			<div class="three fields">
 				<div class="field">
 					<label>Variances</label>
 					<div id="add{{$product[0]->productId}}" style="width:100%" class="ui multiple add search selection dropdown">
@@ -97,6 +97,9 @@
 				</div>
 				<div id="cost{{$product[0]->productId}}" class="field">
 					
+				</div>
+				<div id="qty{{$product[0]->productId}}" class="field">
+				
 				</div>
 			</div>
 			<hr>
@@ -121,13 +124,17 @@
 		    $('.add.ui.dropdown').dropdown({
 		    	onAdd: function(value,text,$addedChoice){
 		    		var prod = $addedChoice.attr('title');
-		    		$("#cost"+prod).append('<div id="'+value+'" class="inline fields"><div class="four wide field"><label id="'+value+'">'+text+'</label></div><div class="twelve wide field"><div class="ui labeled input"><div class="ui label">Php</div><input id="'+value+'" type="text" name="costs[]" onchange="change(this.id)" required onkeypress="return validate(event,this.id)" maxlength="8" data-content="Only numerical values are allowed"></div></div></div>');
-		    		$("#cost"+prod).append('<input id="hidden'+value+'" type="hidden" name="'+value+'">');
-		    	},
+		    		$("#cost"+prod).append('<div id="'+value+'" class="field"><label id="'+value+'">'+text+'</label><div class="ui labeled input"><div class="ui label">Php</div><input id="Cost'+value+'" type="text" name="costs[]" required onchange="change(this.id)" onkeypress="return validate(event,this.id)" maxlength="8" data-content="Only numerical values are allowed"></div></div>');
+		    		$("#cost"+prod).append('<input id="hiddenCost'+value+'" type="hidden" name="cost'+value+'">');
+					$("#qty"+prod).append('<div id="'+value+'" class="field"><label id="'+value+'">'+text+'</label><div class="ui right labeled input"><input id="Qty'+value+'" type="text" name="qtys[]" required onchange="changed(this.id)" onkeypress="return validated(event,this.id)" maxlength="3" data-content="Only numerical values are allowed"><div class="ui label">pcs</div></div></div>');
+					$("#qty"+prod).append('<input id="hiddenQty'+value+'" type="hidden" name="qty'+value+'">');
+				},
 		    	onRemove: function(value, text, $removedChoice){
 		    		var prod = $removedChoice.attr('title');
 		    		$("#cost"+prod+" div[id="+value+"]").remove();
-		    		$("#cost"+prod+" input[id=hidden"+value+"]").remove();
+		    		$("#cost"+prod+" input[id=hiddenCost"+value+"]").remove();
+					$("#qty"+prod+" div[id="+value+"]").remove();
+		    		$("#qty"+prod+" input[id=hiddenQty"+value+"]").remove();
 		    		// $("#cost"+prod+" label[id="+value+"]").remove();
 		    	}
 		    });
@@ -148,14 +155,20 @@
 		    $('#add{{$product[0]->productId}}').dropdown('set selected',variances);
 		    @foreach($pv as $var)
 	    		@if($var->pvIsActive==1)
-	    			$('#cost{{$product[0]->productId}} input[id={{$var->pvVarianceId}}]').val({{$var->pvCost}});
-	    			$('input[id=hidden{{$var->pvVarianceId}}]').val({{$var->pvCost}});
+	    			$('#cost{{$product[0]->productId}} input[id=Cost{{$var->pvVarianceId}}]').val({{$var->pvCost}});
+	    			$('#cost{{$product[0]->productId}} input[id=hiddenCost{{$var->pvVarianceId}}]').val({{$var->pvCost}});
+					$('#qty{{$product[0]->productId}} input[id=Qty{{$var->pvVarianceId}}]').val({{$var->pvThreshold}});
+	    			$('#qty{{$product[0]->productId}} input[id=hiddenQty{{$var->pvVarianceId}}]').val({{$var->pvThreshold}});
 	    		@endif
 	    	@endforeach
 		});
 		function change(id){
 			var value = $("input[id="+id+"]").val();
-			$("input[id=hidden"+id+"]").val(value);
+			$("input[id=hidden"+id+"]").attr("value",value);
+		}
+		function changed(id){
+			var value = $("input[id="+id+"]").val();
+			$("input[id=hidden"+id+"]").attr("value",value);
 		}
 		function reload(title){
 			$(".item#"+title).remove();
@@ -192,6 +205,18 @@
             else {
                 $("input[id="+idx+"]").popup('hide');
                 
+            }
+        }
+		function validated(event, idx) {
+            var char = String.fromCharCode(event.which);
+            var patt = /\d/;
+            var res = patt.test(char);
+            if (!res) {
+                $("input[id="+idx+"]").popup('show');
+                return false;
+            }
+            else {
+                $("input[id="+idx+"]").popup('hide');
             }
         }
 	</script>

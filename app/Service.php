@@ -15,6 +15,7 @@ class Service extends Model
 								'serviceCategoryId',
 								'serviceDesc',
 								'servicePrice',
+								'serviceSize',
 								'serviceIsActive'
 								//
 								);

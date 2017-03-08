@@ -27,6 +27,7 @@ class PackageRequest extends FormRequest
         return [
             'packageName' => 'required|unique:package',
             'packageCost' => 'required|numeric|between:0,99999999.99',
+            'qty.*' => 'required|numeric|between:0,999'
         ];
     }
     public function messages()
@@ -37,6 +38,8 @@ class PackageRequest extends FormRequest
             'packageCost.numeric' => 'Cost must be valid monetary value',
             'packageCost.required' => 'Cost is required',
             'packageCost.max' => 'Max value of cost is 8 digits',
+            'qty.*.required' => 'Quantity is required',
+            'qty.*.numeric' => 'Quantity must be numeric'
         ];
     }
 

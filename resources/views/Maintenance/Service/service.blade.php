@@ -134,7 +134,7 @@
 													<label>Price<span>*</span></label>
 													<div class="ui labeled input">
 														<div class="ui label">P</div>
-														<input type="text" name="editServicePrice" value="{{ $serv->servicePrice }}" placeholder="Price" maxlength="8">
+														<input type="text" id="editServicePrice" name="editServicePrice" value="{{ $serv->servicePrice }}" onkeypress="return validated(event,this.id)" data-content="Only numerical values are allowed" placeholder="Price" maxlength="8">
 													</div>
 												</div>
 												<div class="field">
@@ -237,7 +237,7 @@
 								<label>Price<span>*</span></label>
 								<div class="ui labeled input">
 									<div class="ui label">P</div>
-									<input type="text" name="servicePrice" placeholder="Price" maxlength="8">
+									<input type="text" id="servicePrice" name="servicePrice" onkeypress="return validated(event,this.id)" data-content="Only numerical values are allowed" placeholder="Price" maxlength="8">
 								</div>
 							</div>
 							<div class="field">
@@ -305,5 +305,17 @@
 				closable: false,
 			});
 		}
+		function validated(event, idx) {
+            var char = String.fromCharCode(event.which);
+            var patt = /^\d*\.?\d*$/;
+            var res = patt.test(char);
+            if (!res) {
+                $("input[id="+idx+"]").popup('show');
+                return false;
+            }
+            else {
+                $("input[id="+idx+"]").popup('hide');
+            }
+        }
 	</script>
 @stop

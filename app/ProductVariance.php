@@ -13,6 +13,7 @@ class ProductVariance extends Model
 								'pvProductId',
 								'pvVarianceId',
 								'pvCost',
+								'pvThreshold',
 								'pvIsActive'
 								//
 								);

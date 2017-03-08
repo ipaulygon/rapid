@@ -91,6 +91,7 @@ class PackageController extends Controller
         $this->validate($request, [
             'editPackageName' => 'required',
             'editPackageCost' => 'required|numeric|between:0,99999999.99',
+            'qtys.*' => 'required|numeric|between:0,999'
         ]);
         $checkPackage = Package::all();
         $isAdded = false;

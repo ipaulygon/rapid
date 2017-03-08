@@ -55,6 +55,7 @@ class ProductController extends Controller
         $variance = $request->input('variance');
         $variances = explode(',', $variance);
         $prices = $request->input('cost');
+        $qtys = $request->input('qty');
         $x = 0;
         if($variance!=null || $variance!=''){
             foreach($variances as $var) {
@@ -62,6 +63,7 @@ class ProductController extends Controller
                     'pvProductId' => $request->input('productId'),
                     'pvVarianceId' => $var,
                     'pvCost' => $prices[$x],
+                    'pvThreshold' => $qtys[$x],
                     'pvIsActive' => 1
                     ));
                 $pv->save();
@@ -84,6 +86,7 @@ class ProductController extends Controller
             'editProductTypeId' => 'required',
             'editProductName' => 'required',
             'costs.*' => 'numeric|required|between:0,99999999.99',
+            'qtys.*' => 'numeric|required|between:0,999',
         ]);
         $checkproducts = Product::all();
         $isAdded = false;
@@ -107,6 +110,7 @@ class ProductController extends Controller
             $prodId = $request->input('editProductId');
             $variances = explode(',', $variance);
             $prices = $request->input('costs');
+            $qtys = $request->input('qtys');
             //$affectedRows = ProductVariance::where('pvProductId', '=', $request->input('editProductId'))->update(['pvIsActive' => 0]);
             $product_variance = ProductVariance::with('product')->where('pvProductId','=',$id)->where('pvIsActive','=',1)->count();
             $warning = 0;
@@ -118,6 +122,7 @@ class ProductController extends Controller
                             'pvProductId' => $request->input('editProductId'),
                             'pvVarianceId' => $var,
                             'pvCost' => $prices[$x],
+                            'pvThreshold' => $qtys[$x],
                             'pvIsActive' => 1
                             ));
                         $pv->save();
@@ -135,7 +140,8 @@ class ProductController extends Controller
                 $product_variance = ProductVariance::with('product')->where('pvProductId','=',$id)->where('pvIsActive','=',1)->get();
                 if($variance!=null || $variance!=''){
                     foreach($product_variance as $pv){
-                        $cost = $request->input($pv->pvVarianceId);
+                        $cost = $request->input("cost".$pv->pvVarianceId);
+                        $qty = $request->input("qty".$pv->pvVarianceId);
                         if($cost!='' || $cost !=null){
                             $prodVar = ProductVariance::where('pvProductId','=',$id)->where('pvVarianceId','=',$pv->pvVarianceId)->where('pvIsActive','=',1)->first();
                             $prodVar->pvCost = $cost;
@@ -145,6 +151,11 @@ class ProductController extends Controller
                                 'pcCost' => $cost,
                             ));
                             $prodCost->save();
+                        }
+                        if($qty!='' || $qty !=null){
+                            $prodVar = ProductVariance::where('pvProductId','=',$id)->where('pvVarianceId','=',$pv->pvVarianceId)->where('pvIsActive','=',1)->first();
+                            $prodVar->pvThreshold = $qty;
+                            $prodVar->save();
                         }
                         else{
                             $promo_product = PromoProduct::where('promoProductId','=',$pv->pvId)->where('promoPIsActive','=',1)->count();
@@ -168,7 +179,8 @@ class ProductController extends Controller
                         $pv = ProductVariance::create(array(
                             'pvProductId' => $request->input('editProductId'),
                             'pvVarianceId' => $var,
-                            'pvCost' => $request->input($var),
+                            'pvCost' => $request->input("cost".$var),
+                            'pvThreshold' => $request->input("qty".$var),
                             'pvIsActive' => 1
                             ));
                         $pv->save();

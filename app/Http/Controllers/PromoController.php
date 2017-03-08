@@ -105,7 +105,8 @@ class PromoController extends Controller
             'editPromoCost' => 'required|numeric|between:0,99999999.99',
             'editPromoSupplies' => 'numeric',
             'editPromoStart' => 'date',
-            'editPromoEnd' => 'date'
+            'editPromoEnd' => 'date',
+            'qtys.*' => 'required|numeric|between:0,999'
         ]);
         $checkPromo = Promo::all();
         $isAdded = false;

@@ -355,6 +355,7 @@ class ComposerStaticInitca73150541c9e0567098bf2479ea2cb8
         'App\\Http\\Requests\\BrandRequest' => __DIR__ . '/../..' . '/app/Http/Requests/BrandRequest.php',
         'App\\Http\\Requests\\DiscountRequest' => __DIR__ . '/../..' . '/app/Http/Requests/DiscountRequest.php',
         'App\\Http\\Requests\\InspectItemRequest' => __DIR__ . '/../..' . '/app/Http/Requests/InspectItemRequest.php',
+        'App\\Http\\Requests\\InspectRequest' => __DIR__ . '/../..' . '/app/Http/Requests/InspectRequest.php',
         'App\\Http\\Requests\\InspectTypeRequest' => __DIR__ . '/../..' . '/app/Http/Requests/InspectTypeRequest.php',
         'App\\Http\\Requests\\OrderSupplyRequest' => __DIR__ . '/../..' . '/app/Http/Requests/OrderSupplyRequest.php',
         'App\\Http\\Requests\\PackageRequest' => __DIR__ . '/../..' . '/app/Http/Requests/PackageRequest.php',

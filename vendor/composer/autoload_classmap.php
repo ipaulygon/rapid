@@ -41,6 +41,7 @@ return array(
     'App\\Http\\Requests\\BrandRequest' => $baseDir . '/app/Http/Requests/BrandRequest.php',
     'App\\Http\\Requests\\DiscountRequest' => $baseDir . '/app/Http/Requests/DiscountRequest.php',
     'App\\Http\\Requests\\InspectItemRequest' => $baseDir . '/app/Http/Requests/InspectItemRequest.php',
+    'App\\Http\\Requests\\InspectRequest' => $baseDir . '/app/Http/Requests/InspectRequest.php',
     'App\\Http\\Requests\\InspectTypeRequest' => $baseDir . '/app/Http/Requests/InspectTypeRequest.php',
     'App\\Http\\Requests\\OrderSupplyRequest' => $baseDir . '/app/Http/Requests/OrderSupplyRequest.php',
     'App\\Http\\Requests\\PackageRequest' => $baseDir . '/app/Http/Requests/PackageRequest.php',

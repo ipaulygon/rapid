@@ -16,12 +16,14 @@ class PromoProductSeeder extends Seeder
             	'promoPId' => 'PROMO0001',
 				'promoProductId' => 1,
 				'promoPQty' => 1,
+                'promoPIsFree' => 0,
 				'promoPIsActive' => 1,
             ),
             array(
                 'promoPId' => 'PROMO0001',
                 'promoProductId' => 2,
                 'promoPQty' => 1,
+                'promoPIsFree' => 1,
                 'promoPIsActive' => 1,
             ),
         );

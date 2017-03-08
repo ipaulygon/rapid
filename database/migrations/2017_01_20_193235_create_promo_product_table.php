@@ -19,6 +19,7 @@ class CreatePromoProductTable extends Migration
             $table->unsignedInteger('promoProductId');
             $table->integer('promoPQty')->nullable();
             $table->boolean('promoPIsActive');
+            $table->boolean('promoPIsFree');
             $table->timestamps();
             $table->foreign('promoPId')
                   ->references('promoId')->on('promo')
