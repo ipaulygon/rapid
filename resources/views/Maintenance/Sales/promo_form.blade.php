@@ -47,6 +47,20 @@
 			</div>
 			<div class="inline fields">
 				<div class="two wide field">
+					<label>Description</label>
+				</div>
+				<div class="six wide field">
+					<textarea type="text" name="promoDesc" placeholder="Description" rows="2"></textarea>
+				</div>
+				<div class="two wide field">
+					<label>Total Cost of Items:</label>
+				</div>
+				<div class="six wide field">
+					PhP <input style="border:none" id="totalCost" type="text" readonly value="0">
+				</div>
+			</div>
+			<div class="inline fields">
+				<div class="two wide field">
 					<label>Promo Type</label>
 				</div>
 				<div class="six wide field">
@@ -99,20 +113,7 @@
 					<input class="end" type="text" name="end" placeholder="End Date" onchange="date(this.value,this.name)">
 				</div>
 			</div>
-			<div class="inline fields">
-				<div class="two wide field">
-					<label>Description</label>
-				</div>
-				<div class="six wide field">
-					<textarea type="text" name="promoDesc" placeholder="Description" rows="2"></textarea>
-				</div>
-				<div class="two wide field">
-					<label>Total Cost of Items:</label>
-				</div>
-				<div class="six wide field">
-					PhP <input style="border:none" id="totalCost" type="text" readonly value="0">
-				</div>
-			</div>
+			<!--Noted for inclusion-->
 			<div class="three fields">
 				<div class="field">
 					<label>Products:</label>
@@ -148,6 +149,44 @@
 					</div>
 				</div>
 			</div>
+			<!--Free-->
+			<h3>Free Products and Services</h3>
+			<!--Noted for inclusion-->
+			<div class="three fields">
+				<div class="field">
+					<label>Products:</label>
+					<div id="adds" style="width:100%" class="ui multiple search selection dropdown">
+						<input type="hidden" name="freePromoProductId"><i class="dropdown icon"></i>
+						<input class="search" autocomplete="off" tabindex="0">
+						<div class="default text">Select Products</div>
+						<div class="menu" tabindex="-1">
+							@foreach($freeproduct as $pv)
+								@if($pv->pvIsActive==1)
+									<div class="item" id="{{$pv->pvCost}}" title="{{$newId}}" data-value="{{ $pv->pvId }}">{{$pv->product->brand->brandName}} - {{$pv->product->productName}}| {{$pv->variance->varianceSize}} - {{$pv->variance->unit->unitName}}| {{$pv->product->types->typeName}}</div>
+								@endif
+							@endforeach
+						</div>
+					</div>
+				</div>
+				<div class="field" id="freeQty{{$newId}}">
+					<label>Quantity:</label>
+				</div>
+				<div class="field">
+					<label>Services:</label>
+					<div id="servs" style="width:100%" class="ui multiple search selection dropdown">
+						<input type="hidden" name="freePromoServiceId"><i class="dropdown icon"></i>
+						<input class="search" autocomplete="off" tabindex="0">
+						<div class="default text">Select Services</div>
+						<div class="menu" tabindex="-1">
+							@foreach($freeservice as $services)
+								@if($services->serviceIsActive==1)
+									<div class="item" id="{{$services->servicePrice}}" data-value="{{ $services->serviceId }}">{{$services->serviceName}} - {{$services->categories->categoryName}}</div>
+								@endif
+							@endforeach
+						</div>
+					</div>
+				</div>
+			</div>
 			<hr>
 			<i>Note: All with <span>*</span> are required fields</i>
 			<div style="float:right">
@@ -172,6 +211,16 @@
 					lessService(cost);
 				}
 			});
+			$('#servs.ui.dropdown').dropdown({
+				onAdd: function(value,text,$addedChoice){
+					var cost = $addedChoice.attr("id");
+					totalService(cost);
+				},
+				onRemove:function(value,text,$removedChoice){
+					var cost = $removedChoice.attr("id");
+					lessService(cost);
+				}
+			});
 		    $('#supplies').attr("disabled",true);
 		    $('#supplies').val(0);
 		    $('#add.ui.dropdown').dropdown({
@@ -187,6 +236,21 @@
 					lessProd(value,cost);
 		    		$("#qty"+prod+" div[id="+value+"]").remove();
 					$("#qty"+prod+" input[id=total"+value+"]").remove();
+				}
+		    });
+			$('#adds.ui.dropdown').dropdown({
+		    	onAdd: function(value,text,$addedChoice){
+		    		var prod = $addedChoice.attr('title');
+					var cost = $addedChoice.attr('id');
+		    		$("#freeQty"+prod).append('<div id="'+value+'"><label id="'+value+'">'+text+'</label><div class="ui right labeled input"><input id="free'+value+'" title="'+cost+'" type="text" name="freeqty[]" required onchange="totalProd(this.title,this.value,this.id)" onkeypress="return validate(event,this.id)" maxlength="3" data-content="Only numerical values are allowed"><div class="ui label">pieces</div></div></div>');
+					$("#freeQty"+prod).append('<input type="hidden" id="totalfree'+value+'" value="0">');
+		    	},
+		    	onRemove: function(value, text, $removedChoice){
+		    		var prod = $removedChoice.attr('title');
+					var cost = $removedChoice.attr('id');
+					lessProd(value,cost);
+		    		$("#freeQty"+prod+" div[id="+value+"]").remove();
+					$("#freeQty"+prod+" input[id=total"+value+"]").remove();
 				}
 		    });
 		    $('.ui.form').form({

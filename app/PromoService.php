@@ -12,7 +12,8 @@ class PromoService extends Model
 	protected $fillable = array(
 								'promoSId',
 								'promoServiceId',
-								'promoSIsActive'
+								'promoSIsActive',
+								'promoSIsFree'
 								//
 								);
 	public function service(){

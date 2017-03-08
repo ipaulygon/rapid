@@ -13,7 +13,8 @@ class PromoProduct extends Model
 								'promoPId',
 								'promoProductId',
 								'promoPQty',
-								'promoPIsActive'
+								'promoPIsActive',
+								'promoPIsFree'
 								//
 								);
 	public function product(){

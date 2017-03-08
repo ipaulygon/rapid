@@ -30,7 +30,8 @@ class PromoRequest extends FormRequest
             'promoSupplies' => 'numeric',
             'promoStart' => 'date',
             'promoEnd' => 'date',
-            'qty.*' => 'required|numeric|between:0,999'
+            'qty.*' => 'required|numeric|between:0,999',
+            'freeqty.*' => 'required|numeric|between:0,999'
         ];
     }
 
@@ -46,6 +47,8 @@ class PromoRequest extends FormRequest
             'promoCost.max' => 'Max value of cost is 8 digits',
             'qty.*.required' => 'Quantity is required',
             'qty.*.numeric' => 'Quantity must be numeric',
+            'freeqty.*.required' => 'Quantity is required',
+            'freeqty.*.numeric' => 'Quantity must be numeric',
         ];
     }
 

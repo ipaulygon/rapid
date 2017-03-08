@@ -68,8 +68,7 @@
 		<thead>
 			<tr>
 				<th>Promo</th>
-				<th class="right aligned">Price</th>
-				<th>Description</th>
+				<th class="right aligned">Price (PhP)</th>
 				<th>Products</th>
 				<th>Services</th>
 				<th>Actions</th>
@@ -84,19 +83,30 @@
 							$price = number_format($price,2);
 						?>
 						<td>{{ $promo->promoName }}</td>
-						<td class="right aligned">Php {{ $price }}</td>
-						<td>{{ $promo->promoDesc }}</td>
+						<td class="right aligned">{{ $price }}</td>
 						<td>
 							@foreach($promo->product as $pp)
-								@if($pp->promoPIsActive==1)
+								@if($pp->promoPIsActive==1 && $pp->promoPIsFree==0)
+									<li>{{$pp->product->product->brand->brandName}} - {{$pp->product->product->productName}}| {{$pp->product->variance->varianceSize}} - {{$pp->product->variance->unit->unitName}}|{{$pp->product->product->types->typeName}} <br> x {{$pp->promoPQty}} pcs</li>
+								@endif
+							@endforeach
+							<b>Free:</b> 
+							@foreach($promo->product as $pp)
+								@if($pp->promoPIsActive==1 && $pp->promoPIsFree==1)
 									<li>{{$pp->product->product->brand->brandName}} - {{$pp->product->product->productName}}| {{$pp->product->variance->varianceSize}} - {{$pp->product->variance->unit->unitName}}|{{$pp->product->product->types->typeName}} <br> x {{$pp->promoPQty}} pcs</li>
 								@endif
 							@endforeach
 						</td>
 						<td>
 							@foreach($promo->service as $ps)
-								@if($ps->promoSIsActive==1)
-									<li>{{$ps->service->serviceName}} - {{$ps->service->categories->categoryName}}</li>
+								@if($ps->promoSIsActive==1 && $ps->promoSIsFree==0)
+									<li>{{$ps->service->serviceName}}</li>
+								@endif
+							@endforeach
+							<b>Free:</b> 
+							@foreach($promo->service as $ps)
+								@if($ps->promoSIsActive==1 && $ps->promoSIsFree==1)
+									<li>{{$ps->service->serviceName}}</li>
 								@endif
 							@endforeach
 						</td>

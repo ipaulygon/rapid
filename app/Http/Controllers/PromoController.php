@@ -39,7 +39,9 @@ class PromoController extends Controller
         $promo = Promo::with('product.product.product.types')->with('product.product.product.brand')->with('product.product.variance.unit')->with('service.service.categories')->get();
         $product = ProductVariance::with('product.types')->with('product.brand')->with('variance.unit')->get();
         $service = Service::with('categories')->get();
-        return view('Maintenance.Sales.promo_form',compact('promo','product','service','dateNow','newId'));
+        $freeproduct = ProductVariance::with('product.types')->with('product.brand')->with('variance.unit')->get();
+        $freeservice = Service::with('categories')->get();
+        return view('Maintenance.Sales.promo_form',compact('promo','product','service','freeproduct','freeservice','dateNow','newId'));
     }
 
     public function create(PromoRequest $request){
@@ -72,6 +74,11 @@ class PromoController extends Controller
         $serv = $request->input('promoServiceId');
         $servs = explode(",", $serv);
         $qty = $request->input('qty');
+        $freeprod = $request->input('freePromoProductId');
+        $freeprods = explode(",", $freeprod);
+        $freeserv = $request->input('freePromoServiceId');
+        $freeservs = explode(",", $freeserv);
+        $freeqty = $request->input('freeqty');
         if($prod!=null || $prod!=''){
             $x = 0;
             foreach ($prods as $prods) {
@@ -79,7 +86,8 @@ class PromoController extends Controller
                     'promoPId' => $request->input('promoId'),
                     'promoProductId' => $prods,
                     'promoPQty' => $qty[$x],
-                    'promoPIsActive' => 1
+                    'promoPIsActive' => 1,
+                    'promoPIsFree' => 0
                     ));
                 $pp->save();
                 $x++;
@@ -90,7 +98,33 @@ class PromoController extends Controller
                 $ps = PromoService::create(array(
                     'promoSId' => $request->input('promoId'),
                     'promoServiceId' => $servs,
-                    'promoSIsActive' => 1
+                    'promoSIsActive' => 1,
+                    'promoSIsFree' => 0
+                    ));
+                $ps->save();
+            }
+        }
+         if($freeprod!=null || $freeprod!=''){
+            $x = 0;
+            foreach ($freeprods as $freeprods) {
+                $pp = PromoProduct::create(array(
+                    'promoPId' => $request->input('promoId'),
+                    'promoProductId' => $freeprods,
+                    'promoPQty' => $qty[$x],
+                    'promoPIsActive' => 1,
+                    'promoPIsFree' => 1
+                    ));
+                $pp->save();
+                $x++;
+            }
+        }
+        if($freeserv!=null || $freeserv!=''){
+            foreach ($freeservs as $freeservs) {
+                $ps = PromoService::create(array(
+                    'promoSId' => $request->input('promoId'),
+                    'promoServiceId' => $freeservs,
+                    'promoSIsActive' => 1,
+                    'promoSIsFree' => 1
                     ));
                 $ps->save();
             }
@@ -106,7 +140,7 @@ class PromoController extends Controller
             'editPromoSupplies' => 'numeric',
             'editPromoStart' => 'date',
             'editPromoEnd' => 'date',
-            'qtys.*' => 'required|numeric|between:0,999'
+            'qtys.*' => 'required|numeric|between:0,999',
         ]);
         $checkPromo = Promo::all();
         $isAdded = false;
