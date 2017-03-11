@@ -19,12 +19,12 @@
 		</script>
 	@endif
 
-	<h2>Transaction - New Purchase Order</h2>
+	<h2>Transaction - New Purchase delivery</h2>
 	<hr><br>
 
 	<div class="ui form">
-		{!! Form::open(['action' => 'OrderSupplyController@create']) !!}
-			<input type="hidden" name="orderId" value="{{$newId}}" readonly>
+		{!! Form::open(['action' => 'ReceiveDeliveryController@create']) !!}
+			<input type="hidden" name="deliveryId" value="{{$newId}}" readonly>
 			<div class="field">
 				<label style="color:red">No. {{$newId}}</label>
 			</div>
@@ -34,7 +34,7 @@
 				</div>
 				<div class="six wide field">
 					<div style="width:100%" id="supplier" class="ui search selection dropdown">
-						<input type="hidden" name="orderSupplierId"><i class="dropdown icon"></i>
+						<input type="hidden" name="deliverySupplierId"><i class="dropdown icon"></i>
 						<input class="search" autocomplete="off" tabindex="0">
 						<div class="default text">Select Supplier</div>
 						<div class="menu" tabindex="-1">
@@ -52,21 +52,30 @@
 					<?php echo date("F d, Y"); ?>
 				</div>
 			</div>
-			<div class="inline fields">
-				<div class="two wide field">
-					<label>Description</label>
+            <div class="inline fields">
+                <div class="two wide field">
+					<label>Purchase Orders<span>*</span></label>
 				</div>
 				<div class="fourteen wide field">
-					<textarea name="orderDesc" placeholder="Description" rows="3"></textarea>
+					<div style="width:100%" id="deliveryOrder" class="ui multiple search selection dropdown">
+						<input type="hidden" name="deliveryOrderId"><i class="dropdown icon"></i>
+						<input class="search" autocomplete="off" tabindex="0">
+						<div class="default text">Select Orders</div>
+						<div class="menu" tabindex="-1">
+							@foreach($orders as $orders)
+								<div class="item" data-value="{{ $orders->purchaseHId }}">{{ $orders->purchaseHId }}</div>
+							@endforeach
+						</div>
+					</div>
 				</div>
-			</div>
+            </div>
 			<div class="inline fields">
 				<div class="two wide field">
 					<label>Product</label>
 				</div>
 				<div class="fourteen wide field">
 					<div style="width:100%" id="product" class="ui search multiple selection dropdown">
-						<input type="hidden" name="orderProductId"><i class="dropdown icon"></i>
+						<input type="hidden" name="deliveryProductId"><i class="dropdown icon"></i>
 						<input class="search" autocomplete="off" tabindex="0">
 						<div class="default text">Select Products</div>
 						<div class="menu" tabindex="-1">
@@ -83,8 +92,6 @@
 						<th>Quantity</th>
 						<th>Product</th>
 						<th>Description</th>
-						<th>Unit Price</th>
-						<th>Total Cost</th>
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -95,15 +102,15 @@
 					<label>Total cost: PhP</label>
 				</div>
 				<div class="eight wide field">
-					<input id="totalCost" style="border:none;color:red" type="text" name="totalCost" value="0.00" readonly>
-					<input id="totalCosts" style="border:none;color:red" type="hidden" name="totalCosts" value="0" readonly>
+					<input id="totalCost" style="bdelivery:none;color:red" type="text" name="totalCost" value="0.00" readonly>
+					<input id="totalCosts" style="bdelivery:none;color:red" type="hidden" name="totalCosts" value="0" readonly>
 				</div>
 			</div>
 			<br>
 			<hr>
 			<i>Note: All with <span>*</span> are required fields</i>
 			<div style="float:right">
-				<a href="{{URL::to('/transaction/order-supply')}}" type="reset" class="ui negative button"><i class="arrow left icon"></i>Back</a>
+				<a href="{{URL::to('/transaction/receive-delivery')}}" type="reset" class="ui negative button"><i class="arrow left icon"></i>Back</a>
 				<button type="submit" class="ui positive button"><i class="plus icon"></i>Save</button>
 			</div>
 		{!! Form::close() !!}
@@ -123,6 +130,7 @@
 			$('#stiTitle').attr('class','title active');
 			$('#stiContent').attr('class','content active');
 			$('#supplier.ui.dropdown').dropdown();
+            $('#deliveryOrder.ui.dropdown').dropdown();
 			$('#product.ui.dropdown').dropdown({
 				onAdd:function(value,text,$addedChoice){
 					var cost = $addedChoice.attr('title');
@@ -134,8 +142,8 @@
 			});
 			$('.ui.form').form({
 			    fields: {
-			    	orderSupplierId: 'empty',
-			    	orderProductId: 'empty',
+			    	deliverySupplierId: 'empty',
+			    	deliveryProductId: 'empty',
 			  	}
 			});
 		});
@@ -145,8 +153,8 @@
 	            '<div class="ui fluid input"><input id="'+value+'" name="qty[]" onchange="compute(this.value,this.id)" onkeypress="return validate(event,this.id)" type="text" maxlength="3" data-content="Only numerical values are allowed" required></div>',
 	            text,
 	            '<div class="ui fluid input"><input name="desc[]" type="text"></div>',
-	            '<div class="ui fluid input"><input id="cost'+value+'" style="border:none" type="text" value="'+cost+'" readonly></div>',
-	            '<div class="ui fluid input"><input id="total'+value+'" style="border:none" type="text" value="0" readonly></div>',
+	            // '<div class="ui fluid input"><input id="cost'+value+'" style="bdelivery:none" type="text" value="'+cost+'" readonly></div>',
+	            // '<div class="ui fluid input"><input id="total'+value+'" style="bdelivery:none" type="text" value="0" readonly></div>',
 	            '<span id="'+value+'" onclick="removeRowd(this.id)" class="ui circular icon negative button deleteRow"><i class="ui remove icon"></i></span>',
 	        ] ).draw( false );
 		}

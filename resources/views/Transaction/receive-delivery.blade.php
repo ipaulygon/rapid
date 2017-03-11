@@ -60,28 +60,26 @@
 		</script>
 	@endif
 
-	<h2>Transaction - Order Supply</h2>
+	<h2>Transaction - Receive Delivery</h2>
 	<hr><br>
-	<a class="ui positive button" href="{{URL::to('/transaction/order-supply-form')}}"><i class="plus icon"></i>New Purchase Order</a>
+	<a class="ui positive button" href="{{URL::to('/transaction/receive-delivery-form')}}"><i class="plus icon"></i>New Delivery</a>
 	<br><br>
 	<table id="listType" class="ui celled three column table">
 		<thead>
 			<tr>
 				<th>Reference No.</th>
 				<th>Supplier</th>
-				<th>Order Description</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
-			@foreach($orders as $order)
+			@foreach($delivery as $delivery)
 				<tr>
-					<td>{{$order->purchaseHId}}</td>
-					<td>{{$order->supplier->supplierName}}</td>
-					<td>{{$order->purchaseHDesc}}</td>
+					<td>{{$delivery->deliveryHId}}</td>
+					<td>{{$delivery->supplier->supplierName}}</td>
 					<td>
-						<a href="order-supply-pdf/{{$order->purchaseHId}}" class="ui blue basic circular icon button" data-tooltip="View PDF" data-inverted="" name="{{$order->purchaseHId }}"><i class="eye icon"></i></a>
-						<a href="order-supply-form/{{$order->purchaseHId}}" class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted=""><i class="write icon"></i></a>
+						<a href="delivery-supply-pdf/{{$delivery->deliveryHId}}" class="ui blue basic circular icon button" data-tooltip="View PDF" data-inverted="" name="{{$delivery->deliveryHId }}"><i class="eye icon"></i></a>
+						<a href="delivery-supply-form/{{$delivery->deliveryHId}}" class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted=""><i class="write icon"></i></a>
 					</td>
 				</tr>
 			@endforeach

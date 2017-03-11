@@ -218,7 +218,7 @@
             else {
                 $("input[id="+idx+"]").popup('hide');
                 
-            }
+            }as
         }
 	</script>
 @stop

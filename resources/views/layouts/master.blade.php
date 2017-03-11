@@ -37,6 +37,7 @@
         <div class="item">
             <img class="ui image" src="{{ asset('pics/logo.png')}}">
         </div>
+        <a href="{{URL::to('/dashboard')}}" class="header item">Dashboard</a>
         <!--Maintenance-->
         <div class="item">
             <div class="header">Maintenance</div>
@@ -82,7 +83,7 @@
                     <div id="tiContent" class="content">
                         <div class="ui form">
                             <a href="{{URL::to('/transaction/order-supply')}}" class="item">Order Supplies</a>
-                            <a href="" class="item">Receive Deliveries</a>
+                            <a href="{{URL::to('/transaction/receive-delivery')}}" class="item">Receive Deliveries</a>
                         </div>
                     </div>
                 </div>
@@ -91,8 +92,7 @@
                     <div id="tsContent" class="content">
                         <div class="ui form">
                             <a href="{{URL::to('/transaction/inspect')}}" class="item">Inspect Vehicle</a>
-                            <a href="" class="item">Customize Vehicle</a>
-                            <a href="" class="item">Repair Vehicle</a>
+                            <a href="" class="item">Repair/Customize Vehicle</a>
                         </div>
                     </div>
                 </div>
@@ -129,9 +129,6 @@
         </div>
     </div>
     <div class="ui vertical inverted sidebar large menu" id="tokhang">
-        <div class="item">
-            <img class="ui image" src="{{ asset('pics/logo.png')}}">
-        </div>
         <!--Maintenance-->
         <div class="item">
             <div class="header">Maintenance</div>
@@ -186,8 +183,7 @@
                     <div id="stsContent" class="content">
                         <div class="ui form">
                             <a href="{{URL::to('/transaction/inspect')}}" class="item">Inspect Vehicle</a>
-                            <a href="" class="item">Customize Vehicle</a>
-                            <a href="" class="item">Repair Vehicle</a>
+                            <a href="" class="item">Repair/Customize Vehicle</a>
                         </div>
                     </div>
                 </div>
@@ -230,7 +226,7 @@
                     <i class="content icon"></i>
                 </a>
                 <div class="item">
-                    Rapide Sales with Service Management Application
+                    Rapide Sales
                 </div>
             </div>
         </div>

@@ -269,13 +269,13 @@
 													<td>
 														<div class="inline fields">
 															<div class="field">
-																<div class="ui radio checkbox"><i class="ui smile green icon"></i><input type="radio" name="rate{{$inspectItem->inspectItemId}}" value="1"></div>
+																<div class="ui radio checkbox"><i class="ui big smile green icon"></i><input type="radio" name="rate{{$inspectItem->inspectItemId}}" value="1"></div>
 															</div>
 															<div class="field">
-																<div class="ui radio checkbox"><i class="ui meh yellow icon"></i><input type="radio" name="rate{{$inspectItem->inspectItemId}}" value="2"></div>
+																<div class="ui radio checkbox"><i class="ui big meh yellow icon"></i><input type="radio" name="rate{{$inspectItem->inspectItemId}}" value="2"></div>
 															</div>
 															<div class="field">
-																<div class="ui radio checkbox"><i class="ui frown red icon"></i><input type="radio" name="rate{{$inspectItem->inspectItemId}}" value="3"></div>
+																<div class="ui radio checkbox"><i class="ui big frown red icon"></i><input type="radio" name="rate{{$inspectItem->inspectItemId}}" value="3"></div>
 															</div>
 														</div>
 													</td>

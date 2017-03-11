@@ -94,7 +94,7 @@
 						<td>
 							@foreach($package->service as $ps)
 								@if($ps->packageSIsActive==1)
-									<li>{{$ps->service->serviceName}} - {{$ps->service->categories->categoryName}}</li>
+									<li>{{$ps->service->serviceName}}</li>
 								@endif
 							@endforeach
 						</td>

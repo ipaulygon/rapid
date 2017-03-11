@@ -177,6 +177,12 @@ class PromoController extends Controller
             $serv = $request->input('editPromoServiceId');
             $servs = explode(",", $serv);
             $qty = $request->input('qtys');
+            // free
+            $freeprod = $request->input('editFreePromoProductId');
+            $freeprods = explode(",", $freeprod);
+            $freeserv = $request->input('editFreePromoServiceId');
+            $freeservs = explode(",", $freeserv);
+            $freeqty = $request->input('freeqtys');
             $affectedRows = PromoProduct::where('promoPId', '=', $request->input('editPromoId'))->update(['promoPIsActive' => 0]);
             if($prod!=null || $prod!=''){
                 $x = 0;
@@ -185,7 +191,23 @@ class PromoController extends Controller
                         'promoPId' => $request->input('editPromoId'),
                         'promoProductId' => $prods,
                         'promoPQty' => $qty[$x],
-                        'promoPIsActive' => 1
+                        'promoPIsActive' => 1,
+                        'promoPIsFree' => 0
+                        ));
+                    $pp->save();
+                    $x++;
+                }
+            }
+            // free
+            if($freeprod!=null || $freeprod!=''){
+                $x = 0;
+                foreach ($freeprods as $freeprods) {
+                    $pp = PromoProduct::create(array(
+                        'promoPId' => $request->input('editPromoId'),
+                        'promoProductId' => $freeprods,
+                        'promoPQty' => $freeqty[$x],
+                        'promoPIsActive' => 1,
+                        'promoPIsFree' => 1
                         ));
                     $pp->save();
                     $x++;
@@ -198,7 +220,22 @@ class PromoController extends Controller
                     $ps = PromoService::create(array(
                         'promoSId' => $request->input('editPromoId'),
                         'promoServiceId' => $servs,
-                        'promoSIsActive' => 1
+                        'promoSIsActive' => 1,
+                        'promoSIsFree' => 0
+                        ));
+                    $ps->save();
+                    $x++;
+                }
+            }
+            // free
+            if($freeserv!=null || $freeserv!=''){
+                $x = 0;
+                foreach ($freeservs as $freeservs) {
+                    $ps = PromoService::create(array(
+                        'promoSId' => $request->input('editPromoId'),
+                        'promoServiceId' => $freeservs,
+                        'promoSIsActive' => 1,
+                        'promoSIsFree' => 1
                         ));
                     $ps->save();
                     $x++;
@@ -224,10 +261,15 @@ class PromoController extends Controller
         $promo = Promo::with('product.product.product.types')->with('product.product.product.brand')->with('product.product.variance.unit')->with('service.service.categories')->where('promoId','=',$id)->get();
         $product = ProductVariance::with('product.types')->with('product.brand')->with('variance.unit')->get();
         $service = Service::with('categories')->get();
+        $freeproduct = ProductVariance::with('product.types')->with('product.brand')->with('variance.unit')->get();
+        $freeservice = Service::with('categories')->get();
         $pp = PromoProduct::with('product.product.brand')->with('product.product.types')->with('product.variance.unit')->where('promoPId','=',$id)->get();
         $pd = PromoProduct::with('product.product.brand')->with('product.product.types')->with('product.variance.unit')->where('promoPId','=',$id)->get();
         $ps = PromoService::with('service.categories')->where('promoSId','=',$id)->get();
-        return view('Maintenance.Sales.promo_update',compact('promo','product','service','pp','ps','pd'));
+        $freepp = PromoProduct::with('product.product.brand')->with('product.product.types')->with('product.variance.unit')->where('promoPId','=',$id)->get();
+        $freepd = PromoProduct::with('product.product.brand')->with('product.product.types')->with('product.variance.unit')->where('promoPId','=',$id)->get();
+        $freeps = PromoService::with('service.categories')->where('promoSId','=',$id)->get();
+        return view('Maintenance.Sales.promo_update',compact('promo','product','service','freeproduct','freeservice','pp','ps','pd','freepp','freeps','freepd'));
         //return \Response::json(array('$promo'=>$promo));
     }
 }

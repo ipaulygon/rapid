@@ -33,7 +33,7 @@
 					<label>Supplier<span>*</span></label>
 				</div>
 				<div class="six wide field">
-					<div id="supplier" class="ui search selection dropdown">
+					<div style="width:100%" id="supplier" class="ui search selection dropdown">
 						<input type="hidden" name="editOrderSupplierId" value="{{$order[0]->purchaseHSupplierId}}"><i class="dropdown icon"></i>
 						<input class="search" autocomplete="off" tabindex="0">
 						<div class="default text">Select Supplier</div>
@@ -92,10 +92,10 @@
 			</table>
 			<div class="inline fields">
 				<div class="two wide field">
-					<label>Total cost:</label>
+					<label>Total cost: PhP</label>
 				</div>
 				<div class="eight wide field">
-					<input id="totalCost" style="border:none;color:red" type="text" name="totalCost" value="PHP 0.00" readonly>
+					<input id="totalCost" style="border:none;color:red" type="text" name="totalCost" value="0.00" readonly>
 					<input id="totalCosts" style="border:none;color:red" type="hidden" name="totalCosts" value="0" readonly>
 				</div>
 			</div>
@@ -144,16 +144,16 @@
 				@endforeach
 			];
 			$('#product').dropdown('set selected',products);
-			var total = 0;
 			@foreach($order[0]->detail as $prods)
+				var totalCost = $('#totalCosts').val();
 				$('input[id={{$prods->purchaseDVarianceId}}]').val({{$prods->purchaseDQty}});
 				$('input[title={{$prods->purchaseDVarianceId}}]').val("{{$prods->purchaseDRemarks}}");
 				var computed = ({{$prods->purchaseDQty}}*{{$prods->variance->pvCost}}).toFixed(2);
 				$('input[id=total{{$prods->purchaseDVarianceId}}]').val(computed);
-				total = eval(total+"+"+computed);
+				var total = eval(totalCost+"+"+computed).toFixed(2);
+				$('#totalCost').val(total);
+				$('#totalCosts').val(total);
 			@endforeach
-			$('#totalCost').val("PHP "+total.toLocaleString('en_PH'));
-			$('#totalCosts').val(total);
 		});
 		function addRow(value,text,cost){
 			var t = $('#list').DataTable();
@@ -172,7 +172,7 @@
 			var minus = $('input[id=total'+idx+']').val();
 			$('input[id=total'+idx+']').val(computed);
 			var total = eval($('#totalCosts').val()+"+"+computed+"-"+minus).toFixed(2);
-			$('#totalCost').val("PHP "+total.toLocaleString());
+			$('#totalCost').val(total.toLocaleString("en_PH"));
 			$('#totalCosts').val(total);
 		}
 		function removeRow(value){

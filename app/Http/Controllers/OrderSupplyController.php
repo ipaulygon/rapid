@@ -22,7 +22,7 @@ class OrderSupplyController extends Controller
     }
 
     public function index(){
-        $orders = OrderSupplyHeader::where('purchaseHIsActive','=',1)->get();
+        $orders = OrderSupplyHeader::with('supplier')->where('purchaseHIsActive','=',1)->get();
     	return view('Transaction.order-supply',compact('orders'));
     }
 

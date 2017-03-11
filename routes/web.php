@@ -109,11 +109,6 @@ Route::post('maintenance/technician/create','TechController@create');
 Route::post('maintenance/technician/update','TechController@update');
 Route::post('maintenance/technician/destroy','TechController@destroy');
 
-//Inspect
-Route::get('transaction/inspect','InspectController@index');
-Route::post('transaction/inspect/create','InspectController@create');
-Route::post('transaction/inspect/update','InspectController@update');
-Route::post('transaction/inspect/destroy','InspectController@destroy');
 
 //Utilities
 Route::get('utilities/data-reactivation','ReactivationController@index');
@@ -133,9 +128,19 @@ Route::post('utilities/data-reactivation/discount','ReactivationController@disco
 Route::post('utilities/data-reactivation/tech','ReactivationController@tech');
 
 //Transaction
+//order-supply
 Route::get('transaction/order-supply','OrderSupplyController@index');
 Route::get('transaction/order-supply-form','OrderSupplyController@createForm');
 Route::post('transaction/order-supply/create','OrderSupplyController@create');
 Route::get('transaction/order-supply-form/{id}','OrderSupplyController@updateForm');
 Route::post('transaction/order-supply/update','OrderSupplyController@update');
 Route::get('transaction/order-supply-pdf/{id}','OrderSupplyController@view');
+//receive-delivery
+Route::get('transaction/receive-delivery','ReceiveDeliveryController@index');
+Route::get('transaction/receive-delivery-form','ReceiveDeliveryController@createForm');
+Route::post('transaction/receive-delivery/create','ReceiveDeliveryController@create');
+//Inspect
+Route::get('transaction/inspect','InspectController@index');
+Route::post('transaction/inspect/create','InspectController@create');
+Route::post('transaction/inspect/update','InspectController@update');
+Route::post('transaction/inspect/destroy','InspectController@destroy');
