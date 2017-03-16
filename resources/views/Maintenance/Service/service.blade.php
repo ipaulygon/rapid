@@ -22,43 +22,22 @@
 		</script>
 	@endif
 
-	<!--Errors-->	
-	@if($errors->any())
-		<div class="ui small basic modal" style="text-align:center" id="error">
-			<div class="ui icon header">
-				<i class="remove icon"></i>
-				Error
-			</div>
-			<div class="content">
-				@foreach ($errors->all() as $error)
-                	<li>{{ $error }}</li>
-              	@endforeach
-			</div>
-		</div>
+	@if(Session::has('new_error'))
 		<script type="text/javascript">
 			$(document).ready(function (){
-				$('#error').modal('show');
+				$('#modalNew').modal('show');
 			});
 		</script>
 	@endif
 
-	<!--Update Failed-->
-	@if(Session::has('error_message'))
-		<div class="ui small basic modal" style="text-align:center" id="error_message">
-			<div class="ui icon header">
-				<i class="remove icon"></i>
-				Failed
-			</div>
-			<div class="content">
-				<em>{!! session('error_message') !!}</em>
-			</div>
-		</div>
+	@if(Session::has('update_error'))
 		<script type="text/javascript">
 			$(document).ready(function (){
-				$('#error_message').modal('show');
+				$("#edit{!! session('update_error') !!}").modal('show');
 			});
 		</script>
 	@endif
+
 
 	<h2>Maintenance - Service</h2>
 	<hr><br>
@@ -104,14 +83,30 @@
 							{!! Form::open(['action' => 'ServiceController@update']) !!}	
 								<div class="content">
 									<div class="description">
-										<div class="ui form">								
+										<div class="ui form">
+											@if(Session::has('update_error'))
+												@if($errors->any())
+													<div class="ui negative message">
+														<h3>Something went wrong!</h3>
+														{!! implode('', $errors->all(
+															'<li>:message</li>'
+														)) !!}
+													</div>
+												@endif
+											@endif
+											@if(Session::has('update_unique'))
+												<div class="ui negative message">
+													<h3>Something went wrong!</h3>
+													<li>Service already exists. Update failed.</li>
+												</div>
+											@endif									
 											<div class="inline fields">
 						    					<input type="hidden" name="editServiceId" value="{{ $serv->serviceId }}" readonly>
 						    					<div class="two wide field">
 													<label>Service<span>*</span></label>
 												</div>
 												<div class="fourteen wide field">
-						    						<input type="text" name="editServiceName" value="{{ $serv->serviceName }}" placeholder="Service">
+						    						<input maxlength="255" type="text" name="editServiceName" value="{{ $serv->serviceName }}" placeholder="Service">
 						    					</div>
 						    				</div>
 						    				<div class="three fields">
@@ -155,7 +150,7 @@
 						    						<label>Description</label>
 						    					</div>
 						    					<div class="fourteen wide field">
-						    						<textarea type="text" name="editServiceDesc">{{ $serv->serviceDesc }}</textarea>
+						    						<textarea maxlength="255" type="text" name="editServiceDesc">{{ $serv->serviceDesc }}</textarea>
 						    					</div>
 						    				</div>
 										</div>
@@ -208,20 +203,28 @@
 				<div class="ui form">
 					{!! Form::open(['action' => 'ServiceController@create']) !!}
 						<div class="ui error message"></div>
+						@if($errors->any())
+							<div class="ui negative message">
+								<h3>Something went wrong!</h3>
+								{!! implode('', $errors->all(
+									'<li>:message</li>'
+								)) !!}
+							</div>
+						@endif
 						<div class="inline fields">
 	    					<input type="hidden" name="serviceId" value="{{ $newId }}" readonly>
 	    					<div class="two wide field">
 								<label>Service<span>*</span></label>
 							</div>
 							<div class="fourteen wide field">
-	    						<input type="text" name="serviceName" placeholder="Service">
+	    						<input maxlength="255" type="text" name="serviceName" placeholder="Service" value="{{old('serviceName')}}">
 	    					</div>
 	    				</div>
 	    				<div class="three fields">
 	    					<div class="field">
 								<label>Service Category<span>*</span></label>
 	    						<div class="ui search selection dropdown">
-	    							<input type="hidden" name="serviceCategoryId"><i class="dropdown icon"></i>
+	    							<input type="hidden" name="serviceCategoryId" value="{{old('serviceCategoryId')}}"><i class="dropdown icon"></i>
 	    							<input class="search" autocomplete="off" tabindex="0">
 	    							<div class="default text">Select Category</div>
 	    							<div class="menu" tabindex="-1">
@@ -237,13 +240,13 @@
 								<label>Price<span>*</span></label>
 								<div class="ui labeled input">
 									<div class="ui label">P</div>
-									<input type="text" id="servicePrice" name="servicePrice" onkeypress="return validated(event,this.id)" data-content="Only numerical values are allowed" placeholder="Price" maxlength="8">
+									<input type="text" id="servicePrice" name="servicePrice" value="{{old('servicePrice')}}" onkeypress="return validated(event,this.id)" data-content="Only numerical values are allowed" placeholder="Price" maxlength="8">
 								</div>
 							</div>
 							<div class="field">
 								<label>Service Size<span>*</span></label>
 								<div class="ui search selection dropdown">
-	    							<input type="hidden" name="serviceSize"><i class="dropdown icon"></i>
+	    							<input type="hidden" name="serviceSize" value="{{old('serviceSize')}}"><i class="dropdown icon"></i>
 	    							<input class="search" autocomplete="off" tabindex="0">
 	    							<div class="default text">Select Size</div>
 	    							<div class="menu" tabindex="-1">
@@ -258,7 +261,7 @@
 	    						<label>Description</label>
 	    					</div>
 	    					<div class="fourteen wide field">
-	    						<textarea type="text" name="serviceDesc"></textarea>
+	    						<textarea maxlength="255" type="text" name="serviceDesc">{{old('serviceDesc')}}</textarea>
 	    					</div>
 	    				</div>
 	    				<div class="actions">

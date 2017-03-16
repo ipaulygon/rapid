@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\ProductTypeRequest;
+use App\Http\Requests;
 use App\ProductType;
 use App\TypeVariance;
 use App\Product;
+use Validator;
+use Redirect;
 
 use Illuminate\Http\Request;
 
@@ -23,7 +25,23 @@ class ProductTypeController extends Controller
     	return view('Maintenance.Inventory.product_type',compact('product_type','newId'));
     }
 
-    public function create(ProductTypeRequest $request){
+    public function create(Request $request){
+        $rules = array(
+            'typeName' => 'required|unique:product_type',
+        );
+        $messages = [
+            'unique' => ':attribute already exists.',
+            'required' => 'The :attribute field is required.',
+        ];
+        $niceNames = array(
+            'typeName' => 'Type',
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('new_error','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
         $type = ProductType::create(array(
             'typeId' => $request->input('typeId'),
             'typeName' => trim($request->input('typeName')),
@@ -36,9 +54,22 @@ class ProductTypeController extends Controller
     }
 
     public function update(Request $request){
-        $this->validate($request, [
+        $eid = $request->input('editTypeId');
+        $rules = array(
             'editTypeName' => 'required',
-        ]);
+        );
+        $messages = [
+            'required' => 'The :attribute field is required.',
+        ];
+        $niceNames = array(
+            'editTypeName' => 'Type',
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('update_error',$eid);
+            return Redirect::back()->withErrors($validator);
+        }
     	$checkTypes = ProductType::all();
         $isAdded = false;
         foreach ($checkTypes as $type) {
@@ -54,7 +85,9 @@ class ProductTypeController extends Controller
             $type->save();
             \Session::flash('flash_message','Product type successfully updated.');
         }else{
-            \Session::flash('error_message','Product type already exists. Update failed.');
+            \Session::flash('update_error',$eid);
+            \Session::flash('update_unique','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
         }
         return redirect('maintenance/product-type');
     }

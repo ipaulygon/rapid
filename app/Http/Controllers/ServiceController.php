@@ -1,13 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\ServiceRequest;
+use App\Http\Requests;
 use App\Service;
 use App\ServiceCost;
 use App\ServiceCategory;
 use App\PackageService;
 use App\PromoService;
 use App\TechSkill;
+use Validator;
+use Redirect;
+
 
 use Illuminate\Http\Request;
 
@@ -27,7 +30,30 @@ class ServiceController extends Controller
     	return view('Maintenance.Service.service',compact('service','category','newId'));
     }
 
-    public function create(ServiceRequest $request){
+    public function create(Request $request){
+        $rules = array(
+            'serviceName' => 'required|unique_with:service,serviceSize',
+            'serviceCategoryId' => 'required',
+            'serviceSize' => 'required',
+            'servicePrice' => 'numeric|required|between:0,99999999.99'
+        );
+        $messages = [
+            'unique' => ':attribute already exists.',
+            'required' => 'The :attribute field is required.',
+            'numeric' => 'The :attribute must be numeric'
+        ];
+        $niceNames = array(
+            'serviceName' => 'Service',
+            'serviceCategoryId' => 'Category Id',
+            'serviceSize' => 'Size',
+            'servicePrice' => 'Price'
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('new_error','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
         $serv = Service::create(array(
             'serviceId' => $request->input('serviceId'),
             'serviceName' => trim($request->input('serviceName')),
@@ -48,12 +74,29 @@ class ServiceController extends Controller
     }
 
     public function update(Request $request){
-        $this->validate($request, [
+        $eid = $request->input('editServiceId');
+        $rules = array(
             'editServiceName' => 'required',
             'editServiceCategoryId' => 'required',
             'editServiceSize' => 'required',
             'editServicePrice' => 'numeric|required|between:0,99999999.99',
-        ]);
+        );
+        $messages = [
+            'required' => 'The :attribute field is required.',
+            'numeric' => 'The :attribute must be numeric'
+        ];
+        $niceNames = array(
+            'editServiceName' => 'Service',
+            'editServiceCategoryId' => 'Category Id',
+            'editServiceSize' => 'Size',
+            'editServicePrice' => 'Price'
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('update_error',$eid);
+            return Redirect::back()->withErrors($validator);
+        }
     	$checkService = Service::all();
         $isAdded = false;
         foreach ($checkService as $serv) {
@@ -80,7 +123,9 @@ class ServiceController extends Controller
             }
             \Session::flash('flash_message','Service successfully updated.');
         }else{
-            \Session::flash('error_message','Service already exists. Update failed.');
+            \Session::flash('update_error',$eid);
+            \Session::flash('update_unique','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
         }
         return redirect('maintenance/service');
     }

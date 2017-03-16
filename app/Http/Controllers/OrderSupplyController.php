@@ -100,8 +100,8 @@ class OrderSupplyController extends Controller
     }
 
     public function view($id){
-        $pdf = PDF::loadView('pdf.order-supply-pdf')
-        ->setPaper('Letter');
+        $order = OrderSupplyHeader::with('supplier')->with('detail.variance.product.types')->with('detail.variance.product.brand')->with('detail.variance.variance.unit')->where('purchaseHId','=',$id)->get();
+        $pdf = PDF::loadView('order-supply-pdf',compact('order'));
         return $pdf->stream();
     }
 }

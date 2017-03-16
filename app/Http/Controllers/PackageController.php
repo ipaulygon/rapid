@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
-use App\Http\Requests\PackageRequest;
+use App\Http\Requests;
 use App\Package;
 use App\Product;
 use App\ProductType;
@@ -16,6 +15,8 @@ use App\Service;
 use App\ServiceCategory;
 use App\PackageProduct;
 use App\PackageService;
+use Validator;
+use Redirect;
 
 class PackageController extends Controller
 {
@@ -44,7 +45,28 @@ class PackageController extends Controller
         return view('Maintenance.Sales.package_form',compact('package','product','service','dateNow','newId'));
     }
 
-    public function create(PackageRequest $request){
+    public function create(Request $request){
+        $rules = array(
+            'packageName' => 'required|unique:package',
+            'packageCost' => 'required|numeric|between:0,99999999.99',
+            'qty.*' => 'required|numeric|between:0,999'
+        );
+        $messages = [
+            'unique' => ':attribute already exists.',
+            'required' => 'The :attribute field is required.',
+            'numeric' => ':attribute must be numeric.'
+        ];
+        $niceNames = array(
+            'packageName' => 'Package',
+            'packageCost' => 'Price',
+            'qty.*' => 'Quantity'
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('new_error','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
         $package = Package::create(array(
                 'packageId' => $request->input('packageId'),
                 'packageName' => trim($request->input('packageName')),
@@ -88,11 +110,27 @@ class PackageController extends Controller
     }
 
     public function update(Request $request){
-        $this->validate($request, [
+        $eid = $request->input('editPackageId');
+        $rules = array(
             'editPackageName' => 'required',
             'editPackageCost' => 'required|numeric|between:0,99999999.99',
             'qtys.*' => 'required|numeric|between:0,999'
-        ]);
+        );
+        $messages = [
+            'required' => 'The :attribute field is required.',
+            'numeric' => ':attribute must be numeric.'
+        ];
+        $niceNames = array(
+            'editPackageName' => 'Package',
+            'editPackageCost' => 'Cost',
+            'qtys.*' => 'Quantity'
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('update_error',$eid);
+            return Redirect::back()->withErrors($validator);
+        }
         $checkPackage = Package::all();
         $isAdded = false;
         foreach ($checkPackage as $package) {
@@ -141,7 +179,9 @@ class PackageController extends Controller
             }
             \Session::flash('flash_message','Package successfully updated.');
         }else{
-            \Session::flash('error_message','Package already exists. Update failed.');
+            \Session::flash('update_error',$eid);
+            \Session::flash('update_unique','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
         }
         return redirect('maintenance/package');
     }

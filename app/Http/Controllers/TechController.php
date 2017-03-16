@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\TechRequest;
+use App\Http\Requests;
 use App\Technician;
 use App\TechSkill;
 use App\Service;
+use Validator;
+use Redirect;
 
 use Illuminate\Http\Request;
 
@@ -24,7 +26,40 @@ class TechController extends Controller
     	return view('Maintenance.technician',compact('technician','skills','newId'));
     }
 
-    public function create(TechRequest $request){
+    public function create(Request $request){
+        $rules = array(
+            'techPic' => 'image|mimes:jpeg,png,jpg,svg|max:2048',
+            'techFirst' => 'required|unique_with:technician,techMiddle,techLast',
+            'techLast' => 'required',
+            'street' => 'required',
+            'brgy' => 'required',
+            'city' => 'required',
+            'techContact' => 'required|regex:/^\d{11}$/',
+            'techEmail' => 'email',
+        );
+        $messages = [
+            'unique' => ':attribute already exists.',
+            'required' => 'The :attribute field is required.',
+            'mimes' => 'The :attribute must be jpeg,png,jpg or svg',
+            'max' => 'Max size is 2048',
+            'email' => ':attribute must be email'
+        ];
+        $niceNames = array(
+            'techPic' => 'Picture',
+            'techFirst' => 'First Name',
+            'techLast' => 'Last Name',
+            'street' => 'Street',
+            'brgy' => 'Barangay',
+            'city' => 'City',
+            'techContact' => 'Contact Number',
+            'techEmail' => 'Email',
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('new_error','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
         $file = $request->file('techPic');
         $id = $request->input('techId');
         $techPic = "";
@@ -67,7 +102,8 @@ class TechController extends Controller
     }
 
     public function update(Request $request){
-        $this->validate($request, [
+        $eid = $request->input('editTechId');
+        $rules = array(
             'editTechPic' => 'image|mimes:jpeg,png,jpg,svg|max:2048',
             'editTechFirst' => 'required',
             'editTechLast' => 'required',
@@ -76,7 +112,29 @@ class TechController extends Controller
             'editCity' => 'required',
             'editTechContact' => 'required|numeric|regex:/^\d{11}$/',
             'editTechEmail' => 'email',
-        ]);
+        );
+        $messages = [
+            'required' => 'The :attribute field is required.',
+            'mimes' => 'The :attribute must be jpeg,png,jpg or svg',
+            'max' => 'Max size is 2048',
+            'email' => ':attribute must be email'
+        ];
+        $niceNames = array(
+            'editTechPic' => 'Picture',
+            'editTechFirst' => 'First Name',
+            'editTechLast' => 'Last Name',
+            'editStreet' => 'Street',
+            'editBrgy' => 'Barangay',
+            'editCity' => 'City',
+            'editTechContact' => 'Contact Number',
+            'editTechEmail' => 'Email',
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('update_error',$eid);
+            return Redirect::back()->withErrors($validator);
+        }
         $checktechs = Technician::all();
         $isAdded = false;
         $file = $request->file('editTechPic');
@@ -126,7 +184,9 @@ class TechController extends Controller
             }
             \Session::flash('flash_message','Technician successfully updated.');
         }else{
-            \Session::flash('error_message','Technician already exists. Update failed.');
+            \Session::flash('update_error',$eid);
+            \Session::flash('update_unique','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
         }
         return redirect('maintenance/technician');
     }

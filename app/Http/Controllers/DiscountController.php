@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\DiscountRequest;
+use App\Http\Requests;
 use App\Discount;
+use Validator;
+use Redirect;
 
 use Illuminate\Http\Request;
 
@@ -21,7 +23,26 @@ class DiscountController extends Controller
     	return view('Maintenance.Sales.discount',compact('discount','newId'));
     }
 
-    public function create(DiscountRequest $request){
+    public function create(Request $request){
+        $rules = array(
+            'discountName' => 'required|unique:discount',
+            'discountRate' => 'numeric|required|between:0,99', 
+        );
+        $messages = [
+            'unique' => ':attribute already exists.',
+            'required' => 'The :attribute field is required.',
+            'numeric' => ':attribute must be numeric'
+        ];
+        $niceNames = array(
+            'discountName' => 'Discount',
+            'discountRate' => 'Rate'
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('new_error','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
         $discount = Discount::create(array(
             'discountId' => $request->input('discountId'),
             'discountName' => trim($request->input('discountName')),
@@ -34,10 +55,25 @@ class DiscountController extends Controller
     }
 
     public function update(Request $request){
-        $this->validate($request, [
+        $eid = $request->input('editDiscountId');
+        $rules = array(
             'editDiscountName' => 'required',
             'editDiscountRate' => 'numeric|required|between:0,99',
-        ]);
+        );
+        $messages = [
+            'required' => 'The :attribute field is required.',
+            'numeric' => ':attribute must be numeric'
+        ];
+        $niceNames = array(
+            'editDiscountName' => 'Discount',
+            'editDiscountRate' => 'Rate',
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('update_error',$eid);
+            return Redirect::back()->withErrors($validator);
+        }
     	$checkDis = Discount::all();
         $isAdded = false;
         foreach ($checkDis as $discount) {
@@ -53,7 +89,9 @@ class DiscountController extends Controller
             $discount->save();
             \Session::flash('flash_message','Discount successfully updated.');
         }else{
-            \Session::flash('error_message','Discount already exists. Update failed.');
+            \Session::flash('update_error',$eid);
+            \Session::flash('update_unique','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
         }
         return redirect('maintenance/discount');
     }

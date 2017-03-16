@@ -22,40 +22,18 @@
 		</script>
 	@endif
 
-	<!--Errors-->	
-	@if($errors->any())
-		<div class="ui small basic modal" style="text-align:center" id="error">
-			<div class="ui icon header">
-				<i class="remove icon"></i>
-				Error
-			</div>
-			<div class="content">
-				@foreach ($errors->all() as $error)
-                	<li>{{ $error }}</li>
-              	@endforeach
-			</div>
-		</div>
+	@if(Session::has('new_error'))
 		<script type="text/javascript">
 			$(document).ready(function (){
-				$('#error').modal('show');
+				$('#modalNew').modal('show');
 			});
 		</script>
 	@endif
 
-	<!--Update Failed-->
-	@if(Session::has('error_message'))
-		<div class="ui small basic modal" style="text-align:center" id="error_message">
-			<div class="ui icon header">
-				<i class="remove icon"></i>
-				Failed
-			</div>
-			<div class="content">
-				<em>{!! session('error_message') !!}</em>
-			</div>
-		</div>
+	@if(Session::has('update_error'))
 		<script type="text/javascript">
 			$(document).ready(function (){
-				$('#error_message').modal('show');
+				$("#edit{!! session('update_error') !!}").modal('show');
 			});
 		</script>
 	@endif
@@ -88,7 +66,23 @@
 							{!! Form::open(['action' => 'DiscountController@update']) !!}	
 								<div class="content">
 									<div class="description">
-										<div class="ui form">								
+										<div class="ui form">
+											@if(Session::has('update_error'))
+												@if($errors->any())
+													<div class="ui negative message">
+														<h3>Something went wrong!</h3>
+														{!! implode('', $errors->all(
+															'<li>:message</li>'
+														)) !!}
+													</div>
+												@endif
+											@endif
+											@if(Session::has('update_unique'))
+												<div class="ui negative message">
+													<h3>Something went wrong!</h3>
+													<li>Discount already exists. Update failed.</li>
+												</div>
+											@endif									
 											<div class="sixteen wide field">
 				        						<input type="hidden" name="editDiscountId" value="{{ $discount->discountId }}">
 				        					</div>
@@ -97,7 +91,7 @@
 					        						<label>Discount<span>*</span></label>
 					        					</div>
 					        					<div class="fourteen wide field">
-					        						<input type="text" name="editDiscountName" value="{{ $discount->discountName }}" placeholder="Product Type">
+					        						<input maxlength="255" type="text" name="editDiscountName" value="{{ $discount->discountName }}" placeholder="Product Type">
 					        					</div>
 					        				</div>
 					        				<div class="inline fields">
@@ -105,7 +99,7 @@
 					        						<label>Rate<span>*</span></label>
 					        					</div>
 					        					<div class="fourteen wide field">
-					        						<input type="text" name="editDiscountRate" value="{{ $discount->discountRate }}" placeholder="Rate">
+					        						<input maxlength="3" type="text" name="editDiscountRate" value="{{ $discount->discountRate }}" placeholder="Rate">
 					        					</div>
 					        				</div>
 										</div>
@@ -156,13 +150,21 @@
 				<div class="ui form">
 					{!! Form::open(['action' => 'DiscountController@create']) !!}
 						<div class="ui error message"></div>
+						@if($errors->any())
+							<div class="ui negative message">
+								<h3>Something went wrong!</h3>
+								{!! implode('', $errors->all(
+									'<li>:message</li>'
+								)) !!}
+							</div>
+						@endif
 						<input type="hidden" name="discountId" value="{{$newId}}" readonly>
 	    				<div class="inline fields">
 	    					<div class="two wide field">
 	    						<label>Discount<span>*</span></label>
 	    					</div>
 	    					<div class="fourteen wide field">
-	    						<input type="text" name="discountName" placeholder="Discount">
+	    						<input maxlength="255" type="text" name="discountName" placeholder="Discount" value="{{old('discountName')}}">
 	    					</div>
 	    				</div>
 	    				<div class="inline fields">
@@ -170,7 +172,7 @@
 	    						<label>Rate<span>*</span></label>
 	    					</div>
 	    					<div class="fourteen wide field">
-	    						<input type="text" name="discountRate" placeholder="Rate">
+	    						<input maxlength="3" type="text" name="discountRate" placeholder="Rate" value="{{old('discountRate')}}">
 	    					</div>
 	    				</div>
 	    				<div class="actions">

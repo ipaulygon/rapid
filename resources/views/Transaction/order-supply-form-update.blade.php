@@ -26,7 +26,7 @@
 		{!! Form::open(['action' => 'OrderSupplyController@update']) !!}
 			<input type="hidden" name="editOrderId" value="{{$order[0]->purchaseHId}}" readonly>
 			<div class="field">
-				<label style="color:red">No. {{$order[0]->purchaseHId}}</label>
+				<label style="font-weight: bold">No. {{$order[0]->purchaseHId}}</label>
 			</div>
 			<div class="inline fields">
 				<div class="two wide field">
@@ -62,6 +62,15 @@
 			</div>
 			<div class="inline fields">
 				<div class="two wide field">
+					<label>Total cost: PhP</label>
+				</div>
+				<div class="eight wide field">
+					<input id="totalCost" style="border:none;font-weight: bold" type="text" name="totalCost" value="0.00" readonly>
+					<input id="totalCosts" style="border:none;font-weight: bold" type="hidden" name="totalCosts" value="0" readonly>
+				</div>
+			</div>
+			<div class="inline fields">
+				<div class="two wide field">
 					<label>Product</label>
 				</div>
 				<div class="fourteen wide field">
@@ -90,15 +99,6 @@
 				</thead>
 				<tbody id="tableInsert"></tbody>
 			</table>
-			<div class="inline fields">
-				<div class="two wide field">
-					<label>Total cost: PhP</label>
-				</div>
-				<div class="eight wide field">
-					<input id="totalCost" style="border:none;color:red" type="text" name="totalCost" value="0.00" readonly>
-					<input id="totalCosts" style="border:none;color:red" type="hidden" name="totalCosts" value="0" readonly>
-				</div>
-			</div>
 			<br>
 			<hr>
 			<i>Note: All with <span>*</span> are required fields</i>

@@ -1,38 +1,35 @@
 @extends('layouts.master')
 
 @section('content')
-	<!--Errors-->	
-	@if($errors->any())
-		<div class="ui small basic modal" style="text-align:center" id="error">
-			<div class="ui icon header">
-				<i class="remove icon"></i>
-				Error
-			</div>
-			<div class="content">
-				@foreach ($errors->all() as $error)
-                	<li>{{ $error }}</li>
-              	@endforeach
-			</div>
-		</div>
-		<script type="text/javascript">
-			$(document).ready(function (){
-				$('#error').modal('show');
-			});
-		</script>
-	@endif
-
 	<h2>Maintenance - Update Package</h2>
 	<hr><br>
 
 	<div class="ui form">
 		{!! Form::open(['action' => 'PackageController@update']) !!}
 			<input type="hidden" name="editPackageId" value="{{ $package[0]->packageId }}" readonly>
+			<div class="ui error message"></div>
+			@if(Session::has('update_error'))
+				@if($errors->any())
+					<div class="ui negative message">
+						<h3>Something went wrong!</h3>
+						{!! implode('', $errors->all(
+							'<li>:message</li>'
+						)) !!}
+					</div>
+				@endif
+			@endif
+			@if(Session::has('update_unique'))
+				<div class="ui negative message">
+					<h3>Something went wrong!</h3>
+					<li>Package already exists. Update failed.</li>
+				</div>
+			@endif	
 			<div class="inline fields">
 				<div class="two wide field">
 					<label>Package<span>*</span></label>
 				</div>
 				<div class="six wide field">
-					<input type="text" name="editPackageName" value="{{ $package[0]->packageName }}" placeholder="Package">
+					<input maxlength="255" type="text" name="editPackageName" value="{{ $package[0]->packageName }}" placeholder="Package">
 				</div>
 				<div class="two wide field">
 					<label>Price<span>*</span></label>
@@ -49,7 +46,7 @@
 					<label>Description</label>
 				</div>
 				<div class="six wide field">
-					<textarea type="text" name="editPackageDesc" placeholder="Description" rows="2">{{ $package[0]->packageDesc }}</textarea>
+					<textarea maxlength="255" type="text" name="editPackageDesc" placeholder="Description" rows="2">{{ $package[0]->packageDesc }}</textarea>
 				</div>
 				<div class="two wide field">
 					<label>Total Cost of Items:</label>
@@ -86,7 +83,15 @@
 						<div class="menu" tabindex="-1">
 							@foreach($service as $service)
 								@if($service->serviceIsActive==1)
-									<div class="item" id="{{$service->servicePrice}}" data-value="{{ $service->serviceId }}">{{$service->serviceName}} - {{$service->categories->categoryName}}</div>
+									<?php
+										$size = "";
+										if($service->serviceSize==1){
+											$size="Sedan";
+										}else{
+											$size="Large Vehicle";
+										}
+									?>
+									<div class="item" id="{{$service->servicePrice}}" data-value="{{ $service->serviceId }}">{{$service->serviceName}} - {{$size}}</div>
 								@endif
 							@endforeach
 						</div>

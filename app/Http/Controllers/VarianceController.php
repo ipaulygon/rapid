@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\VarianceRequest;
+use App\Http\Requests;
 use App\Variance;
 use App\Unit;
 use App\ProductType;
 use App\TypeVariance;
 use App\ProductVariance;
 use App\Product;
+use Validator;
+use Redirect;
 
 use Illuminate\Http\Request;
 
@@ -28,7 +30,25 @@ class VarianceController extends Controller
     	return view('Maintenance.Inventory.product_variance',compact('variance','unit','types','newId'));
     }
 
-    public function create(VarianceRequest $request){
+    public function create(Request $request){
+        $rules = array(
+            'varianceSize' => 'required|unique:variance',
+            'varianceUnitId' => 'required|unique_with:variance,varianceSize',
+        );
+        $messages = [
+            'unique' => ':attribute already exists.',
+            'required' => 'The :attribute field is required.',
+        ];
+        $niceNames = array(
+            'varianceSize' => 'Size',
+            'varianceUnitId' => 'Unit Id',
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('new_error','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
         $variance = Variance::create(array(
             'varianceId' => $request->input('varianceId'),
             'varianceSize' => trim($request->input('varianceSize')),
@@ -54,10 +74,24 @@ class VarianceController extends Controller
     }
 
     public function update(Request $request){
-        $this->validate($request, [
+        $eid = $request->input('editVarianceId');
+        $rules = array(
             'editVarianceSize' => 'required',
             'editVarianceUnitId' => 'required',
-        ]);
+        );
+        $messages = [
+            'required' => 'The :attribute field is required.',
+        ];
+        $niceNames = array(
+            'editVarianceSize' => 'Size',
+            'editVarianceUnitId' => 'Unit Id',
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('update_error',$eid);
+            return Redirect::back()->withErrors($validator);
+        }
     	$checkvariances = Variance::all();
         $isAdded = false;
         foreach ($checkvariances as $variance) {
@@ -138,7 +172,9 @@ class VarianceController extends Controller
             }
             \Session::flash('flash_message','Variance successfully updated.');
         }else{
-            \Session::flash('error_message','Variance already exists. Update failed.');
+            \Session::flash('update_error',$eid);
+            \Session::flash('update_unique','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
         }
         return redirect('maintenance/product-variance');
     }

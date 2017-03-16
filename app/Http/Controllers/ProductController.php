@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\ProductRequest;
+use App\Http\Requests;
 use App\Product;
 use App\ProductType;
 use App\Brand;
@@ -11,6 +11,8 @@ use App\TypeVariance;
 use App\PackageProduct;
 use App\PromoProduct;
 use App\ProductCost;
+use Validator;
+use Redirect;
 
 use Illuminate\Http\Request;
 
@@ -42,7 +44,32 @@ class ProductController extends Controller
         return view('Maintenance.Inventory.product_form',compact('product','type','brand','variance','tv','newId'));
     }
 
-    public function create(ProductRequest $request){
+    public function create(Request $request){
+        $rules = array(
+            'productBrandId' => 'required',
+            'productTypeId' => 'required',
+            'productName' => 'required|unique_with:product,productBrandId','productTypeId',
+            'cost.*' => 'numeric|required|between:0,99999999.99',
+            'qty.*' => 'numeric|required|between:0,999',
+        );
+        $messages = [
+            'unique' => ':attribute already exists.',
+            'required' => 'The :attribute field is required.',
+            'numeric' => ':attribute must be numeric',
+        ];
+        $niceNames = array(
+            'productBrandId' => 'Brand Id',
+            'productTypeId' => 'Type Id',
+            'productName' => 'Product',
+            'cost.*' => 'Cost',
+            'qty.*' => 'Quantity'
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('new_error','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
         $product = Product::create(array(
             'productId' => $request->input('productId'),
             'productBrandId' => trim($request->input('productBrandId')),
@@ -81,13 +108,32 @@ class ProductController extends Controller
     }
 
     public function update(Request $request){
-        $this->validate($request, [
+        $eid = $request->input('editProductId');
+        $rules = array(
             'editProductBrandId' => 'required',
             'editProductTypeId' => 'required',
             'editProductName' => 'required',
             'costs.*' => 'numeric|required|between:0,99999999.99',
             'qtys.*' => 'numeric|required|between:0,999',
-        ]);
+        );
+        $messages = [
+            'unique' => ':attribute already exists.',
+            'required' => 'The :attribute field is required.',
+            'numeric' => ':attribute must be numeric',
+        ];
+        $niceNames = array(
+            'editProductBrandId' => 'Brand Id',
+            'editProductTypeId' => 'Type Id',
+            'editProductName' => 'Product',
+            'costs.*' => 'Cost',
+            'qtys.*' => 'Quantity'
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('update_error',$eid);
+            return Redirect::back()->withErrors($validator);
+        }
         $checkproducts = Product::all();
         $isAdded = false;
         foreach ($checkproducts as $product) {
@@ -224,7 +270,9 @@ class ProductController extends Controller
                 \Session::flash('warning_message','Some of the variances were not updated/deactivated because it is used by promos and packages. Product updated');
             }
         }else{
-            \Session::flash('error_message','Product already exists. Update failed.');
+            \Session::flash('update_error',$eid);
+            \Session::flash('update_unique','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
         }
         return redirect('maintenance/product');
     }

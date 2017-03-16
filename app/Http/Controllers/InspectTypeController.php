@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\InspectTypeRequest;
+use App\Http\Requests;
 use App\InspectType;
 use App\InspectItem;
+use Validator;
+use Redirect;
 
 use Illuminate\Http\Request;
 
@@ -22,7 +24,23 @@ class InspectTypeController extends Controller
     	return view('Maintenance.Service.inspection_type',compact('inspect_type','newIdType'));
     }
 
-    public function create(InspectTypeRequest $request){
+    public function create(Request $request){
+        $rules = array(
+            'inspectTypeName' => 'required|unique:inspect_type',
+        );
+        $messages = [
+            'unique' => ':attribute already exists.',
+            'required' => 'The :attribute field is required.',
+        ];
+        $niceNames = array(
+            'inspectTypeName' => 'Inspection Type',
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('new_error','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
         $type = InspectType::create(array(
             'inspectTypeId' => $request->input('inspectTypeId'),
             'inspectTypeName' => trim($request->input('inspectTypeName')),
@@ -35,9 +53,22 @@ class InspectTypeController extends Controller
     }
 
     public function update(Request $request){
-        $this->validate($request, [
+        $eid = $request->input('editInspectTypeId');
+        $rules = array(
             'editInspectTypeName' => 'required',
-        ]);
+        );
+        $messages = [
+            'required' => 'The :attribute field is required.',
+        ];
+        $niceNames = array(
+            'editInspectTypeName' => 'Inspection Type',
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('update_error',$eid);
+            return Redirect::back()->withErrors($validator);
+        }
         $checkInspectType = InspectType::all();
         $isAdded = false;
         foreach ($checkInspectType as $inspectType) {
@@ -53,7 +84,9 @@ class InspectTypeController extends Controller
             $inspectType->save();
             \Session::flash('flash_message','Inspection Type successfully updated.');
         }else{
-            \Session::flash('error_message','Inspection Type already exists. Update failed.');
+            \Session::flash('update_error',$eid);
+            \Session::flash('update_unique','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
         }
         return redirect('maintenance/inspect-type');
     }

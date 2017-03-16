@@ -22,40 +22,18 @@
 		</script>
 	@endif
 
-	<!--Errors-->	
-	@if($errors->any())
-		<div class="ui small basic modal" style="text-align:center" id="error">
-			<div class="ui icon header">
-				<i class="remove icon"></i>
-				Error
-			</div>
-			<div class="content">
-				@foreach ($errors->all() as $error)
-                	<li>{{ $error }}</li>
-              	@endforeach
-			</div>
-		</div>
+	@if(Session::has('new_error'))
 		<script type="text/javascript">
 			$(document).ready(function (){
-				$('#error').modal('show');
+				$('#modalNewItem').modal('show');
 			});
 		</script>
 	@endif
 
-	<!--Update Failed-->
-	@if(Session::has('error_message'))
-		<div class="ui small basic modal" style="text-align:center" id="error_message">
-			<div class="ui icon header">
-				<i class="remove icon"></i>
-				Failed
-			</div>
-			<div class="content">
-				<em>{!! session('error_message') !!}</em>
-			</div>
-		</div>
+	@if(Session::has('update_error'))
 		<script type="text/javascript">
 			$(document).ready(function (){
-				$('#error_message').modal('show');
+				$("#edit{!! session('update_error') !!}").modal('show');
 			});
 		</script>
 	@endif
@@ -90,7 +68,23 @@
 							{!! Form::open(['action' => 'InspectItemController@update']) !!}	
 								<div class="content">
 									<div class="description">
-										<div class="ui form">								
+										<div class="ui form">
+											@if(Session::has('update_error'))
+												@if($errors->any())
+													<div class="ui negative message">
+														<h3>Something went wrong!</h3>
+														{!! implode('', $errors->all(
+															'<li>:message</li>'
+														)) !!}
+													</div>
+												@endif
+											@endif
+											@if(Session::has('update_unique'))
+												<div class="ui negative message">
+													<h3>Something went wrong!</h3>
+													<li>Inspection Item already exists. Update failed.</li>
+												</div>
+											@endif								
 											<div class="sixteen wide field">
 				        						<input type="hidden" name="editInspectItemId" value="{{ $inspectItem->inspectItemId }}">
 				        					</div>
@@ -99,7 +93,7 @@
 					        						<label>Inspect Item<span>*</span></label>
 					        					</div>
 					        					<div class="six wide field">
-					        						<input type="text" name="editInspectItemName" value="{{ $inspectItem->inspectItemName }}" placeholder="Inspect Item">
+					        						<input maxlength="255" type="text" name="editInspectItemName" value="{{ $inspectItem->inspectItemName }}" placeholder="Inspect Item">
 					        					</div>
 					        					<div class="two wide field">
 					                                <label>Inspection Type<span>*</span></label>
@@ -124,7 +118,7 @@
 					        						<label>Description</label>
 					        					</div>
 					        					<div class="fourteen wide field">
-					        						<textarea type="text" name="editInspectItemDesc" placeholder="Description">{{ $inspectItem->inspectItemDesc }}</textarea>
+					        						<textarea maxlength="255" type="text" name="editInspectItemDesc" placeholder="Description">{{ $inspectItem->inspectItemDesc }}</textarea>
 					        					</div>
 					        				</div>
 										</div>
@@ -174,20 +168,28 @@
                 <div class="ui form">
                     {!! Form::open(['action' => 'InspectItemController@create']) !!}
                         <div class="ui error message"></div>
+						@if($errors->any())
+							<div class="ui negative message">
+								<h3>Something went wrong!</h3>
+								{!! implode('', $errors->all(
+									'<li>:message</li>'
+								)) !!}
+							</div>
+						@endif
                         <input type="hidden" name="inspectItemId" value="{{$newIdItem}}" readonly>
                         <div class="inline fields">
                             <div class="two wide field">
                                 <label>Inspection Item<span>*</span></label>
                             </div>
                             <div class="six wide field">
-                                <input type="text" name="inspectItemName" placeholder="Inspection Item">
+                                <input maxlength="255" type="text" name="inspectItemName" placeholder="Inspection Item" value="{{old('inspectItemName')}}">
                             </div>
                             <div class="two wide field">
                                 <label>Inspection Type<span>*</span></label>
                             </div>
                             <div class="six wide field">
                                 <div class="ui search selection dropdown">
-                                    <input type="hidden" name="inspectItemTypeId"><i class="dropdown icon"></i>
+                                    <input type="hidden" name="inspectItemTypeId" value="{{old('inspectItemTypeId')}}"><i class="dropdown icon"></i>
                                     <input class="search" autocomplete="off" tabindex="0">
                                     <div class="default text">Select Type</div>
                                     <div class="menu" tabindex="-1">
@@ -205,7 +207,7 @@
                                 <label>Description</label>
                             </div>
                             <div class="fourteen wide field">
-                                <textarea type="text" name="inspectItemDesc" placeholder="Description"></textarea>
+                                <textarea maxlength="255" type="text" name="inspectItemDesc" placeholder="Description">{{old('inspectItemDesc')}}</textarea>
                             </div>
                         </div>
                         <div class="actions">

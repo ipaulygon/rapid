@@ -22,40 +22,18 @@
 		</script>
 	@endif
 
-	<!--Errors-->	
-	@if($errors->any())
-		<div class="ui small basic modal" style="text-align:center" id="error">
-			<div class="ui icon header">
-				<i class="remove icon"></i>
-				Error
-			</div>
-			<div class="content">
-				@foreach ($errors->all() as $error)
-                	<li>{{ $error }}</li>
-              	@endforeach
-			</div>
-		</div>
+	@if(Session::has('new_error'))
 		<script type="text/javascript">
 			$(document).ready(function (){
-				$('#error').modal('show');
+				$('#modalNew').modal('show');
 			});
 		</script>
 	@endif
 
-	<!--Update Failed-->
-	@if(Session::has('error_message'))
-		<div class="ui small basic modal" style="text-align:center" id="error_message">
-			<div class="ui icon header">
-				<i class="remove icon"></i>
-				Failed
-			</div>
-			<div class="content">
-				<em>{!! session('error_message') !!}</em>
-			</div>
-		</div>
+	@if(Session::has('update_error'))
 		<script type="text/javascript">
 			$(document).ready(function (){
-				$('#error_message').modal('show');
+				$("#edit{!! session('update_error') !!}").modal('show');
 			});
 		</script>
 	@endif
@@ -115,7 +93,23 @@
 							{!! Form::open(['action' => 'VarianceController@update']) !!}	
 								<div class="content">
 									<div class="description">
-										<div class="ui form">								
+										<div class="ui form">
+											@if(Session::has('update_error'))
+												@if($errors->any())
+													<div class="ui negative message">
+														<h3>Something went wrong!</h3>
+														{!! implode('', $errors->all(
+															'<li>:message</li>'
+														)) !!}
+													</div>
+												@endif
+											@endif
+											@if(Session::has('update_unique'))
+												<div class="ui negative message">
+													<h3>Something went wrong!</h3>
+													<li>Variance already exists. Update failed.</li>
+												</div>
+											@endif									
 											<div class="sixteen wide field">
 				        						<input type="hidden" name="editVarianceId" value="{{ $variance->varianceId }}">
 				        					</div>
@@ -124,7 +118,7 @@
 					        						<label>Variance<span>*</span></label>
 					        					</div>
 					        					<div class="six wide field">
-					        						<input type="text" name="editVarianceSize" value="{{ $variance->varianceSize }}" placeholder="Variance">
+					        						<input maxlength="255" type="text" name="editVarianceSize" value="{{ $variance->varianceSize }}" placeholder="Variance">
 					        					</div>
 					        					<div class="two wide field">
 						    						<label>Unit<span>*</span></label>
@@ -168,7 +162,7 @@
 					        						<label>Description</label>
 					        					</div>
 					        					<div class="fourteen wide field">
-					        						<textarea type="text" name="editVarianceDesc" placeholder="Description">{{ $variance->varianceDesc }}</textarea>
+					        						<textarea maxlength="255" type="text" name="editVarianceDesc" placeholder="Description">{{ $variance->varianceDesc }}</textarea>
 					        					</div>
 					        				</div>
 										</div>
@@ -229,19 +223,27 @@
 					{!! Form::open(['action' => 'VarianceController@create']) !!}
 						<input type="hidden" name="varianceId" value="{{ $newId }}" readonly>
 	    				<div class="ui error message"></div>
+						@if($errors->any())
+							<div class="ui negative message">
+								<h3>Something went wrong!</h3>
+								{!! implode('', $errors->all(
+									'<li>:message</li>'
+								)) !!}
+							</div>
+						@endif
 	    				<div class="inline fields">
 	    					<div class="two wide field">
 	    						<label>Size<span>*</span></label>
 	    					</div>
 	    					<div class="six wide field">
-	    						<input type="text" name="varianceSize" placeholder="Variance">
+	    						<input maxlength="255" type="text" name="varianceSize" placeholder="Variance" value="{{old('varianceSize')}}">
 	    					</div>
 	    					<div class="two wide field">
 	    						<label>Unit<span>*</span></label>
 	    					</div>
 	    					<div class="six wide field">
 	    						<div class="ui search selection dropdown">
-	    							<input type="hidden" name="varianceUnitId"><i class="dropdown icon"></i>
+	    							<input type="hidden" name="varianceUnitId" value="{{old('varianceUnitId')}}"><i class="dropdown icon"></i>
 	    							<input class="search" autocomplete="off" tabindex="0">
 	    							<div class="default text">Select Unit</div>
 	    							<div class="menu" tabindex="-1">
@@ -260,7 +262,7 @@
 	    					</div>
 	    					<div class="fourteen wide field">
 	    						<div style="width:100%" class="ui multiple search selection dropdown">
-	    							<input type="hidden" name="types"><i class="dropdown icon"></i>
+	    							<input type="hidden" name="types" value="{{old('types')}}"><i class="dropdown icon"></i>
 	    							<input class="search" autocomplete="off" tabindex="0">
 	    							<div class="default text">Limit to Types</div>
 	    							<div class="menu" tabindex="-1">
@@ -278,7 +280,7 @@
 	    						<label>Description</label>
 	    					</div>
 	    					<div class="fourteen wide field">
-	    						<textarea type="text" name="varianceDesc" placeholder="Description"></textarea>
+	    						<textarea maxlength="255" type="text" name="varianceDesc" placeholder="Description">{{old('varianceDesc')}}</textarea>
 	    					</div>
 	    				</div>
 	    				<div class="actions">

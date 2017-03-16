@@ -22,40 +22,18 @@
 		</script>
 	@endif
 
-	<!--Errors-->	
-	@if($errors->any())
-		<div class="ui small basic modal" style="text-align:center" id="error">
-			<div class="ui icon header">
-				<i class="remove icon"></i>
-				Error
-			</div>
-			<div class="content">
-				@foreach ($errors->all() as $error)
-                	<li>{{ $error }}</li>
-              	@endforeach
-			</div>
-		</div>
+	@if(Session::has('new_error'))
 		<script type="text/javascript">
 			$(document).ready(function (){
-				$('#error').modal('show');
+				$('#modalNew').modal('show');
 			});
 		</script>
 	@endif
 
-	<!--Update Failed-->
-	@if(Session::has('error_message'))
-		<div class="ui small basic modal" style="text-align:center" id="error_message">
-			<div class="ui icon header">
-				<i class="remove icon"></i>
-				Failed
-			</div>
-			<div class="content">
-				<em>{!! session('error_message') !!}</em>
-			</div>
-		</div>
+	@if(Session::has('update_error'))
 		<script type="text/javascript">
 			$(document).ready(function (){
-				$('#error_message').modal('show');
+				$("#edit{!! session('update_error') !!}").modal('show');
 			});
 		</script>
 	@endif
@@ -88,7 +66,23 @@
 							{!! Form::open(['action' => 'UnitController@update']) !!}	
 								<div class="content">
 									<div class="description">
-										<div class="ui form">								
+										<div class="ui form">
+											@if(Session::has('update_error'))
+												@if($errors->any())
+													<div class="ui negative message">
+														<h3>Something went wrong!</h3>
+														{!! implode('', $errors->all(
+															'<li>:message</li>'
+														)) !!}
+													</div>
+												@endif
+											@endif
+											@if(Session::has('update_unique'))
+												<div class="ui negative message">
+													<h3>Something went wrong!</h3>
+													<li>Unit of Measurement already exists. Update failed.</li>
+												</div>
+											@endif									
 											<div class="sixteen wide field">
 				        						<input type="hidden" name="editUnitId" value="{{ $unit->unitId }}">
 				        					</div>
@@ -97,7 +91,7 @@
 					        						<label>Unit<span>*</span></label>
 					        					</div>
 					        					<div class="fourteen wide field">
-					        						<input type="text" name="editUnitName" value="{{ $unit->unitName }}" placeholder="Unit">
+					        						<input maxlength="255" type="text" name="editUnitName" value="{{ $unit->unitName }}" placeholder="Unit">
 					        					</div>
 					        				</div>
 					        				<div class="inline fields">
@@ -105,7 +99,7 @@
 					        						<label>Description</label>
 					        					</div>
 					        					<div class="fourteen wide field">
-					        						<textarea type="text" name="editUnitDesc" placeholder="Description">{{ $unit->unitDesc }}</textarea>
+					        						<textarea maxlength="255" type="text" name="editUnitDesc" placeholder="Description">{{ $unit->unitDesc }}</textarea>
 					        					</div>
 					        				</div>
 										</div>
@@ -155,12 +149,20 @@
 					{!! Form::open(['action' => 'UnitController@create']) !!}
 						<input type="hidden" name="unitId" value="{{ $newId }}" readonly>
 	    				<div class="ui error message"></div>
+						@if($errors->any())
+							<div class="ui negative message">
+								<h3>Something went wrong!</h3>
+								{!! implode('', $errors->all(
+									'<li>:message</li>'
+								)) !!}
+							</div>
+						@endif
 	    				<div class="inline fields">
 	    					<div class="two wide field">
 	    						<label>UOM<span>*</span></label>
 	    					</div>
 	    					<div class="fourteen wide field">
-	    						<input type="text" name="unitName" placeholder="Unit">
+	    						<input maxlength="255" type="text" name="unitName" placeholder="Unit" value="{{old('unitName')}}">
 	    					</div>
 	    				</div>
 	    				<div class="inline fields">
@@ -168,7 +170,7 @@
 	    						<label>Description</label>
 	    					</div>
 	    					<div class="fourteen wide field">
-	    						<textarea type="text" name="unitDesc" placeholder="Description"></textarea>
+	    						<textarea maxlength="255" type="text" name="unitDesc" placeholder="Description">{{old('unitDesc')}}</textarea>
 	    					</div>
 	    				</div>
 	    				<div class="actions">

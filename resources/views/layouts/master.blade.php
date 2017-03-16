@@ -37,7 +37,7 @@
         <div class="item">
             <img class="ui image" src="{{ asset('pics/logo.png')}}">
         </div>
-        <a href="{{URL::to('/dashboard')}}" class="header item">Dashboard</a>
+        <a href="{{URL::to('/dashboard')}}" class="item">Dashboard</a>
         <!--Maintenance-->
         <div class="item">
             <div class="header">Maintenance</div>
@@ -77,7 +77,7 @@
         <!--Transaction-->
         <div class="item">
             <div class="header">Transaction</div>
-            <div class="ui vertical accordion inverted">
+            <div class="ui vertical accordion inverted fluid">
                 <div class="item">
                     <a id="tiTitle" class="title"><i class="dropdown icon"></i>Inventory</a>
                     <div id="tiContent" class="content">
@@ -92,7 +92,7 @@
                     <div id="tsContent" class="content">
                         <div class="ui form">
                             <a href="{{URL::to('/transaction/inspect')}}" class="item">Inspect Vehicle</a>
-                            <a href="" class="item">Repair/Customize Vehicle</a>
+                            <a href="{{URL::to('/transaction/repair')}}" class="item">Repair/Customize Vehicle</a>
                         </div>
                     </div>
                 </div>
@@ -113,7 +113,7 @@
             <div class="header">Utilities</div>
             <div class="ui vertical accordion inverted">
                 <div class="ui form">
-                    <a href="{{URL::to('/utilities/data-reactivation')}}" class="item">Data Reactivation</a>
+                    <a href="{{URL::to('/utilities/data-reactivation')}}" class="item">Data Activation</a>
                 </div>
             </div>
         </div>
@@ -204,7 +204,7 @@
             <div class="header">Utilities</div>
             <div class="ui vertical accordion inverted">
                 <div class="ui form">
-                    <a href="{{URL::to('/utilities/data-reactivation')}}" class="item">Data Reactivation</a>
+                    <a href="{{URL::to('/utilities/data-reactivation')}}" class="item">Data Activation</a>
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\PromoRequest;
+use App\Http\Requests;
 use App\Promo;
 use App\Product;
 use App\ProductType;
@@ -14,6 +14,8 @@ use App\Service;
 use App\ServiceCategory;
 use App\PromoProduct;
 use App\PromoService;
+use Validator;
+use Redirect;
 
 use Illuminate\Http\Request;
 
@@ -44,7 +46,37 @@ class PromoController extends Controller
         return view('Maintenance.Sales.promo_form',compact('promo','product','service','freeproduct','freeservice','dateNow','newId'));
     }
 
-    public function create(PromoRequest $request){
+    public function create(Request $request){
+        $rules = array(
+            'promoName' => 'required|unique:promo',
+            'promoCost' => 'required|numeric|between:0,99999999.99',
+            'promoSupplies' => 'numeric|between:0,99999999',
+            'promoStart' => 'date',
+            'promoEnd' => 'date',
+            'qty.*' => 'required|numeric|between:0,999',
+            'freeqty.*' => 'required|numeric|between:0,999'
+        );
+        $messages = [
+            'unique' => ':attribute already exists.',
+            'required' => 'The :attribute field is required.',
+            'numeric' => ':attribute must be numeric.',
+            'date' => ':attribute must be a date.'
+        ];
+        $niceNames = array(
+            'promoName' => 'Promo',
+            'promoCost' => 'Cost',
+            'promoSupplies' => 'Supplies',
+            'promoStart' => 'Start Date',
+            'promoEnd' => 'End Date',
+            'qty.*' => 'Quantity',
+            'freeqty.*' => 'Quantity'
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('new_error','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
         $promoStart = trim($request->input('promoStart'));
         $promoEnd = trim($request->input('promoEnd'));
         $promoSupplies = trim($request->input('promoSupplies'));
@@ -134,14 +166,37 @@ class PromoController extends Controller
     }
 
     public function update(Request $request){
-        $this->validate($request, [
+        $eid = $request->input('editPromoId');
+        $rules = array(
             'editPromoName' => 'required',
             'editPromoCost' => 'required|numeric|between:0,99999999.99',
             'editPromoSupplies' => 'numeric',
             'editPromoStart' => 'date',
             'editPromoEnd' => 'date',
             'qtys.*' => 'required|numeric|between:0,999',
-        ]);
+            'freeqtys.*' => 'required|numeric|between:0,999'
+        );
+        $messages = [
+            'unique' => ':attribute already exists.',
+            'required' => 'The :attribute field is required.',
+            'numeric' => ':attribute must be numeric.',
+            'date' => ':attribute must be a date.'
+        ];
+        $niceNames = array(
+            'editPromoName' => 'Promo',
+            'editPromoCost' => 'Cost',
+            'editPromoSupplies' => 'Supplies',
+            'editPromoStart' => 'Start Date',
+            'editPromoEnd' => 'End Date',
+            'qtys.*' => 'Quantity',
+            'freeqtys.*' => 'Quantity'
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('update_error',$eid);
+            return Redirect::back()->withErrors($validator);
+        }
         $checkPromo = Promo::all();
         $isAdded = false;
         foreach ($checkPromo as $promo) {
@@ -243,7 +298,9 @@ class PromoController extends Controller
             }
             \Session::flash('flash_message','Promo successfully updated.');
         }else{
-            \Session::flash('error_message','Promo already exists. Update failed.');
+            \Session::flash('update_error',$eid);
+            \Session::flash('update_unique','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
         }
         return redirect('maintenance/promo');
     }

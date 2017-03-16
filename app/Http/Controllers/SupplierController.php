@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\SupplierRequest;
+use App\Http\Requests;
 use App\Supplier;
+use Validator;
+use Redirect;
 
 use Illuminate\Http\Request;
 
@@ -22,7 +24,28 @@ class SupplierController extends Controller
     	return view('Maintenance.Inventory.supplier',compact('title','supplier','newId'));
     }
 
-    public function create(SupplierRequest $request){
+    public function create(Request $request){
+        $rules = array(
+            'supplierName' => 'required|unique:supplier',
+            'supplierPerson' => 'required',
+            'supplierContact' => 'required|regex:/^\d{11}$/',
+        );
+        $messages = [
+            'unique' => ':attribute already exists.',
+            'required' => 'The :attribute field is required.',
+            'regex' => 'The :attribute field has invalid format'
+        ];
+        $niceNames = array(
+            'supplierName' => 'Supplier',
+            'supplierPerson' => 'Contact Person',
+            'supplierContact' => 'Contact Number'
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('new_error','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
         $supplier = Supplier::create(array(
             'supplierId' => $request->input('supplierId'),
             'supplierName' => trim($request->input('supplierName')),
@@ -37,11 +60,28 @@ class SupplierController extends Controller
     }
 
     public function update(Request $request){
-        $this->validate($request, [
+        $eid = $request->input('editSupplierId');
+        $rules = array(
             'editSupplierName' => 'required',
             'editSupplierPerson' => 'required',
             'editSupplierContact' => 'required|numeric|regex:/^\d{11}$/',
-        ]);
+        );
+        $messages = [
+            'required' => 'The :attribute field is required.',
+            'numeric' => ':attribute already must be numeric.',
+            'regex' => 'The :attribute field has invalid format'
+        ];
+        $niceNames = array(
+            'editSupplierName' => 'Supplier',
+            'editSupplierPerson' => 'Contact Person',
+            'editSupplierContact' => 'Contact Number'
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('update_error',$eid);
+            return Redirect::back()->withErrors($validator);
+        }
     	$checksuppliers = Supplier::all();
         $isAdded = false;
         foreach ($checksuppliers as $supplier) {
@@ -59,7 +99,9 @@ class SupplierController extends Controller
             $supplier->save();
             \Session::flash('flash_message','Supplier successfully updated.');
         }else{
-            \Session::flash('error_message','Supplier already exists. Update failed.');
+            \Session::flash('update_error',$eid);
+            \Session::flash('update_unique','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
         }
         return redirect('maintenance/supplier');
     }

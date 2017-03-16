@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\InspectItemRequest;
+use App\Http\Requests;
 use App\InspectItem;
 use App\InspectType;
+use Validator;
+use Redirect;
 
 use Illuminate\Http\Request;
 
@@ -23,7 +25,25 @@ class InspectItemController extends Controller
     	return view('Maintenance.Service.inspection_item',compact('inspect_item','newIdItem','inspect_type'));
     }
 
-    public function create(InspectItemRequest $request){
+    public function create(Request $request){
+        $rules = array(
+            'inspectItemName' => 'required',
+            'inspectItemTypeId' => 'required|unique_with:inspect_item,inspectItemName',
+        );
+        $messages = [
+            'unique' => ':attribute already exists.',
+            'required' => 'The :attribute field is required.',
+        ];
+        $niceNames = array(
+            'inspectItemName' => 'Inspection Item',
+            'inspectItemTypeId' => 'Inspection Type Id'
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('new_error','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
         $type = InspectItem::create(array(
             'inspectItemId' => $request->input('inspectItemId'),
             'inspectItemName' => trim($request->input('inspectItemName')),
@@ -37,10 +57,24 @@ class InspectItemController extends Controller
     }
 
     public function update(Request $request){
-        $this->validate($request, [
+        $eid = $request->input('editInspectItemId');
+        $rules = array(
             'editInspectItemName' => 'required',
             'editInspectItemTypeId' => 'required',
-        ]);
+        );
+        $messages = [
+            'required' => 'The :attribute field is required.',
+        ];
+        $niceNames = array(
+            'editInspectItemName' => 'Inspection Item',
+            'editInspectItemTypeId' => 'Inspection Type Id',
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('update_error',$eid);
+            return Redirect::back()->withErrors($validator);
+        }
         $checkInspectItem = InspectItem::all();
         $isAdded = false;
         foreach ($checkInspectItem as $inspectItem) {
@@ -58,7 +92,9 @@ class InspectItemController extends Controller
             $inspectItem->save();
             \Session::flash('flash_message','Inspection item successfully updated.');
         }else{
-            \Session::flash('error_message','Inspection item already exists. Update failed.');
+            \Session::flash('update_error',$eid);
+            \Session::flash('update_unique','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
         }
         return redirect('maintenance/inspect-item');
     }

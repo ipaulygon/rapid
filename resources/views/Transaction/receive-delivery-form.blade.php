@@ -19,21 +19,21 @@
 		</script>
 	@endif
 
-	<h2>Transaction - New Purchase delivery</h2>
+	<h2>Transaction - New Purchase Delivery</h2>
 	<hr><br>
 
 	<div class="ui form">
 		{!! Form::open(['action' => 'ReceiveDeliveryController@create']) !!}
 			<input type="hidden" name="deliveryId" value="{{$newId}}" readonly>
 			<div class="field">
-				<label style="color:red">No. {{$newId}}</label>
+				<label style="font-weight: bold">No. {{$newId}}</label>
 			</div>
 			<div class="inline fields">
 				<div class="two wide field">
 					<label>Supplier<span>*</span></label>
 				</div>
 				<div class="six wide field">
-					<div style="width:100%" id="supplier" class="ui search selection dropdown">
+					<div style="width:100%" id="supplier" class="ui search selection dropdown" onchange="supplier()">
 						<input type="hidden" name="deliverySupplierId"><i class="dropdown icon"></i>
 						<input class="search" autocomplete="off" tabindex="0">
 						<div class="default text">Select Supplier</div>
@@ -62,37 +62,16 @@
 						<input class="search" autocomplete="off" tabindex="0">
 						<div class="default text">Select Orders</div>
 						<div class="menu" tabindex="-1">
-							@foreach($orders as $orders)
-								<div class="item" data-value="{{ $orders->purchaseHId }}">{{ $orders->purchaseHId }}</div>
-							@endforeach
 						</div>
 					</div>
 				</div>
             </div>
-			<div class="inline fields">
-				<div class="two wide field">
-					<label>Product</label>
-				</div>
-				<div class="fourteen wide field">
-					<div style="width:100%" id="product" class="ui search multiple selection dropdown">
-						<input type="hidden" name="deliveryProductId"><i class="dropdown icon"></i>
-						<input class="search" autocomplete="off" tabindex="0">
-						<div class="default text">Select Products</div>
-						<div class="menu" tabindex="-1">
-							@foreach($products as $product)
-								<div class="item" title="{{$product->pvCost}}" data-value="{{ $product->pvId }}">{{$product->product->brand->brandName}} - {{$product->product->productName}}| {{$product->variance->varianceSize}} - {{$product->variance->unit->unitName}}| {{$product->product->types->typeName}}</div>
-							@endforeach
-						</div>
-					</div>
-				</div>
-			</div>
 			<table id="list" class="ui celled table">
 				<thead>
 					<tr>
 						<th>Quantity</th>
 						<th>Product</th>
 						<th>Description</th>
-						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody id="tableInsert"></tbody>
@@ -102,8 +81,8 @@
 					<label>Total cost: PhP</label>
 				</div>
 				<div class="eight wide field">
-					<input id="totalCost" style="bdelivery:none;color:red" type="text" name="totalCost" value="0.00" readonly>
-					<input id="totalCosts" style="bdelivery:none;color:red" type="hidden" name="totalCosts" value="0" readonly>
+					<input id="totalCost" style="border:none;font-weight: bold" type="text" name="totalCost" value="0.00" readonly>
+					<input id="totalCosts" style="border:none;font-weight: bold" type="hidden" name="totalCosts" value="0" readonly>
 				</div>
 			</div>
 			<br>
@@ -130,16 +109,15 @@
 			$('#stiTitle').attr('class','title active');
 			$('#stiContent').attr('class','content active');
 			$('#supplier.ui.dropdown').dropdown();
-            $('#deliveryOrder.ui.dropdown').dropdown();
-			$('#product.ui.dropdown').dropdown({
-				onAdd:function(value,text,$addedChoice){
+            $('#deliveryOrder.ui.dropdown').dropdown({
+            	onAdd:function(value,text,$addedChoice){
 					var cost = $addedChoice.attr('title');
 					addRow(value,text,cost);
 				},
 				onRemove:function(value,text,$removedChoice){
 					removeRow(value);
 				}
-			});
+            });
 			$('.ui.form').form({
 			    fields: {
 			    	deliverySupplierId: 'empty',
@@ -147,14 +125,17 @@
 			  	}
 			});
 		});
+		function supplier(){
+			
+		}
 		function addRow(value,text,cost){
 			var t = $('#list').DataTable();
 			t.row.add( [
 	            '<div class="ui fluid input"><input id="'+value+'" name="qty[]" onchange="compute(this.value,this.id)" onkeypress="return validate(event,this.id)" type="text" maxlength="3" data-content="Only numerical values are allowed" required></div>',
 	            text,
 	            '<div class="ui fluid input"><input name="desc[]" type="text"></div>',
-	            // '<div class="ui fluid input"><input id="cost'+value+'" style="bdelivery:none" type="text" value="'+cost+'" readonly></div>',
-	            // '<div class="ui fluid input"><input id="total'+value+'" style="bdelivery:none" type="text" value="0" readonly></div>',
+	            // '<div class="ui fluid input"><input id="cost'+value+'" style="border:none" type="text" value="'+cost+'" readonly></div>',
+	            // '<div class="ui fluid input"><input id="total'+value+'" style="border:none" type="text" value="0" readonly></div>',
 	            '<span id="'+value+'" onclick="removeRowd(this.id)" class="ui circular icon negative button deleteRow"><i class="ui remove icon"></i></span>',
 	        ] ).draw( false );
 		}

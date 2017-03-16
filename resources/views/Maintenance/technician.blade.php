@@ -22,40 +22,18 @@
 		</script>
 	@endif
 
-	<!--Errors-->	
-	@if($errors->any())
-		<div class="ui small basic modal" style="text-align:center" id="error">
-			<div class="ui icon header">
-				<i class="remove icon"></i>
-				Error
-			</div>
-			<div class="content">
-				@foreach ($errors->all() as $error)
-                	<li>{{ $error }}</li>
-              	@endforeach
-			</div>
-		</div>
+	@if(Session::has('new_error'))
 		<script type="text/javascript">
 			$(document).ready(function (){
-				$('#error').modal('show');
+				$('#modalNew').modal('show');
 			});
 		</script>
 	@endif
 
-	<!--Update Failed-->
-	@if(Session::has('error_message'))
-		<div class="ui small basic modal" style="text-align:center" id="error_message">
-			<div class="ui icon header">
-				<i class="remove icon"></i>
-				Failed
-			</div>
-			<div class="content">
-				<em>{!! session('error_message') !!}</em>
-			</div>
-		</div>
+	@if(Session::has('update_error'))
 		<script type="text/javascript">
 			$(document).ready(function (){
-				$('#error_message').modal('show');
+				$("#edit{!! session('update_error') !!}").modal('show');
 			});
 		</script>
 	@endif
@@ -96,7 +74,23 @@
 							{!! Form::open(['action' => 'TechController@update','files'=>true]) !!}	
 								<div class="content">
 									<div class="description">
-										<div class="ui form">								
+										<div class="ui form">
+											@if(Session::has('update_error'))
+												@if($errors->any())
+													<div class="ui negative message">
+														<h3>Something went wrong!</h3>
+														{!! implode('', $errors->all(
+															'<li>:message</li>'
+														)) !!}
+													</div>
+												@endif
+											@endif
+											@if(Session::has('update_unique'))
+												<div class="ui negative message">
+													<h3>Something went wrong!</h3>
+													<li>Technician already exists. Update failed.</li>
+												</div>
+											@endif									
 											<input type="hidden" name="editTechId" value="{{$tech->techId}}">
 											<div class="two fields">
 												<div class="field" style="width:30%">
@@ -114,39 +108,39 @@
 													<div class="three fields">
 														<div class="field">
 															<label>First Name<span>*</span></label>
-															<input type="text" name="editTechFirst" placeholder="John" value="{{$tech->techFirst}}">
+															<input maxlength="255" type="text" name="editTechFirst" placeholder="John" value="{{$tech->techFirst}}">
 														</div>
 														<div class="field">
 															<label>Middle Name</label>
-															<input type="text" name="editTechMiddle" placeholder="Cena" value="{{$tech->techMiddle}}">
+															<input maxlength="255" type="text" name="editTechMiddle" placeholder="Cena" value="{{$tech->techMiddle}}">
 														</div>
 														<div class="field">
 															<label>Last Name<span>*</span></label>
-															<input type="text" name="editTechLast" placeholder="Doe" value="{{$tech->techLast}}">
+															<input maxlength="255" type="text" name="editTechLast" placeholder="Doe" value="{{$tech->techLast}}">
 														</div>
 													</div>
 													<div class="three fields">
 														<div class="field">
 															<label>Street/Block<span>*</span></label>
-															<input type="text" name="editStreet" placeholder="Baker St." value="{{$tech->techStreet}}">
+															<input maxlength="255" type="text" name="editStreet" placeholder="Baker St." value="{{$tech->techStreet}}">
 														</div>
 														<div class="field">
 															<label>Brgy./Subd<span>*</span></label>
-															<input type="text" name="editBrgy" placeholder="Brgy. 546" value="{{$tech->techBrgy}}">
+															<input maxlength="255" type="text" name="editBrgy" placeholder="Brgy. 546" value="{{$tech->techBrgy}}">
 														</div>
 														<div class="field">
 															<label>City<span>*</span></label>
-															<input type="text" name="editCity" placeholder="Manila City" value="{{$tech->techCity}}">
+															<input maxlength="255" type="text" name="editCity" placeholder="Manila City" value="{{$tech->techCity}}">
 														</div>
 													</div>
 													<div class="two fields">
 														<div class="field">
 															<label>Contact No.<span>*</span></label>
-															<input type="text" name="editTechContact" placeholder="Contact No." value="{{$tech->techContact}}">
+															<input maxlength="255" type="text" name="editTechContact" placeholder="Contact No." value="{{$tech->techContact}}">
 														</div>
 														<div class="field">
 															<label>Email</label>
-															<input type="email" name="editTechEmail" placeholder="Email" value="{{$tech->techEmail}}">
+															<input maxlength="255" type="email" name="editTechEmail" placeholder="Email" value="{{$tech->techEmail}}">
 														</div>
 													</div>
 													<div class="field">
@@ -224,6 +218,14 @@
 				<div class="ui form">
 					{!! Form::open(['action' => 'TechController@create','files'=>true]) !!}
 						<div class="ui error message"></div>
+						@if($errors->any())
+							<div class="ui negative message">
+								<h3>Something went wrong!</h3>
+								{!! implode('', $errors->all(
+									'<li>:message</li>'
+								)) !!}
+							</div>
+						@endif
 						<input type="hidden" name="techId" value="{{$newId}}">
 						<div class="two fields">
 							<div class="field" style="width:30%">
@@ -240,45 +242,45 @@
 								<div class="three fields">
 									<div class="field">
 										<label>First Name<span>*</span></label>
-										<input type="text" name="techFirst" placeholder="John">
+										<input maxlength="255" type="text" name="techFirst" placeholder="John" value="{{old('techFirst')}}">
 									</div>
 									<div class="field">
 										<label>Middle Name</label>
-										<input type="text" name="techMiddle" placeholder="Cena">
+										<input maxlength="255" type="text" name="techMiddle" placeholder="Cena" value="{{old('techMiddle')}}">
 									</div>
 									<div class="field">
 										<label>Last Name<span>*</span></label>
-										<input type="text" name="techLast" placeholder="Doe">
+										<input maxlength="255" type="text" name="techLast" placeholder="Doe" value="{{old('techLast')}}">
 									</div>
 								</div>
 								<div class="three fields">
 									<div class="field">
 										<label>Street/Block<span>*</span></label>
-										<input type="text" name="street" placeholder="Baker St.">
+										<input maxlength="255" type="text" name="street" placeholder="Baker St." value="{{old('street')}}">
 									</div>
 									<div class="field">
 										<label>Brgy./Subd<span>*</span></label>
-										<input type="text" name="brgy" placeholder="Brgy. 546">
+										<input maxlength="255" type="text" name="brgy" placeholder="Brgy. 546" value="{{old('brgy')}}">
 									</div>
 									<div class="field">
 										<label>City<span>*</span></label>
-										<input type="text" name="city" placeholder="Manila City">
+										<input maxlength="255" type="text" name="city" placeholder="Manila City" value="{{old('city')}}">
 									</div>
 								</div>
 								<div class="two fields">
 									<div class="field">
 										<label>Contact No.<span>*</span></label>
-										<input type="text" name="techContact" placeholder="0905xxxxxxx">
+										<input maxlength="255" type="text" name="techContact" placeholder="0905xxxxxxx" value="{{old('techContact')}}">
 									</div>
 									<div class="field">
 										<label>Email</label>
-										<input type="text" name="techEmail" placeholder="example@yahoo.com">
+										<input maxlength="255" type="text" name="techEmail" placeholder="example@yahoo.com" value="{{old('techEmail')}}">
 									</div>
 								</div>
 								<div class="field">
 									<label>Skills</label>
 									<div class="ui multiple search selection dropdown">
-		    							<input type="hidden" name="techSkillId"><i class="dropdown icon"></i>
+		    							<input type="hidden" name="techSkillId" value="{{old('techSkillId')}}"><i class="dropdown icon"></i>
 		    							<input class="search" autocomplete="off" tabindex="0">
 		    							<div class="default text">Select Skills</div>
 		    							<div class="menu" tabindex="-1">

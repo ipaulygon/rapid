@@ -21,7 +21,7 @@
 		</script>
 	@endif
 
-	<h2>Data Reactivation</h2>
+	<h2>Data Activation</h2>
 	<hr><br>
 	<div class="ui secondary pointing menu">
 		<a class="item active" data-tab="inventory">Inventory</a>

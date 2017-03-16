@@ -64,7 +64,7 @@
 	<hr><br>
 	<a class="ui positive button" href="{{URL::to('/transaction/order-supply-form')}}"><i class="plus icon"></i>New Purchase Order</a>
 	<br><br>
-	<table id="listType" class="ui celled three column table">
+	<table id="listType" class="ui celled four column table">
 		<thead>
 			<tr>
 				<th>Reference No.</th>

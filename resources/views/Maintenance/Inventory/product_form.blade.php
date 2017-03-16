@@ -1,26 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-	<!--Errors-->	
-	@if($errors->any())
-		<div class="ui small basic modal" style="text-align:center" id="error">
-			<div class="ui icon header">
-				<i class="remove icon"></i>
-				Error
-			</div>
-			<div class="content">
-				@foreach ($errors->all() as $error)
-                	<li>{{ $error }}</li>
-              	@endforeach
-			</div>
-		</div>
-		<script type="text/javascript">
-			$(document).ready(function (){
-				$('#error').modal('show');
-			});
-		</script>
-	@endif
-
 	<h2>Maintenance - New Product</h2>
 	<hr><br>
 
@@ -28,13 +8,21 @@
 		{!! Form::open(['action' => 'ProductController@create']) !!}
 			<input type="hidden" name="productId" value="{{ $newId }}" readonly>
 			<div class="ui error message"></div>
+			@if($errors->any())
+				<div class="ui negative message">
+					<h3>Something went wrong!</h3>
+					{!! implode('', $errors->all(
+						'<li>:message</li>'
+					)) !!}
+				</div>
+			@endif
 			<div class="inline fields">
 				<div class="two wide field">
 					<label>Brand<span>*</span></label>
 				</div>
 				<div class="six wide field">
 					<div id="brand" class="ui search selection dropdown">
-						<input type="hidden" name="productBrandId"><i class="dropdown icon"></i>
+						<input type="hidden" name="productBrandId" value="{{old('productBrandId')}}"><i class="dropdown icon"></i>
 						<input class="search" autocomplete="off" tabindex="0">
 						<div class="default text">Select Brand</div>
 						<div class="menu" tabindex="-1">
@@ -69,7 +57,7 @@
 					<label>Product<span>*</span></label>
 				</div>
 				<div class="fourteen wide field">
-					<input type="text" name="productName" placeholder="Product">
+					<input maxlength="255" type="text" name="productName" placeholder="Product" value="{{old('productName')}}">
 				</div>
 			</div>
 			<div class="inline fields">
@@ -77,7 +65,7 @@
 					<label>Description</label>
 				</div>
 				<div class="fourteen wide field">
-					<textarea type="text" name="productDesc" placeholder="Description" rows="3"></textarea>
+					<textarea maxlength="255" type="text" name="productDesc" placeholder="Description" rows="3">{{old('productDesc')}}</textarea>
 				</div>
 			</div>
 			<div class="three fields">
@@ -91,10 +79,10 @@
 					</div>
 				</div>
 				<div id="cost{{$newId}}" class="field">
-					
+					<label>Price</label>
 				</div>
 				<div id="qty{{$newId}}" class="field">
-					
+					<label>Danger Prompt</label>
 				</div>
 			</div>
 			<hr>
@@ -119,8 +107,8 @@
 		    $('.add.ui.dropdown').dropdown({
 		    	onAdd: function(value,text,$addedChoice){
 		    		var prod = $addedChoice.attr('title');
-		    		$("#cost"+prod).append('<div id="'+value+'" class="field"><label id="'+value+'">'+text+'</label><div class="ui labeled input"><div class="ui label">Php</div><input id="cost'+value+'" type="text" name="cost[]" required onkeypress="return validate(event,this.id)" maxlength="8" data-content="Only numerical values are allowed"></div></div>');
-					$("#qty"+prod).append('<div id="'+value+'" class="field"><label id="'+value+'">'+text+'</label><div class="ui right labeled input"><input id="qty'+value+'" type="text" name="qty[]" required onkeypress="return validated(event,this.id)" maxlength="3" data-content="Only numerical values are allowed"><div class="ui label">pcs</div></div></div>');
+		    		$("#cost"+prod).append('<div id="'+value+'" class="inline fields"><label id="'+value+'">'+text+'<span>*</span></label><div class="ui labeled input"><div class="ui label">Php</div><input id="cost'+value+'" type="text" name="cost[]" required onkeypress="return validate(event,this.id)" maxlength="8" data-content="Only numerical values are allowed"></div></div>');
+					$("#qty"+prod).append('<div id="'+value+'" class="inline fields"><label id="'+value+'">'+text+'<span>*</span></label><div class="ui right labeled input"><input id="qty'+value+'" type="text" name="qty[]" required onkeypress="return validated(event,this.id)" maxlength="3" data-content="Only numerical values are allowed"><div class="ui label">pcs</div></div></div>');
 		    	},
 		    	onRemove: function(value, text, $removedChoice){
 		    		var prod = $removedChoice.attr('title');
@@ -143,7 +131,7 @@
 			$(".item#"+title).remove();
 			$("#cost"+title+" div").remove();
 			$("#cost"+title+" input").remove();
-			$("#cost"+title+" label").remove();
+			// $("#cost"+title+" label").remove();
 			$("#add"+title).dropdown('clear');
 			var id = $("#drop"+title).val();
 			$.ajaxSetup({

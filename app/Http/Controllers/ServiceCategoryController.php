@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\ServiceCategoryRequest;
+use App\Http\Requests;
 use App\ServiceCategory;
 use App\Service;
+use Validator;
+use Redirect;
 
 use Illuminate\Http\Request;
 
@@ -22,7 +24,23 @@ class ServiceCategoryController extends Controller
     	return view('Maintenance.Service.service_category',compact('service_category','newId'));
     }
 
-    public function create(ServiceCategoryRequest $request){
+    public function create(Request $request){
+        $rules = array(
+            'categoryName' => 'required|unique:service_category',
+        );
+        $messages = [
+            'unique' => ':attribute already exists.',
+            'required' => 'The :attribute field is required.',
+        ];
+        $niceNames = array(
+            'categoryName' => 'Category',
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('new_error','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
         $type = ServiceCategory::create(array(
             'categoryId' => $request->input('categoryId'),
             'categoryName' => trim($request->input('categoryName')),
@@ -35,9 +53,22 @@ class ServiceCategoryController extends Controller
     }
 
     public function update(Request $request){
-        $this->validate($request, [
+        $eid = $request->input('editCategoryId');
+        $rules = array(
             'editCategoryName' => 'required',
-        ]);
+        );
+        $messages = [
+            'required' => 'The :attribute field is required.',
+        ];
+        $niceNames = array(
+            'editCategoryName' => 'Category',
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('update_error',$eid);
+            return Redirect::back()->withErrors($validator);
+        }
         $checkCategory = ServiceCategory::all();
         $isAdded = false;
         foreach ($checkCategory as $category) {
@@ -53,7 +84,9 @@ class ServiceCategoryController extends Controller
             $category->save();
             \Session::flash('flash_message','Service Category successfully updated.');
         }else{
-            \Session::flash('error_message','Service Category already exists. Update failed.');
+            \Session::flash('update_error',$eid);
+            \Session::flash('update_unique','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
         }
         return redirect('maintenance/service-category');
     }

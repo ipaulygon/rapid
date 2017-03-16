@@ -139,8 +139,13 @@ Route::get('transaction/order-supply-pdf/{id}','OrderSupplyController@view');
 Route::get('transaction/receive-delivery','ReceiveDeliveryController@index');
 Route::get('transaction/receive-delivery-form','ReceiveDeliveryController@createForm');
 Route::post('transaction/receive-delivery/create','ReceiveDeliveryController@create');
+Route::post('transaction/receive-delivery/order','ReceiveDeliveryController@order');
 //Inspect
 Route::get('transaction/inspect','InspectController@index');
 Route::post('transaction/inspect/create','InspectController@create');
 Route::post('transaction/inspect/update','InspectController@update');
 Route::post('transaction/inspect/destroy','InspectController@destroy');
+//repair
+Route::get('transaction/repair','RepairController@index');
+Route::get('transaction/estimate-form','RepairController@createEstimateForm');
+Route::post('transaction/estimate-form/create','RepairController@createEstimate');

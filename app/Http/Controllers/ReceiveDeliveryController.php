@@ -39,6 +39,10 @@ class ReceiveDeliveryController extends Controller
     }
 
     public function create(){
-        echo "hello";
+        
+    }
+
+    public function order(){
+        
     }
 }

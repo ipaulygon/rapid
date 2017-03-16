@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\BrandRequest;
+use App\Http\Requests;
 use App\Brand;
 use App\Product;
+use Validator;
+use Redirect;
 
 use Illuminate\Http\Request;
 
@@ -22,7 +24,23 @@ class BrandController extends Controller
     	return view('Maintenance.Inventory.product_brand',compact('brand','newId'));
     }
 
-    public function create(BrandRequest $request){
+    public function create(Request $request){
+        $rules = array(
+            'brandName' => 'required|unique:brand',
+        );
+        $messages = [
+            'unique' => ':attribute already exists.',
+            'required' => 'The :attribute field is required.',
+        ];
+        $niceNames = array(
+            'brandName' => 'Brand',
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('new_error','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
         $brand = Brand::create(array(
             'brandId' => $request->input('brandId'),
             'brandName' => trim($request->input('brandName')),
@@ -35,9 +53,22 @@ class BrandController extends Controller
     }
 
     public function update(Request $request){
-        $this->validate($request, [
+        $eid = $request->input('editBrandId');
+        $rules = array(
             'editBrandName' => 'required',
-        ]);
+        );
+        $messages = [
+            'required' => 'The :attribute field is required.',
+        ];
+        $niceNames = array(
+            'editBrandName' => 'Brand',
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            \Session::flash('update_error',$eid);
+            return Redirect::back()->withErrors($validator);
+        }
     	$checkbrands = Brand::all();
         $isAdded = false;
         foreach ($checkbrands as $brand) {
@@ -53,7 +84,9 @@ class BrandController extends Controller
             $brand->save();
             \Session::flash('flash_message','Brand successfully updated.');
         }else{
-            \Session::flash('error_message','Brand already exists. Update failed.');
+            \Session::flash('update_error',$eid);
+            \Session::flash('update_unique','Error');
+            return Redirect::back()->withErrors($validator)->withInput();
         }
         return redirect('maintenance/product-brand');
     }

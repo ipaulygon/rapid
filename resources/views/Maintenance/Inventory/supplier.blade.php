@@ -22,40 +22,18 @@
 		</script>
 	@endif
 
-	<!--Errors-->	
-	@if($errors->any())
-		<div class="ui small basic modal" style="text-align:center" id="error">
-			<div class="ui icon header">
-				<i class="remove icon"></i>
-				Error
-			</div>
-			<div class="content">
-				@foreach ($errors->all() as $error)
-                	<li>{{ $error }}</li>
-              	@endforeach
-			</div>
-		</div>
+	@if(Session::has('new_error'))
 		<script type="text/javascript">
 			$(document).ready(function (){
-				$('#error').modal('show');
+				$('#modalNew').modal('show');
 			});
 		</script>
 	@endif
 
-	<!--Update Failed-->
-	@if(Session::has('error_message'))
-		<div class="ui small basic modal" style="text-align:center" id="error_message">
-			<div class="ui icon header">
-				<i class="remove icon"></i>
-				Failed
-			</div>
-			<div class="content">
-				<em>{!! session('error_message') !!}</em>
-			</div>
-		</div>
+	@if(Session::has('update_error'))
 		<script type="text/javascript">
 			$(document).ready(function (){
-				$('#error_message').modal('show');
+				$("#edit{!! session('update_error') !!}").modal('show');
 			});
 		</script>
 	@endif
@@ -92,7 +70,23 @@
 							{!! Form::open(['action' => 'SupplierController@update']) !!}
 								<div class="content">
 									<div class="description">
-										<div class="ui form">								
+										<div class="ui form">
+											@if(Session::has('update_error'))
+												@if($errors->any())
+													<div class="ui negative message">
+														<h3>Something went wrong!</h3>
+														{!! implode('', $errors->all(
+															'<li>:message</li>'
+														)) !!}
+													</div>
+												@endif
+											@endif
+											@if(Session::has('update_unique'))
+												<div class="ui negative message">
+													<h3>Something went wrong!</h3>
+													<li>Supplier already exists. Update failed.</li>
+												</div>
+											@endif							
 											<div class="sixteen wide field">
 				        						<input type="hidden" name="editSupplierId" value="{{ $supplier->supplierId }}">
 				        					</div>
@@ -101,7 +95,7 @@
 					        						<label>Supplier<span>*</span></label>
 					        					</div>
 					        					<div class="fourteen wide field">
-					        						<input type="text" name="editSupplierName" value="{{ $supplier->supplierName }}" placeholder="Supplier">
+					        						<input maxlength="255" type="text" name="editSupplierName" value="{{ $supplier->supplierName }}" placeholder="Supplier">
 					        					</div>
 					        				</div>
 					        				<div class="inline fields">
@@ -109,13 +103,13 @@
 						    						<label>Contact Person<span>*</span></label>
 						    					</div>
 						    					<div class="six wide field">
-						    						<input type="text" name="editSupplierPerson" value="{{ $supplier->supplierPerson }}" placeholder="Contact Person">
+						    						<input maxlength="255" type="text" name="editSupplierPerson" value="{{ $supplier->supplierPerson }}" placeholder="Contact Person">
 						    					</div>
 						    					<div class="two wide field">
 						    						<label>Contact No.<span>*</span></label>
 						    					</div>
 						    					<div class="six wide field">
-						    						<input type="text" name="editSupplierContact" value="{{ $supplier->supplierContact }}" placeholder="Contact No.">
+						    						<input maxlength="255" type="text" name="editSupplierContact" value="{{ $supplier->supplierContact }}" placeholder="Contact No.">
 						    					</div>
 						    				</div>
 					        				<div class="inline fields">
@@ -123,7 +117,7 @@
 					        						<label>Address</label>
 					        					</div>
 					        					<div class="fourteen wide field">
-					        						<textarea type="text" name="editSupplierAddress" placeholder="Address">{{ $supplier->supplierAddress }}</textarea>
+					        						<textarea maxlength="255" type="text" name="editSupplierAddress" placeholder="Address">{{ $supplier->supplierAddress }}</textarea>
 					        					</div>
 					        				</div>
 										</div>
@@ -176,12 +170,20 @@
 					{!! Form::open(['action' => 'SupplierController@create']) !!}
 						<input type="hidden" name="supplierId" value="{{ $newId }}" readonly>
 						<div class="ui error message"></div>
+						@if($errors->any())
+							<div class="ui negative message">
+								<h3>Something went wrong!</h3>
+								{!! implode('', $errors->all(
+									'<li>:message</li>'
+								)) !!}
+							</div>
+						@endif
 	    				<div class="inline fields">
 	    					<div class="two wide field">
 	    						<label>Supplier<span>*</span></label>
 	    					</div>
 	    					<div class="fourteen wide field">
-	    						<input type="text" name="supplierName" placeholder="Supplier">
+	    						<input maxlength="255" type="text" name="supplierName" value="{{old('supplierName')}}" placeholder="Supplier">
 	    					</div>
 	    				</div>
 	    				<div class="inline fields">
@@ -189,13 +191,13 @@
 	    						<label>Contact Person<span>*</span></label>
 	    					</div>
 	    					<div class="six wide field">
-	    						<input type="text" name="supplierPerson" placeholder="Contact Person">
+	    						<input maxlength="255" type="text" name="supplierPerson" value="{{old('supplierPerson')}}" placeholder="Contact Person">
 	    					</div>
 	    					<div class="two wide field">
 	    						<label>Contact No.<span>*</span></label>
 	    					</div>
 	    					<div class="six wide field">
-	    						<input type="text" name="supplierContact" placeholder="Contact No.">
+	    						<input maxlength="255" type="text" name="supplierContact" value="{{old('supplierContact')}}"  placeholder="Contact No.">
 	    					</div>
 	    				</div>
 	    				<div class="inline fields">
@@ -203,7 +205,7 @@
 	    						<label>Address</label>
 	    					</div>
 	    					<div class="fourteen wide field">
-	    						<textarea type="text" name="supplierAddress" placeholder="Address" rows="2"></textarea>
+	    						<textarea maxlength="255" type="text" name="supplierAddress" placeholder="Address" rows="2">{{old('supplierAddress')}}</textarea>
 	    					</div>
 	    				</div>
 	    				<div class="actions">
