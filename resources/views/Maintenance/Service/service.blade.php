@@ -41,7 +41,7 @@
 
 	<h2>Maintenance - Service</h2>
 	<hr><br>
-	<button class="ui green button" name="modalNew" onclick="modal(this.name)"><i class="plus icon"></i>New Service</button>
+	<button class="ui primary button" name="modalNew" onclick="modal(this.name)"><i class="plus icon"></i>New Service</button>
 	<br><br>
 	<table id="list" class="ui six column celled table">
 		<thead>
@@ -74,7 +74,7 @@
 						<td>{{ $serv->categories->categoryName }}</td>
 						<td class="right aligned">{{ $price }}</td>
 						<td>
-							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="edit{{ $serv->serviceId }}" onclick="modal(this.name)"><i class="write icon"></i></button>
+							<button class="ui primary basic circular icon button" data-tooltip="Update Record" data-inverted="" name="edit{{ $serv->serviceId }}" onclick="modal(this.name)"><i class="write icon"></i></button>
 							<button class="ui red basic circular icon button" data-tooltip="Deactivate Record" data-inverted="" name="del{{ $serv->serviceId }}" onclick="modal(this.name)"><i class="trash icon"></i></button>
 						</td>
 						<!--Modal for Update-->
@@ -159,7 +159,7 @@
 								<div class="actions">
 									<i>Note: All with <span>(*)</span> are required fields</i>
 		        					<button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
-		        					<button type="submit" class="ui green button"><i class="write icon"></i>Update</button>
+		        					<button type="submit" class="ui primary button"><i class="write icon"></i>Update</button>
 		        				</div>
 	        				{!! Form::close() !!}
 						</div>
@@ -185,7 +185,7 @@
 								</div>
 								<div class="actions">
 			        				<button type="submit" class="ui negative button"><i class="trash icon"></i>Deactivate</button>
-			        				<button type="reset" class="ui positive button"><i class="remove icon"></i>Cancel</button>
+			        				<button type="reset" class="ui primary button"><i class="remove icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
 						</div>
@@ -267,7 +267,7 @@
 	    				<div class="actions">
 							<i>Note: All with <span>(*)</span> are required fields</i>
 							<button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
-							<button type="submit" class="ui green button"><i class="write icon"></i>Save</button>
+							<button type="submit" class="ui primary button"><i class="write icon"></i>Save</button>
 						</div>
 					{!! Form::close() !!}
 				</div>

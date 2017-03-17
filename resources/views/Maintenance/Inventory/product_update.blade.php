@@ -103,7 +103,7 @@
 			<i>Note:<br> All with <span>*</span> are required fields. <br>All variances that are removed will also be removed in packages and promos.<br>Items inside the transaction will not be deleted.</i>
 			<div style="float:right">
 				<a href="{{URL::to('/maintenance/product')}}" type="reset" class="ui negative button"><i class="arrow left icon"></i>Back</a>
-				<button type="submit" class="ui positive button"><i class="plus icon"></i>Update</button>
+				<button type="submit" class="ui primary button"><i class="plus icon"></i>Update</button>
 			</div>
 		{!! Form::close() !!}
 	</div>

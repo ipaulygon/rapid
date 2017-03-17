@@ -91,7 +91,7 @@
 			<i>Note: All with <span>*</span> are required fields</i>
 			<div style="float:right">
 				<a href="{{URL::to('/transaction/receive-delivery')}}" type="reset" class="ui negative button"><i class="arrow left icon"></i>Back</a>
-				<button type="submit" class="ui positive button"><i class="plus icon"></i>Save</button>
+				<button type="submit" class="ui primary button"><i class="plus icon"></i>Save</button>
 			</div>
 		{!! Form::close() !!}
 	</div>

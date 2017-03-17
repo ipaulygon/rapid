@@ -22,27 +22,27 @@
 		</script>
 	@endif
 
-	<h2>Transaction - Estimate Cost</h2>
+	<h2>Transaction - Job Order</h2>
 	<hr><br>
-	<a class="ui primary button" href="{{URL::to('/transaction/estimate-form')}}"><i class="plus icon"></i>New Estimation</a>
+	<a class="ui primary button" href="{{URL::to('/transaction/job-form')}}"><i class="plus icon"></i>New Job Order</a>
 	<br><br>
 	<table id="listType" class="ui celled three column table">
 		<thead>
 			<tr>
-				<th>Estimate No.</th>
+				<th>Job No.</th>
 				<th>Vehicle</th>
                 <th>Customer</th>
                 <th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
-			@foreach($estimates as $estimate)
+			@foreach($jobs as $job)
                 <tr>
-                	<td>{{$estimate->estimateHId}}</td>
-                    <td>{{$estimate->vehicle->vehiclePlate}}</td>
-                    <td>{{$estimate->customer->customerFirst}} {{$estimate->customer->customerMiddle}} {{$estimate->customer->customerLast}}</td>
+                	<td>{{$job->jobId}}</td>
+                    <td>{{$job->vehicle->vehiclePlate}}</td>
+                    <td>{{$job->customer->customerFirst}} {{$job->customer->customerMiddle}} {{$job->customer->customerLast}}</td>
                     <td>
-                        <a href="order-supply-pdf/{{$order->purchaseHId}}" class="ui blue basic circular icon button" data-tooltip="View PDF" data-inverted="" name="{{$estimate->estimateHId}}"><i class="eye icon"></i></a>
+                        <a href="order-supply-pdf/{{$order->purchaseHId}}" class="ui blue basic circular icon button" data-tooltip="View PDF" data-inverted="" name="{{$job->jobHId}}"><i class="eye icon"></i></a>
 						<a href="order-supply-form/{{$order->purchaseHId}}" class="ui primary basic circular icon button" data-tooltip="Update Record" data-inverted=""><i class="write icon"></i></a>
                     </td>
                 </tr>
@@ -55,10 +55,6 @@
 @section('scripts')
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$('#tsTitle').attr('class','title active');
-			$('#tsContent').attr('class','content active');
-			$('#stsTitle').attr('class','title active');
-			$('#stsContent').attr('class','content active');
 		    $('#listType').DataTable();
 		});
 		function modal(open){

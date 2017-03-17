@@ -19,18 +19,18 @@
 		</script>
 	@endif
 
-	<h2>Transaction - New Estimate</h2>
+	<h2>Transaction - New Job Order</h2>
 	<hr><br>
 
 	<div class="ui form">
-		{!! Form::open(['action' => 'RepairController@createEstimate']) !!}
-			<input type="hidden" name="estimateId" value="{{$newId}}" readonly>
+		{!! Form::open(['action' => 'JobController@create']) !!}
+			<input type="hidden" name="jobId" value="{{$newId}}" readonly>
 			<div class="field">
 				<h3>No. {{$newId}}</h3>
 			</div>
             <div class="ui stackable container secondary pointing menu">
                 <a class="active item" data-tab="first">Primary Details</a>
-                <a class="item" data-tab="second">Estimation Details</a>
+                <a class="item" data-tab="second">Job Order Details</a>
             </div>
             <div class="ui active tab" data-tab="first">
                 <div class="ui inverted segment top attached">
@@ -169,7 +169,7 @@
                         <label>Description</label>
                     </div>
                     <div class="fourteen wide field">
-                        <textarea name="estimateDesc" placeholder="Description" rows="3"></textarea>
+                        <textarea name="jobDesc" placeholder="Description" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="inline fields">
@@ -192,7 +192,7 @@
                         </div>
                         <div class="fourteen wide field">
                             <div style="width:100%" id="product" class="ui search multiple selection dropdown">
-                                <input type="hidden" name="estimateItemsId"><i class="dropdown icon"></i>
+                                <input type="hidden" name="jobItemsId"><i class="dropdown icon"></i>
                                 <input class="search" autocomplete="off" tabindex="0">
                                 <div class="default text">Select Items</div>
                                 <div class="menu" tabindex="-1">
@@ -232,7 +232,7 @@
                         </div>
                         <div class="fourteen wide field">
                             <div style="width:100%" id="service" class="ui search multiple selection dropdown">
-                                <input type="hidden" name="estimateServicesId"><i class="dropdown icon"></i>
+                                <input type="hidden" name="jobServicesId"><i class="dropdown icon"></i>
                                 <input class="search" autocomplete="off" tabindex="0">
                                 <div class="default text">Select Services</div>
                                 <div class="menu" tabindex="-1">
@@ -267,9 +267,9 @@
 			<hr>
 			<i>Note: All with <span>(*)</span> are required fields</i>
 			<div style="float:right">
-				<a href="{{URL::to('/transaction/repair')}}" type="reset" class="ui negative button"><i class="arrow left icon"></i>Back</a>
+				<a href="{{URL::to('/transaction/job')}}" type="reset" class="ui negative button"><i class="arrow left icon"></i>Back</a>
 				<button type="submit" class="ui primary button"><i class="plus icon"></i>Save</button>
-                <a href="{{URL::to('/transaction/job-form')}}" type="reset" class="ui secondary button">Proceed to Job Order<i class="arrow right icon"></i></a>
+                <a href="{{URL::to('/transaction/payment-form')}}" type="reset" class="ui secondary button">Proceed to Payment<i class="arrow right icon"></i></a>
 			</div>
 		{!! Form::close() !!}
 	</div>
@@ -329,8 +329,8 @@
 			});
 			$('.ui.form').form({
 			    fields: {
-			    	estimateSupplierId: 'empty',
-			    	estimateProductId: 'empty',
+			    	jobSupplierId: 'empty',
+			    	jobProductId: 'empty',
 			  	}
 			});
 		});

@@ -46,7 +46,7 @@
 						<td>{{$supplier->supplierName}}</td>
 						<td>{{$supplier->supplierDesc}}</td>
 						<td>
-							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$supplier->supplierId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
+							<button class="ui primary basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$supplier->supplierId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
 						</td>
 						<div class="ui small basic modal" id="refresh{{$supplier->supplierId}}" style="text-align:center">
 							<div class="ui icon header">
@@ -64,7 +64,7 @@
 									</div>
 								</div>
 								<div class="actions">
-			        				<button type="submit" class="ui positive button"><i class="refresh icon"></i>Reactivate</button>
+			        				<button type="submit" class="ui primary button"><i class="refresh icon"></i>Reactivate</button>
 			        				<button type="reset" class="ui negative button"><i class="remove icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
@@ -89,7 +89,7 @@
 						<td>{{$brand->brandName}}</td>
 						<td>{{$brand->brandDesc}}</td>
 						<td>
-							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$brand->brandId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
+							<button class="ui primary basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$brand->brandId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
 						</td>
 						<div class="ui small basic modal" id="refresh{{$brand->brandId}}" style="text-align:center">
 							<div class="ui icon header">
@@ -107,7 +107,7 @@
 									</div>
 								</div>
 								<div class="actions">
-			        				<button type="submit" class="ui positive button"><i class="refresh icon"></i>Reactivate</button>
+			        				<button type="submit" class="ui primary button"><i class="refresh icon"></i>Reactivate</button>
 			        				<button type="reset" class="ui negative button"><i class="remove icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
@@ -132,7 +132,7 @@
 						<td>{{$type->typeName}}</td>
 						<td>{{$type->typeDesc}}</td>
 						<td>
-							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$type->typeId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
+							<button class="ui primary basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$type->typeId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
 						</td>
 						<div class="ui small basic modal" id="refresh{{$type->typeId}}" style="text-align:center">
 							<div class="ui icon header">
@@ -150,7 +150,7 @@
 									</div>
 								</div>
 								<div class="actions">
-			        				<button type="submit" class="ui positive button"><i class="refresh icon"></i>Reactivate</button>
+			        				<button type="submit" class="ui primary button"><i class="refresh icon"></i>Reactivate</button>
 			        				<button type="reset" class="ui negative button"><i class="remove icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
@@ -175,7 +175,7 @@
 						<td>{{$unit->unitName}}</td>
 						<td>{{$unit->unitDesc}}</td>
 						<td>
-							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$unit->unitId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
+							<button class="ui primary basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$unit->unitId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
 						</td>
 						<div class="ui small basic modal" id="refresh{{$unit->unitId}}" style="text-align:center">
 							<div class="ui icon header">
@@ -193,7 +193,7 @@
 									</div>
 								</div>
 								<div class="actions">
-			        				<button type="submit" class="ui positive button"><i class="refresh icon"></i>Reactivate</button>
+			        				<button type="submit" class="ui primary button"><i class="refresh icon"></i>Reactivate</button>
 			        				<button type="reset" class="ui negative button"><i class="remove icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
@@ -218,7 +218,7 @@
 						<td>{{$variance->varianceName}}</td>
 						<td>{{$variance->varianceDesc}}</td>
 						<td>
-							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$variance->varianceId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
+							<button class="ui primary basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$variance->varianceId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
 						</td>
 						<div class="ui small basic modal" id="refresh{{$variance->varianceId}}" style="text-align:center">
 							<div class="ui icon header">
@@ -236,7 +236,7 @@
 									</div>
 								</div>
 								<div class="actions">
-			        				<button type="submit" class="ui positive button"><i class="refresh icon"></i>Reactivate</button>
+			        				<button type="submit" class="ui primary button"><i class="refresh icon"></i>Reactivate</button>
 			        				<button type="reset" class="ui negative button"><i class="remove icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
@@ -261,7 +261,7 @@
 						<td>{{$product->productName}}</td>
 						<td>{{$product->productDesc}}</td>
 						<td>
-							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$product->productId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
+							<button class="ui primary basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$product->productId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
 						</td>
 						<div class="ui small basic modal" id="refresh{{$product->productId}}" style="text-align:center">
 							<div class="ui icon header">
@@ -279,7 +279,7 @@
 									</div>
 								</div>
 								<div class="actions">
-			        				<button type="submit" class="ui positive button"><i class="refresh icon"></i>Reactivate</button>
+			        				<button type="submit" class="ui primary button"><i class="refresh icon"></i>Reactivate</button>
 			        				<button type="reset" class="ui negative button"><i class="remove icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
@@ -306,7 +306,7 @@
 						<td>{{$category->categoryName}}</td>
 						<td>{{$category->categoryDesc}}</td>
 						<td>
-							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$category->categoryId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
+							<button class="ui primary basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$category->categoryId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
 						</td>
 						<div class="ui small basic modal" id="refresh{{$category->categoryId}}" style="text-align:center">
 							<div class="ui icon header">
@@ -324,7 +324,7 @@
 									</div>
 								</div>
 								<div class="actions">
-			        				<button type="submit" class="ui positive button"><i class="refresh icon"></i>Reactivate</button>
+			        				<button type="submit" class="ui primary button"><i class="refresh icon"></i>Reactivate</button>
 			        				<button type="reset" class="ui negative button"><i class="remove icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
@@ -349,7 +349,7 @@
 						<td>{{$service->serviceName}}</td>
 						<td>{{$service->serviceDesc}}</td>
 						<td>
-							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$service->serviceId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
+							<button class="ui primary basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$service->serviceId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
 						</td>
 						<div class="ui small basic modal" id="refresh{{$service->serviceId}}" style="text-align:center">
 							<div class="ui icon header">
@@ -367,7 +367,7 @@
 									</div>
 								</div>
 								<div class="actions">
-			        				<button type="submit" class="ui positive button"><i class="refresh icon"></i>Reactivate</button>
+			        				<button type="submit" class="ui primary button"><i class="refresh icon"></i>Reactivate</button>
 			        				<button type="reset" class="ui negative button"><i class="remove icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
@@ -392,7 +392,7 @@
 						<td>{{$inspectType->inspectTypeName}}</td>
 						<td>{{$inspectType->inspectTypeDesc}}</td>
 						<td>
-							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$inspectType->inspectTypeId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
+							<button class="ui primary basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$inspectType->inspectTypeId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
 						</td>
 						<div class="ui small basic modal" id="refresh{{$inspectType->inspectTypeId}}" style="text-align:center">
 							<div class="ui icon header">
@@ -410,7 +410,7 @@
 									</div>
 								</div>
 								<div class="actions">
-			        				<button type="submit" class="ui positive button"><i class="refresh icon"></i>Reactivate</button>
+			        				<button type="submit" class="ui primary button"><i class="refresh icon"></i>Reactivate</button>
 			        				<button type="reset" class="ui negative button"><i class="remove icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
@@ -435,7 +435,7 @@
 						<td>{{$inspectItem->inspectItemName}}</td>
 						<td>{{$inspectItem->inspectItemDesc}}</td>
 						<td>
-							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$inspectItem->inspectItemId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
+							<button class="ui primary basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$inspectItem->inspectItemId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
 						</td>
 						<div class="ui small basic modal" id="refresh{{$inspectItem->inspectItemId}}" style="text-align:center">
 							<div class="ui icon header">
@@ -453,7 +453,7 @@
 									</div>
 								</div>
 								<div class="actions">
-			        				<button type="submit" class="ui positive button"><i class="refresh icon"></i>Reactivate</button>
+			        				<button type="submit" class="ui primary button"><i class="refresh icon"></i>Reactivate</button>
 			        				<button type="reset" class="ui negative button"><i class="remove icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
@@ -480,7 +480,7 @@
 						<td>{{$package->packageName}}</td>
 						<td>{{$package->packageDesc}}</td>
 						<td>
-							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$package->packageId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
+							<button class="ui primary basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$package->packageId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
 						</td>
 						<div class="ui small basic modal" id="refresh{{$package->packageId}}" style="text-align:center">
 							<div class="ui icon header">
@@ -498,7 +498,7 @@
 									</div>
 								</div>
 								<div class="actions">
-			        				<button type="submit" class="ui positive button"><i class="refresh icon"></i>Reactivate</button>
+			        				<button type="submit" class="ui primary button"><i class="refresh icon"></i>Reactivate</button>
 			        				<button type="reset" class="ui negative button"><i class="remove icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
@@ -523,7 +523,7 @@
 						<td>{{$promo->promoName}}</td>
 						<td>{{$promo->promoDesc}}</td>
 						<td>
-							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$promo->promoId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
+							<button class="ui primary basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$promo->promoId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
 						</td>
 						<div class="ui small basic modal" id="refresh{{$promo->promoId}}" style="text-align:center">
 							<div class="ui icon header">
@@ -541,7 +541,7 @@
 									</div>
 								</div>
 								<div class="actions">
-			        				<button type="submit" class="ui positive button"><i class="refresh icon"></i>Reactivate</button>
+			        				<button type="submit" class="ui primary button"><i class="refresh icon"></i>Reactivate</button>
 			        				<button type="reset" class="ui negative button"><i class="remove icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
@@ -566,7 +566,7 @@
 						<td>{{$discount->discountName}}</td>
 						<td>{{$discount->discountDesc}}</td>
 						<td>
-							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$discount->discountId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
+							<button class="ui primary basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$discount->discountId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
 						</td>
 						<div class="ui small basic modal" id="refresh{{$discount->discountId}}" style="text-align:center">
 							<div class="ui icon header">
@@ -584,7 +584,7 @@
 									</div>
 								</div>
 								<div class="actions">
-			        				<button type="submit" class="ui positive button"><i class="refresh icon"></i>Reactivate</button>
+			        				<button type="submit" class="ui primary button"><i class="refresh icon"></i>Reactivate</button>
 			        				<button type="reset" class="ui negative button"><i class="remove icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
@@ -611,7 +611,7 @@
 						<td><img style="width: 150px;height:150px; object-fit: contain;" src="{{URL::asset($tech->techPic)}}"></td>
 						<td>{{$tech->techFirst}} {{$tech->techMiddle}} {{$tech->techLast}}</td>
 						<td>
-							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$tech->techId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
+							<button class="ui primary basic circular icon button" data-tooltip="Update Record" data-inverted="" name="refresh{{$tech->techId}}" onclick="modal(this.name)"><i class="refresh icon"></i></button>
 						</td>
 						<div class="ui small basic modal" id="refresh{{$tech->techId}}" style="text-align:center">
 							<div class="ui icon header">
@@ -632,7 +632,7 @@
 									</div>
 								</div>
 								<div class="actions">
-			        				<button type="submit" class="ui positive button"><i class="refresh icon"></i>Reactivate</button>
+			        				<button type="submit" class="ui primary button"><i class="refresh icon"></i>Reactivate</button>
 			        				<button type="reset" class="ui negative button"><i class="remove icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}

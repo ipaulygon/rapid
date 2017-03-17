@@ -62,7 +62,7 @@
 
 	<h2>Transaction - Receive Delivery</h2>
 	<hr><br>
-	<a class="ui positive button" href="{{URL::to('/transaction/receive-delivery-form')}}"><i class="plus icon"></i>New Delivery</a>
+	<a class="ui primary button" href="{{URL::to('/transaction/receive-delivery-form')}}"><i class="plus icon"></i>New Delivery</a>
 	<br><br>
 	<table id="listType" class="ui celled three column table">
 		<thead>
@@ -79,7 +79,7 @@
 					<td>{{$delivery->supplier->supplierName}}</td>
 					<td>
 						<a href="delivery-supply-pdf/{{$delivery->deliveryHId}}" class="ui blue basic circular icon button" data-tooltip="View PDF" data-inverted="" name="{{$delivery->deliveryHId }}"><i class="eye icon"></i></a>
-						<a href="delivery-supply-form/{{$delivery->deliveryHId}}" class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted=""><i class="write icon"></i></a>
+						<a href="delivery-supply-form/{{$delivery->deliveryHId}}" class="ui primary basic circular icon button" data-tooltip="Update Record" data-inverted=""><i class="write icon"></i></a>
 					</td>
 				</tr>
 			@endforeach

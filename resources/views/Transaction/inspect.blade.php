@@ -24,7 +24,7 @@
 
 	<h2>Transaction - Inspection</h2>
 	<hr><br>
-	<a class="ui positive button" href="{{URL::to('/transaction/inspect-form')}}"><i class="plus icon"></i>New Inspection</a>
+	<a class="ui primary button" href="{{URL::to('/transaction/inspect-form')}}"><i class="plus icon"></i>New Inspection</a>
 	<br><br>
 	<table id="listType" class="ui celled table">
 		<thead>
@@ -47,7 +47,7 @@
 						<td>{{ $inspect->inspectRequest }}</td>
 						<td>{{ $inspect->inspectRemarks }}</td>
 						<td>
-							<button class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="edit{{ $inspect->inspectId }}" onclick="modal(this.name)"><i class="write icon"></i></button>
+							<button class="ui primary basic circular icon button" data-tooltip="Update Record" data-inverted="" name="edit{{ $inspect->inspectId }}" onclick="modal(this.name)"><i class="write icon"></i></button>
 							<button class="ui red basic circular icon button" data-tooltip="Deactivate Record" data-inverted="" name="del{{ $inspect->inspectId }}" onclick="modal(this.name)"><i class="trash icon"></i></button>
 						</td>
 					</tr>

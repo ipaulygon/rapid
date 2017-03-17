@@ -62,7 +62,7 @@
 
 	<h2>Transaction - Order Supply</h2>
 	<hr><br>
-	<a class="ui positive button" href="{{URL::to('/transaction/order-supply-form')}}"><i class="plus icon"></i>New Purchase Order</a>
+	<a class="ui primary button" href="{{URL::to('/transaction/order-supply-form')}}"><i class="plus icon"></i>New Purchase Order</a>
 	<br><br>
 	<table id="listType" class="ui celled four column table">
 		<thead>
@@ -81,7 +81,7 @@
 					<td>{{$order->purchaseHDesc}}</td>
 					<td>
 						<a href="order-supply-pdf/{{$order->purchaseHId}}" class="ui blue basic circular icon button" data-tooltip="View PDF" data-inverted="" name="{{$order->purchaseHId }}"><i class="eye icon"></i></a>
-						<a href="order-supply-form/{{$order->purchaseHId}}" class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted=""><i class="write icon"></i></a>
+						<a href="order-supply-form/{{$order->purchaseHId}}" class="ui primary basic circular icon button" data-tooltip="Update Record" data-inverted=""><i class="write icon"></i></a>
 					</td>
 				</tr>
 			@endforeach

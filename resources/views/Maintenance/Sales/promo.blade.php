@@ -62,7 +62,7 @@
 
 	<h2>Maintenance - Promo</h2>
 	<hr><br>
-	<a href="{{URL::to('maintenance/promo/form-create')}}" class="ui green button" name="modalAdd"><i class="plus icon"></i>New Promo</a>
+	<a href="{{URL::to('maintenance/promo/form-create')}}" class="ui primary button" name="modalAdd"><i class="plus icon"></i>New Promo</a>
 	<br><br>
 	<table id="listType" class="ui celled table">
 		<thead>
@@ -111,7 +111,7 @@
 							@endforeach
 						</td>
 						<td>
-							<a href="promo/view/{{$promo->promoId}}" class="ui green basic circular icon button" data-tooltip="Update Record" data-inverted="" name="modalUpdate" id="{{$promo->promoId}}"><i class="write icon"></i></a>
+							<a href="promo/view/{{$promo->promoId}}" class="ui primary basic circular icon button" data-tooltip="Update Record" data-inverted="" name="modalUpdate" id="{{$promo->promoId}}"><i class="write icon"></i></a>
 							<button class="ui red basic circular icon button" data-tooltip="Deactivate Record" data-inverted="" name="del{{ $promo->promoId }}" onclick="modal(this.name)"><i class="trash icon"></i></button>
 						</td>
 						<!--Modal for Deactivate-->
@@ -132,7 +132,7 @@
 								</div>
 								<div class="actions">
 			        				<button type="submit" class="ui negative button"><i class="trash icon"></i>Deactivate</button>
-			        				<button type="reset" class="ui green button"><i class="remove icon"></i>Cancel</button>
+			        				<button type="reset" class="ui primary button"><i class="remove icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
 						</div>

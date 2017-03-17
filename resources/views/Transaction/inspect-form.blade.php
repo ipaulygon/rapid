@@ -184,13 +184,13 @@
 											<td>
 												<div class="inline fields">
 													<div class="field">
-														<div class="ui radio checkbox"><i class="ui big smile green icon"></i><input type="radio" name="rate{{$inspectItem->inspectItemId}}" value="1"></div>
+														<div class="ui radio checkbox"><i class="ui big blue smile icon"></i><input type="radio" name="rate{{$inspectItem->inspectItemId}}" value="1"></div>
 													</div>
 													<div class="field">
-														<div class="ui radio checkbox"><i class="ui big meh yellow icon"></i><input type="radio" name="rate{{$inspectItem->inspectItemId}}" value="2"></div>
+														<div class="ui radio checkbox"><i class="ui big orange meh icon"></i><input type="radio" name="rate{{$inspectItem->inspectItemId}}" value="2"></div>
 													</div>
 													<div class="field">
-														<div class="ui radio checkbox"><i class="ui big frown red icon"></i><input type="radio" name="rate{{$inspectItem->inspectItemId}}" value="3"></div>
+														<div class="ui radio checkbox"><i class="ui big red frown icon"></i><input type="radio" name="rate{{$inspectItem->inspectItemId}}" value="3"></div>
 													</div>
 												</div>
 											</td>
@@ -207,7 +207,7 @@
 			<i>Note: All with <span>(*)</span> are required fields</i>
 			<div style="float:right">
 				<a href="{{URL::to('/transaction/inspect')}}" type="reset" class="ui negative button"><i class="arrow left icon"></i>Back</a>
-				<button type="submit" class="ui positive button"><i class="plus icon"></i>Save</button>
+				<button type="submit" class="ui primary button"><i class="plus icon"></i>Save</button>
 			</div>
 		{!! Form::close() !!}
 	</div>

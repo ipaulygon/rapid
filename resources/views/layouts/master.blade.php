@@ -97,15 +97,13 @@
                     </div>
                 </div>
                 <div class="ui form">
-                    <a href="{{URL::to('/maintenance/job')}}" class="item">Job Order</a>
-                    <a href="{{URL::to('/maintenance/payment')}}" class="item">Payments and Collections</a>
+                    <a href="{{URL::to('/transaction/job')}}" class="item">Job Order</a>
+                    <a href="{{URL::to('/transaction/payment')}}" class="item">Payments and Collections</a>
                 </div>
             </div>
         </div>
         <!--Queries-->
-        <div class="item">
-            <div class="header">Queries</div>
-        </div>
+        <a href="{{URL::to('/queries')}}" class="item">Queries</a>
         <!--Reports-->
         <div class="item">
             <div class="header">Reports</div>
@@ -189,7 +187,8 @@
                     </div>
                 </div>
                 <div class="ui form">
-                    <a href="{{URL::to('/maintenance/package')}}" class="item">Payments and Collections</a>
+                    <a href="{{URL::to('/transaction/job')}}" class="item">Job Order</a>
+                    <a href="{{URL::to('/transaction/payment')}}" class="item">Payments and Collections</a>
                 </div>
             </div>
         </div>
