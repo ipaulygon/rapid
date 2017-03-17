@@ -96,7 +96,7 @@
 					<label>Price</label>
 				</div>
 				<div id="qty{{$product[0]->productId}}" class="field">
-					<label>Danger Prompt</label>
+					<label>Threshold</label>
 				</div>
 			</div>
 			<hr>
@@ -121,9 +121,9 @@
 		    $('.add.ui.dropdown').dropdown({
 		    	onAdd: function(value,text,$addedChoice){
 		    		var prod = $addedChoice.attr('title');
-		    		$("#cost"+prod).append('<div id="'+value+'" class="inline fields"><label id="'+value+'">'+text+'</label><div class="ui labeled input"><div class="ui label">Php</div><input id="Cost'+value+'" type="text" name="costs[]" required onchange="change(this.id)" onkeypress="return validate(event,this.id)" maxlength="8" data-content="Only numerical values are allowed"></div></div>');
+		    		$("#cost"+prod).append('<div id="'+value+'" class="inline fields"><label id="'+value+'">'+text+'</label><div class="ui labeled input"><div class="ui label">Php</div><input style="text-align:right" id="Cost'+value+'" type="text" name="costs[]" required onchange="change(this.id)" onkeypress="return validate(event,this.id)" maxlength="8" data-content="Only numerical values are allowed"></div></div>');
 		    		$("#cost"+prod).append('<input id="hiddenCost'+value+'" type="hidden" name="cost'+value+'">');
-					$("#qty"+prod).append('<div id="'+value+'" class="inline fields"><label id="'+value+'">'+text+'</label><div class="ui right labeled input"><input id="Qty'+value+'" type="text" name="qtys[]" required onchange="changed(this.id)" onkeypress="return validated(event,this.id)" maxlength="3" data-content="Only numerical values are allowed"><div class="ui label">pcs</div></div></div>');
+					$("#qty"+prod).append('<div id="'+value+'" class="inline fields"><label id="'+value+'">'+text+'</label><div class="ui right labeled input"><input style="text-align:right" id="Qty'+value+'" type="text" name="qtys[]" required onchange="changed(this.id)" onkeypress="return validated(event,this.id)" maxlength="3" data-content="Only numerical values are allowed"><div class="ui label">pcs</div></div></div>');
 					$("#qty"+prod).append('<input id="hiddenQty'+value+'" type="hidden" name="qty'+value+'">');
 				},
 		    	onRemove: function(value, text, $removedChoice){

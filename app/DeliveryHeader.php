@@ -12,7 +12,7 @@ class DeliveryHeader extends Model
 	protected $fillable = array(
 								'deliveryHId',
 								'deliveryHSupplierId',
-								'deliveryHIsActive',
+								'deliveryIsActive',
 								//
 								);
 	public function supplier(){

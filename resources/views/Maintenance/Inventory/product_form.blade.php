@@ -82,11 +82,11 @@
 					<label>Price</label>
 				</div>
 				<div id="qty{{$newId}}" class="field">
-					<label>Danger Prompt</label>
+					<label>Threshold</label>
 				</div>
 			</div>
 			<hr>
-			<i>Note: All with <span>*</span> are required fields</i>
+			<i>Note: All with <span>(*)</span> are required fields</i>
 			<div style="float:right">
 				<a href="{{URL::to('/maintenance/product')}}" type="reset" class="ui negative button"><i class="arrow left icon"></i>Back</a>
 				<button type="submit" class="ui positive button"><i class="plus icon"></i>Save</button>
@@ -107,8 +107,8 @@
 		    $('.add.ui.dropdown').dropdown({
 		    	onAdd: function(value,text,$addedChoice){
 		    		var prod = $addedChoice.attr('title');
-		    		$("#cost"+prod).append('<div id="'+value+'" class="inline fields"><label id="'+value+'">'+text+'<span>*</span></label><div class="ui labeled input"><div class="ui label">Php</div><input id="cost'+value+'" type="text" name="cost[]" required onkeypress="return validate(event,this.id)" maxlength="8" data-content="Only numerical values are allowed"></div></div>');
-					$("#qty"+prod).append('<div id="'+value+'" class="inline fields"><label id="'+value+'">'+text+'<span>*</span></label><div class="ui right labeled input"><input id="qty'+value+'" type="text" name="qty[]" required onkeypress="return validated(event,this.id)" maxlength="3" data-content="Only numerical values are allowed"><div class="ui label">pcs</div></div></div>');
+		    		$("#cost"+prod).append('<div id="'+value+'" class="inline fields"><label id="'+value+'">'+text+'<span>*</span></label><div class="ui labeled input"><div class="ui label">Php</div><input style="text-align:right" id="cost'+value+'" type="text" name="cost[]" required onkeypress="return validate(event,this.id)" maxlength="8" data-content="Only numerical values are allowed"></div></div>');
+					$("#qty"+prod).append('<div id="'+value+'" class="inline fields"><label id="'+value+'">'+text+'<span>*</span></label><div class="ui right labeled input"><input style="text-align:right" id="qty'+value+'" type="text" name="qty[]" required onkeypress="return validated(event,this.id)" maxlength="3" data-content="Only numerical values are allowed"><div class="ui label">pcs</div></div></div>');
 		    	},
 		    	onRemove: function(value, text, $removedChoice){
 		    		var prod = $removedChoice.attr('title');

@@ -24,6 +24,6 @@ class Customer extends Model
 		return $this->hasMany('App\InspectHeader','inspectCustomerId');
 	}
     public function estimate(){
-		return $this->hasMany('App\EstimateHeader','estimateHCustomerId');
+		return $this->hasMany('App\EstimateHeader','estimateCustomerId');
 	}
 }

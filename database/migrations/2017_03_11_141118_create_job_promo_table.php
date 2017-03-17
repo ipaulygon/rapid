@@ -37,6 +37,6 @@ class CreateJobPromoTable extends Migration
      */
     public function down()
     {
-        chema::dropIfExists('job_promo');
+        Schema::dropIfExists('job_promo');
     }
 }

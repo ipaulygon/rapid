@@ -346,6 +346,7 @@ class ComposerStaticInitca73150541c9e0567098bf2479ea2cb8
         'CreateJobPromoTable' => __DIR__ . '/../..' . '/database/migrations/2017_03_11_141118_create_job_promo_table.php',
         'CreateJobServiceTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_20_202148_create_job_service_table.php',
         'CreateJobTechTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_20_202446_create_job_tech_table.php',
+        'CreatePackageCostTable' => __DIR__ . '/../..' . '/database/migrations/2017_03_16_182821_create_package_cost_table.php',
         'CreatePackageProductTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_25_101753_create_package_product_table.php',
         'CreatePackageServiceTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_25_101823_create_package_service_table.php',
         'CreatePackageTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_25_101247_create_package_table.php',
@@ -355,6 +356,7 @@ class ComposerStaticInitca73150541c9e0567098bf2479ea2cb8
         'CreateProductTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_11_153428_create_product_table.php',
         'CreateProductTypeTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_11_150833_create_product_type_table.php',
         'CreateProductVarianceTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_13_085353_create_product_variance_table.php',
+        'CreatePromoCostTable' => __DIR__ . '/../..' . '/database/migrations/2017_03_16_183002_create_promo_cost_table.php',
         'CreatePromoProductTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_20_193235_create_promo_product_table.php',
         'CreatePromoServiceTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_20_193228_create_promo_service_table.php',
         'CreatePromoTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_19_162616_create_promo_table.php',
@@ -374,6 +376,7 @@ class ComposerStaticInitca73150541c9e0567098bf2479ea2cb8
         'CreateVehicleMakeTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_20_195306_create_vehicle_make_table.php',
         'CreateVehicleModelTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_20_195314_create_vehicle_model_table.php',
         'CreateVehicleTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_20_195320_create_vehicle_table.php',
+        'CustomerSeeder' => __DIR__ . '/../..' . '/database/seeds/CustomerSeeder.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
         'DiscountSeeder' => __DIR__ . '/../..' . '/database/seeds/DiscountSeeder.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
@@ -454,6 +457,8 @@ class ComposerStaticInitca73150541c9e0567098bf2479ea2cb8
         'Hamcrest\\Xml\\HasXPath' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Xml/HasXPath.php',
         'InspectItemSeeder' => __DIR__ . '/../..' . '/database/seeds/InspectItemSeeder.php',
         'InspectTypeSeeder' => __DIR__ . '/../..' . '/database/seeds/InspectTypeSeeder.php',
+        'MakeSeeder' => __DIR__ . '/../..' . '/database/seeds/MakeSeeder.php',
+        'ModelSeeder' => __DIR__ . '/../..' . '/database/seeds/ModelSeeder.php',
         'PHPUnit\\Framework\\Assert' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/Assert.php',
         'PHPUnit\\Framework\\BaseTestListener' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/BaseTestListener.php',
         'PHPUnit\\Framework\\TestCase' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/TestCase.php',
@@ -932,6 +937,7 @@ class ComposerStaticInitca73150541c9e0567098bf2479ea2cb8
         'UnitSeeder' => __DIR__ . '/../..' . '/database/seeds/UnitSeeder.php',
         'UserSeeder' => __DIR__ . '/../..' . '/database/seeds/UserSeeder.php',
         'VarianceSeeder' => __DIR__ . '/../..' . '/database/seeds/VarianceSeeder.php',
+        'VehicleSeeder' => __DIR__ . '/../..' . '/database/seeds/VehicleSeeder.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

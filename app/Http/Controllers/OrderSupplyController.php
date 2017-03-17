@@ -53,6 +53,7 @@ class OrderSupplyController extends Controller
                 'purchaseHDId' => $request->input('orderId'),
                 'purchaseDVarianceId' => $prod,
                 'purchaseDQty' => $qty[$x],
+                'purchaseDeliveredQty' => 0,
                 'purchaseDRemarks' => $desc[$x]
             ));
             $order_detail->save();
@@ -90,6 +91,7 @@ class OrderSupplyController extends Controller
                 'purchaseHDId' => $id,
                 'purchaseDVarianceId' => $prod,
                 'purchaseDQty' => $qty[$x],
+                'purchaseDeliveredQty' => 0,
                 'purchaseDRemarks' => $desc[$x]
             ));
             $order_detail->save();

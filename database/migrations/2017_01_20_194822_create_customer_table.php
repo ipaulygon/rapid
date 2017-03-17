@@ -20,7 +20,7 @@ class CreateCustomerTable extends Migration
             $table->string('customerMiddle');
             $table->string('customerLast');
             $table->text('customerAddress');
-            $table->string('customerEmail');
+            $table->string('customerEmail')->nullable();
             $table->string('customerContact');
             $table->boolean('customerIsActive');
             $table->timestamps();

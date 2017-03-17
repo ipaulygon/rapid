@@ -19,6 +19,7 @@ class CreateDeliveryDetailTable extends Migration
             $table->unsignedInteger('deliveryDVarianceId');
             $table->integer('deliveryDQty');
             $table->text('deliveryDRemarks');
+            $table->timestamps();
             $table->foreign('deliveryHDId')
                   ->references('deliveryHId')->on('delivery_header')
                   ->onUpdate('cascade')

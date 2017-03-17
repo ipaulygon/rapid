@@ -43,14 +43,14 @@ class ProductVarianceSeeder extends Seeder
             array(
                 'pvProductId' => 'PROD0002',
                 'pvVarianceId' => 'VAR0005',
-                'pvCost' => 1025.87,
+                'pvCost' => 600.87,
                 'pvThreshold' => 10,
                 'pvIsActive' => 1,
             ),
             array(
                 'pvProductId' => 'PROD0002',
                 'pvVarianceId' => 'VAR0006',
-                'pvCost' => 3000.75,
+                'pvCost' => 600.75,
                 'pvThreshold' => 10,
                 'pvIsActive' => 1,
             ),

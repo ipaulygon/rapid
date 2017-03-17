@@ -37,6 +37,6 @@ class CreateJobPackageTable extends Migration
      */
     public function down()
     {
-        chema::dropIfExists('job_package');
+        Schema::dropIfExists('job_package');
     }
 }

@@ -19,10 +19,10 @@ class CreateVehicleTable extends Migration
             $table->string('vehiclePlate');
             $table->string('vehicleMakeId');
             $table->string('vehicleModelId');
-            $table->date('vehicleYear');
+            $table->string('vehicleYear');
             $table->integer('vehicleType');
             $table->integer('vehicleEngine');
-            $table->double('vehicleMileage', 15, 8);
+            $table->double('vehicleMileage', 15, 8)->nullable();
             $table->boolean('vehicleIsActive');
             $table->primary('vehicleId');
             $table->timestamps();

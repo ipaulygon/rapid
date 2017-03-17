@@ -16,12 +16,12 @@ class CreateDeliveryOrderTable extends Migration
         Schema::create('delivery_order', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('deliveryOId');
-            $table->string('deliveryOSupplierId');
+            $table->string('deliveryOrderId');
             $table->string('deliveryOHeaderId');
             $table->boolean('deliveryOIsActive');
             $table->timestamps();
-            $table->foreign('deliveryOSupplierId')
-                  ->references('supplierId')->on('supplier')
+            $table->foreign('deliveryOrderId')
+                  ->references('purchaseHId')->on('purchase_header')
                   ->onUpdate('cascade')
                   ->onDelete('restrict');
             $table->foreign('deliveryOHeaderId')

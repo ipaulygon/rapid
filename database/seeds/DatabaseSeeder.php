@@ -34,5 +34,9 @@ class DatabaseSeeder extends Seeder
         $this->call(PackageServiceSeeder::class);
         $this->call(TypeVarianceSeeder::class);
         $this->call(TechSkillSeeder::class);
+        $this->call(CustomerSeeder::class);
+        $this->call(MakeSeeder::class);
+        $this->call(ModelSeeder::class);
+        $this->call(VehicleSeeder::class);
     }
 }

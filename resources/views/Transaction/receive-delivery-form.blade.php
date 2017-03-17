@@ -34,7 +34,7 @@
 				</div>
 				<div class="six wide field">
 					<div style="width:100%" id="supplier" class="ui search selection dropdown" onchange="supplier()">
-						<input type="hidden" name="deliverySupplierId"><i class="dropdown icon"></i>
+						<input id="supplierId" type="hidden" name="deliverySupplierId"><i class="dropdown icon"></i>
 						<input class="search" autocomplete="off" tabindex="0">
 						<div class="default text">Select Supplier</div>
 						<div class="menu" tabindex="-1">
@@ -58,25 +58,26 @@
 				</div>
 				<div class="fourteen wide field">
 					<div style="width:100%" id="deliveryOrder" class="ui multiple search selection dropdown">
-						<input type="hidden" name="deliveryOrderId"><i class="dropdown icon"></i>
+						<input id="orderId" type="hidden" name="deliveryOrderId"><i class="dropdown icon"></i>
 						<input class="search" autocomplete="off" tabindex="0">
 						<div class="default text">Select Orders</div>
-						<div class="menu" tabindex="-1">
+						<div id="menuPO" class="menu" tabindex="-1">
 						</div>
 					</div>
 				</div>
             </div>
-			<table id="list" class="ui celled table">
+			<table id="list" class="ui celled four column table">
 				<thead>
 					<tr>
-						<th>Quantity</th>
+						<th>Quantity Ordered</th>
 						<th>Product</th>
 						<th>Description</th>
+						<th>Quantity Received</th>
 					</tr>
 				</thead>
 				<tbody id="tableInsert"></tbody>
 			</table>
-			<div class="inline fields">
+			<!-- <div class="inline fields">
 				<div class="two wide field">
 					<label>Total cost: PhP</label>
 				</div>
@@ -84,7 +85,7 @@
 					<input id="totalCost" style="border:none;font-weight: bold" type="text" name="totalCost" value="0.00" readonly>
 					<input id="totalCosts" style="border:none;font-weight: bold" type="hidden" name="totalCosts" value="0" readonly>
 				</div>
-			</div>
+			</div> -->
 			<br>
 			<hr>
 			<i>Note: All with <span>*</span> are required fields</i>
@@ -103,6 +104,7 @@
 				pageLength: 100,
 				paging: false,
 				info: false,
+				ordering: false,
 			});
 			$('#tiTitle').attr('class','title active');
 			$('#tiContent').attr('class','content active');
@@ -111,11 +113,43 @@
 			$('#supplier.ui.dropdown').dropdown();
             $('#deliveryOrder.ui.dropdown').dropdown({
             	onAdd:function(value,text,$addedChoice){
-					var cost = $addedChoice.attr('title');
-					addRow(value,text,cost);
+					$.ajaxSetup({
+				        headers: {
+				            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				        }
+					});
+					$.ajax({
+						type: "POST",
+						url: "{{url('transaction/receive-delivery/order')}}",
+						data: {'id':value},
+						dataType: "JSON",
+						success:function(data){
+							console.log(data);
+							for(var x=0;x<data.data.length;x++){
+								if(data.data[x].purchaseDQty!=data.data[x].purchaseDeliveredQty){
+									var qty = eval(data.data[x].purchaseDQty+"-"+data.data[x].purchaseDeliveredQty);
+									t.row.add( [
+							            '<div title="'+value+'" class="ui fluid right labeled input"><div></div><input title="'+data.data[x].variance.pvId+'" style="border:none;text-align:right" type="text" value="'+qty+'" readonly><div class="ui label">pcs.</div></div><input type="hidden" name="variances[]" value="'+data.data[x].variance.pvId+'">',
+							            data.data[x].variance.product.brand.brandName+' - '+data.data[x].variance.product.productName+' | '+data.data[x].variance.variance.varianceSize+' - '+data.data[x].variance.variance.unit.unitName+'| '+data.data[x].variance.product.types.typeName,
+							            data.data[x].purchaseDRemarks+" | "+value,
+							            '<div class="ui fluid right labeled input"><input data="'+data.data[x].variance.pvId+'" id="'+value+data.data[x].variance.pvId+'" style="text-align:right" value="0" name="qty'+value+'[]" onkeypress="return validate(event,this.id)" type="number" min="0" max="'+qty+'" maxlength="3" data-content="Only numerical values are allowed" required><div class="ui label">pcs.</div></div>',
+							        ] ).draw( false );
+								}
+								// var counter = $("input[title="+data.data[x].variance.pvId+"]").val();
+								// if(counter==null || counter==''){
+									
+								// }
+								// else{
+								// 	counter = eval(counter+"+"+data.data[x].purchaseDQty);
+								// 	$("input[title="+data.data[x].variance.pvId+"]").val(counter);
+								// 	$("input[data="+data.data[x].variance.pvId+"]").attr("max",counter);
+								// }
+							}
+						}
+					});
 				},
 				onRemove:function(value,text,$removedChoice){
-					removeRow(value);
+					t.row( $('div[title='+value+']').parents('tr') ).remove().draw();
 				}
             });
 			$('.ui.form').form({
@@ -126,7 +160,27 @@
 			});
 		});
 		function supplier(){
-			
+			$(".item.choice").remove();
+			$("#deliveryOrder").dropdown('clear');
+ 			var table = $('#list').DataTable();
+			table.clear().draw();
+ 			var id = $("#supplierId").val();
+ 			$.ajaxSetup({
+		        headers: {
+		            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		        }
+			});
+			$.ajax({
+				type: "POST",
+				url: "{{url('transaction/receive-delivery/supplier')}}",
+				data: {'id':id},
+				dataType: "JSON",
+				success:function(data){
+					for(var x=0;x<data.data.length;x++){
+						$("#menuPO").append('<div class="item choice" data-value="'+data.data[x].purchaseHId+'">'+data.data[x].purchaseHId+'</div>');
+					}
+				}
+			});
 		}
 		function addRow(value,text,cost){
 			var t = $('#list').DataTable();

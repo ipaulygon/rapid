@@ -12,6 +12,7 @@ class OrderSupplyDetail extends Model
 								'purchaseHDId',
 								'purchaseDVarianceId',
 								'purchaseDQty',
+								'purchaseDeliveredQty',
 								'purchaseDRemarks'
 								//
 								);

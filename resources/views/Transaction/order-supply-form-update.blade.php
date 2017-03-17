@@ -26,7 +26,7 @@
 		{!! Form::open(['action' => 'OrderSupplyController@update']) !!}
 			<input type="hidden" name="editOrderId" value="{{$order[0]->purchaseHId}}" readonly>
 			<div class="field">
-				<label style="font-weight: bold">No. {{$order[0]->purchaseHId}}</label>
+				<h3>No. {{$order[0]->purchaseHId}}</h3>
 			</div>
 			<div class="inline fields">
 				<div class="two wide field">
@@ -92,8 +92,8 @@
 						<th>Quantity</th>
 						<th>Product</th>
 						<th>Description</th>
-						<th>Unit Price</th>
-						<th>Total Cost</th>
+						<th>Unit Price(PhP)</th>
+						<th>Total Cost(PhP)</th>
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -101,7 +101,7 @@
 			</table>
 			<br>
 			<hr>
-			<i>Note: All with <span>*</span> are required fields</i>
+			<i>Note: All with <span>(*)</span> are required fields</i>
 			<div style="float:right">
 				<a href="{{URL::to('/transaction/order-supply')}}" type="reset" class="ui negative button"><i class="arrow left icon"></i>Back</a>
 				<button type="submit" class="ui positive button"><i class="plus icon"></i>Save</button>
@@ -117,6 +117,7 @@
 				pageLength: 100,
 				paging: false,
 				info: false,
+				ordering: false
 			});
 			$('#tiTitle').attr('class','title active');
 			$('#tiContent').attr('class','content active');
@@ -158,11 +159,11 @@
 		function addRow(value,text,cost){
 			var t = $('#list').DataTable();
 			t.row.add( [
-	            '<div class="ui fluid input"><input id="'+value+'" name="qty[]" onchange="compute(this.value,this.id)" onkeypress="return validate(event,this.id)" type="text" maxlength="3" data-content="Only numerical values are allowed" required></div>',
+	            '<div class="ui fluid input"><input style="text-align:right" id="'+value+'" name="qty[]" onchange="compute(this.value,this.id)" onkeypress="return validate(event,this.id)" type="text" maxlength="3" data-content="Only numerical values are allowed" required></div>',
 	            text,
 	            '<div class="ui fluid input"><input title="'+value+'" name="desc[]" type="text"></div>',
-	            '<div class="ui fluid input"><input id="cost'+value+'" style="border:none" type="text" value="'+cost+'" readonly></div>',
-	            '<div class="ui fluid input"><input id="total'+value+'" style="border:none" type="text" value="0" readonly></div>',
+	            '<div class="ui fluid input"><input id="cost'+value+'" style="border:none;text-align:right" type="text" value="'+cost+'" readonly></div>',
+	            '<div class="ui fluid input"><input id="total'+value+'" style="border:none;text-align:right" type="text" value="0" readonly></div>',
 	            '<span id="'+value+'" onclick="removeRowd(this.id)" class="ui circular icon negative button deleteRow"><i class="ui remove icon"></i></span>',
 	        ] ).draw( false );
 		}

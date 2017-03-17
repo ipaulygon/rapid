@@ -26,140 +26,144 @@
 		{!! Form::open(['action' => 'RepairController@createEstimate']) !!}
 			<input type="hidden" name="estimateId" value="{{$newId}}" readonly>
 			<div class="field">
-				<label style="color:red">No. {{$newId}}</label>
+				<h3>No. {{$newId}}</h3>
 			</div>
             <div class="ui stackable container secondary pointing menu">
-                <a class="active item" data-tab="first">Customer Details</a>
-                <a class="item" data-tab="second">Vehicle Details</a>
-                <a class="item" data-tab="third">Estimation Details</a>
+                <a class="active item" data-tab="first">Primary Details</a>
+                <a class="item" data-tab="second">Estimation Details</a>
             </div>
-            <!--customer-->
             <div class="ui active tab" data-tab="first">
-                <div class="three fields">
-                    <div class="field">
-                        <label>First Name<span>*</span></label>
-                        <input type="text" name="custFirst">
+                <div class="ui inverted segment top attached">
+                    <h3 class="ui yellow header">Customer Information</h3>
+                </div>
+                <div class="ui attached segment">
+                    <div class="three fields">
+                        <div class="field">
+                            <label>First Name<span>*</span></label>
+                            <input type="text" name="custFirst">
+                        </div>
+                        <div class="field">
+                            <label>Middle Name</label>
+                            <input type="text" name="custMiddle">
+                        </div>
+                        <div class="field">
+                            <label>Last Name<span>*</span></label>
+                            <input type="text" name="custLast">
+                        </div>
                     </div>
                     <div class="field">
-                        <label>Middle Name</label>
-                        <input type="text" name="custMiddle">
+                        <label>Address<span>*</span></label>
+                        <textarea type="text" name="custAddress" rows="2"></textarea>
                     </div>
-                    <div class="field">
-                        <label>Last Name<span>*</span></label>
-                        <input type="text" name="custLast">
+                    <div class="two fields">
+                        <div class="field">
+                            <label>Contact<span>*</span></label>
+                            <input type="text" name="custContact">
+                        </div>
+                        <div class="field">
+                            <label>Email</label>
+                            <input type="text" name="custEmail">
+                        </div>
                     </div>
                 </div>
-                <div class="field">
-                    <label>Address<span>*</span></label>
-                    <textarea type="text" name="custAddress" rows="2"></textarea>
+                <div class="ui inverted segment top attached">
+                    <h3 class="ui yellow header">Vehicle Information</h3>
                 </div>
-                <div class="two fields">
-                    <div class="field">
-                        <label>Contact<span>*</span></label>
-                        <input type="text" name="custContact">
+                <div class="ui attached segment">
+                    <div class="three fields">
+                        <div class="field">
+                            <label>Vehicle Plate<span>*</span></label>
+                            <div id="vehiclePlate" class="ui search selection dropdown">
+                                <input type="hidden" name="vehiclePlateId"><i class="dropdown icon"></i>
+                                <input name="vehiclePlate" class="search" autocomplete="off" tabindex="0">
+                                <div class="default text">XXX 000 / AAA 1234 </div>
+                                <div class="menu" tabindex="-1">
+                                    @foreach($vehicle as $vehicle)
+                                        <div class="item" data-value="{{ $vehicle->vehiclePlate }}">{{$vehicle->vehiclePlate }}</div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Vehicle Make<span>*</span></label>
+                            <div id="vehicleMake" class="ui search selection dropdown">
+                                <input type="hidden" name="vehicleMakeId"><i class="dropdown icon"></i>
+                                <input name="vehicleMake" class="search" autocomplete="off" tabindex="0">
+                                <div class="default text">Toyota / Honda</div>
+                                <div class="menu" tabindex="-1">
+                                    @foreach($make as $make)
+                                        <div class="item" data-value="{{$make->makeId}}">{{$make->makeName}}</div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Vehicle Model<span>*</span></label>
+                            <div id="vehicleModel" class="ui search selection dropdown">
+                                <input type="hidden" name="vehicleModelId"><i class="dropdown icon"></i>
+                                <input name="vehicleModel" class="search" autocomplete="off" tabindex="0">
+                                <div class="default text">Vios / WIGO</div>
+                                <div class="menu" tabindex="-1">
+                                    @foreach($model as $model)
+                                        <div class="item" data-value="{{$model->modelId}}">{{$model->modelName}}</div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="field">
-                        <label>Email</label>
-                        <input type="text" name="custEmail">
+                    <div class="three fields">
+                        <div class="field">
+                            <label>Vehicle Year<span>*</span></label>
+                            <div id="vehicleYear" class="ui search selection dropdown">
+                                <input type="hidden" name="vehicleYear"><i class="dropdown icon"></i>
+                                <input class="search" autocomplete="off" tabindex="0">
+                                <div class="default text">2010</div>
+                                <div class="menu" tabindex="-1">
+                                    <?php 
+                                        $date = date("Y");
+                                    ?>
+                                    @for($dates=$date;$dates>1900;$dates--)
+                                        <div class="item" data-value="{{$dates}}">{{$dates}}</div>
+                                    @endfor
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Vehicle Type<span>*</span></label>
+                            <div id="vehicleType" class="ui search selection dropdown">
+                                <input type="hidden" name="vehicleType"><i class="dropdown icon"></i>
+                                <input class="search" autocomplete="off" tabindex="0">
+                                <div class="default text">Automatic/Manual</div>
+                                <div class="menu" tabindex="-1">
+                                    <div class="item" data-value="1">Manual</div>
+                                    <div class="item" data-value="2">Automatic</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Vehicle Engine<span>*</span></label>
+                            <div id="vehicleEngine" class="ui search selection dropdown">
+                                <input type="hidden" name="vehicleEngine"><i class="dropdown icon"></i>
+                                <input class="search" autocomplete="off" tabindex="0">
+                                <div class="default text">Diesel/Gas</div>
+                                <div class="menu" tabindex="-1">
+                                    <div class="item" data-value="1">Diesel</div>
+                                    <div class="item" data-value="2">Gas</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="three fields">
+                        <div class="field"></div>
+                        <div class="field">
+                            <label>Vehicle Mileage</label>
+                            <input type="text" name="vehicleMileage">
+                        </div>
+                        <div class="field"></div>
                     </div>
                 </div>
             </div>
-            <!--vehicle-->
-            <div class="ui tab" data-tab="second">
-                <div class="three fields">
-                    <div class="field">
-                        <label>Vehicle Plate<span>*</span></label>
-                        <div id="vehiclePlate" class="ui search selection dropdown">
-                            <input type="hidden" name="vehiclePlateId"><i class="dropdown icon"></i>
-                            <input name="vehiclePlate" class="search" autocomplete="off" tabindex="0">
-                            <div class="default text">XXX 000 / AAA 1234 </div>
-                            <div class="menu" tabindex="-1">
-                                @foreach($vehicle as $vehicle)
-                                    <div class="item" data-value="{{ $vehicle->vehiclePlate }}">{{$vehicle->vehiclePlate }}</div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label>Vehicle Make<span>*</span></label>
-                        <div id="vehicleMake" class="ui search selection dropdown">
-                            <input type="hidden" name="vehicleMakeId"><i class="dropdown icon"></i>
-                            <input name="vehicleMake" class="search" autocomplete="off" tabindex="0">
-                            <div class="default text">Toyota</div>
-                            <div class="menu" tabindex="-1">
-                                @foreach($make as $make)
-                                    <div class="item" data-value="{{$make->makeId}}">{{$make->makeName}}</div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label>Vehicle Model<span>*</span></label>
-                        <div id="vehicleModel" class="ui search selection dropdown">
-                            <input type="hidden" name="vehicleModelId"><i class="dropdown icon"></i>
-                            <input name="vehicleModel" class="search" autocomplete="off" tabindex="0">
-                            <div class="default text">Vios</div>
-                            <div class="menu" tabindex="-1">
-                                @foreach($model as $model)
-                                    <div class="item" data-value="{{$model->modelId}}">{{$model->modelName}}</div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="three fields">
-                    <div class="field">
-                        <label>Vehicle Year<span>*</span></label>
-                        <div id="vehicleYear" class="ui search selection dropdown">
-                            <input type="hidden" name="vehicleYear"><i class="dropdown icon"></i>
-                            <input class="search" autocomplete="off" tabindex="0">
-                            <div class="default text">2010</div>
-                            <div class="menu" tabindex="-1">
-                                <?php 
-                                    $date = date("Y");
-                                ?>
-                                @for($dates=$date;$dates>1900;$dates--)
-                                    <div class="item" data-value="{{$dates}}">{{$dates}}</div>
-                                @endfor
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label>Vehicle Type<span>*</span></label>
-                        <div id="vehicleType" class="ui search selection dropdown">
-                            <input type="hidden" name="vehicleType"><i class="dropdown icon"></i>
-                            <input class="search" autocomplete="off" tabindex="0">
-                            <div class="default text">Automatic/Manual</div>
-                            <div class="menu" tabindex="-1">
-                                <div class="item" data-value="1">Manual</div>
-                                <div class="item" data-value="2">Automatic</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label>Vehicle Engine<span>*</span></label>
-                        <div id="vehicleEngine" class="ui search selection dropdown">
-                            <input type="hidden" name="vehicleEngine"><i class="dropdown icon"></i>
-                            <input class="search" autocomplete="off" tabindex="0">
-                            <div class="default text">Diesel/Gas</div>
-                            <div class="menu" tabindex="-1">
-                                <div class="item" data-value="1">Diesel</div>
-                                <div class="item" data-value="2">Gas</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="three fields">
-                    <div class="field"></div>
-                    <div class="field">
-                        <label>Vehicle Mileage</label>
-                        <input type="text" name="vehicleMileage">
-                    </div>
-                    <div class="field"></div>
-                </div>
-            </div>
-            <!--estimate-->
-			<div class="ui tab" data-tab="third">
+			<div class="ui tab" data-tab="second">
                 <div class="inline fields">
                     <div class="two wide field">
                         <label>Description</label>
@@ -173,84 +177,95 @@
                         <label>Total cost: PhP</label>
                     </div>
                     <div class="eight wide field">
-                        <input id="totalCost" style="border:none;color:red" type="text" name="totalCost" value="0.00" readonly>
-                        <input id="totalCosts" style="border:none;color:red" type="hidden" name="totalCosts" value="0" readonly>
+                        <input id="totalCost" style="border:none;font-weight: bold" type="text" name="totalCost" value="0.00" readonly>
+                        <input id="totalCosts" style="border:none;font-weight: bold" type="hidden" name="totalCosts" value="0" readonly>
                     </div>
                 </div>
-                <div class="inline fields">
-                    <div class="two wide field">
-                        <label>Items</label>
-                    </div>
-                    <div class="fourteen wide field">
-                        <div style="width:100%" id="product" class="ui search multiple selection dropdown">
-                            <input type="hidden" name="estimateItemsId"><i class="dropdown icon"></i>
-                            <input class="search" autocomplete="off" tabindex="0">
-                            <div class="default text">Select Items</div>
-                            <div class="menu" tabindex="-1">
-                                @foreach($promo as $promo)
-                                    <div class="item" data-name="promo" title="{{$promo->promoCost}}" data-value="{{ $promo->promoId }}">{{$promo->promoName}}</div>
-                                @endforeach
-                                @foreach($package as $package)
-                                    <div class="item" data-name="package" title="{{$package->packageCost}}" data-value="{{ $package->packageId }}">{{$package->packageName}}</div>
-                                @endforeach
-                                @foreach($products as $product)
-                                    <div class="item" data-name="product" title="{{$product->pvCost}}" data-value="{{ $product->pvId }}">{{$product->product->brand->brandName}} - {{$product->product->productName}}| {{$product->variance->varianceSize}} - {{$product->variance->unit->unitName}}| {{$product->product->types->typeName}}</div>
-                                @endforeach
+                <!-- items -->
+                <div class="ui inverted segment top attached">
+                    <h3 class="ui yellow header">Items</h3>
+                </div>
+                <div class="ui attached segment">
+                    <div class="inline fields">
+                        <div class="two wide field">
+                            <label>Items</label>
+                        </div>
+                        <div class="fourteen wide field">
+                            <div style="width:100%" id="product" class="ui search multiple selection dropdown">
+                                <input type="hidden" name="estimateItemsId"><i class="dropdown icon"></i>
+                                <input class="search" autocomplete="off" tabindex="0">
+                                <div class="default text">Select Items</div>
+                                <div class="menu" tabindex="-1">
+                                    @foreach($promo as $promo)
+                                        <div class="item" data-name="promo" title="{{$promo->promoCost}}" data-value="{{ $promo->promoId }}">{{$promo->promoName}}</div>
+                                    @endforeach
+                                    @foreach($package as $package)
+                                        <div class="item" data-name="package" title="{{$package->packageCost}}" data-value="{{ $package->packageId }}">{{$package->packageName}}</div>
+                                    @endforeach
+                                    @foreach($products as $product)
+                                        <div class="item" data-name="product" title="{{$product->pvCost}}" data-value="{{ $product->pvId }}">{{$product->product->brand->brandName}} - {{$product->product->productName}}| {{$product->variance->varianceSize}} - {{$product->variance->unit->unitName}}| {{$product->product->types->typeName}}</div>
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <table id="list" class="ui celled table">
+                        <thead>
+                            <tr>
+                                <th>Quantity</th>
+                                <th>Items</th>
+                                <th>Unit Price</th>
+                                <th>Total Cost</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableInsert"></tbody>
+                    </table>
                 </div>
-                <table id="list" class="ui celled table">
-                    <thead>
-                        <tr>
-                            <th>Quantity</th>
-                            <th>Items</th>
-                            <th>Unit Price</th>
-                            <th>Total Cost</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableInsert"></tbody>
-                </table>
-                <div class="inline fields">
-                    <div class="two wide field">
-                        <label>Services</label>
-                    </div>
-                    <div class="fourteen wide field">
-                        <div style="width:100%" id="service" class="ui search multiple selection dropdown">
-                            <input type="hidden" name="estimateServicesId"><i class="dropdown icon"></i>
-                            <input class="search" autocomplete="off" tabindex="0">
-                            <div class="default text">Select Services</div>
-                            <div class="menu" tabindex="-1">
-                                @foreach($service as $service)
-                                    <?php
-                                        $serviceSize = "";
-                                        if($service->serviceSize==1){
-                                            $serviceSize = "Sedan";
-                                        }else{
-                                            $serviceSize = "Large Vehicle";
-                                        }
-                                    ?>
-                                    <div class="item" data-name="service" title="{{$service->servicePrice}}" data-value="{{ $service->serviceId }}">{{$service->serviceName}} - {{$serviceSize}}</div>
-                                @endforeach
+                 <div class="ui inverted segment top attached">
+                    <h3 class="ui yellow header">Services</h3>
+                </div>
+                <div class="ui attached segment">
+                    <div class="inline fields">
+                        <div class="two wide field">
+                            <label>Services</label>
+                        </div>
+                        <div class="fourteen wide field">
+                            <div style="width:100%" id="service" class="ui search multiple selection dropdown">
+                                <input type="hidden" name="estimateServicesId"><i class="dropdown icon"></i>
+                                <input class="search" autocomplete="off" tabindex="0">
+                                <div class="default text">Select Services</div>
+                                <div class="menu" tabindex="-1">
+                                    @foreach($service as $service)
+                                        <?php
+                                            $serviceSize = "";
+                                            if($service->serviceSize==1){
+                                                $serviceSize = "Sedan";
+                                            }else{
+                                                $serviceSize = "Large Vehicle";
+                                            }
+                                        ?>
+                                        <div class="item" data-name="service" title="{{$service->servicePrice}}" data-value="{{ $service->serviceId }}">{{$service->serviceName}} - {{$serviceSize}}</div>
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <table id="list1" class="ui celled table">
+                        <thead>
+                            <tr>
+                                <th>Services</th>
+                                <th>Price</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableInsert1"></tbody>
+                    </table>
                 </div>
-                <table id="list1" class="ui celled table">
-                    <thead>
-                        <tr>
-                            <th>Services</th>
-                            <th>Price</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableInsert1"></tbody>
-                </table>
             </div>
 			<br>
 			<hr>
-			<i>Note: All with <span>*</span> are required fields</i>
+			<i>Note: All with <span>(*)</span> are required fields</i>
 			<div style="float:right">
 				<a href="{{URL::to('/transaction/repair')}}" type="reset" class="ui negative button"><i class="arrow left icon"></i>Back</a>
 				<button type="submit" class="ui positive button"><i class="plus icon"></i>Save</button>
@@ -267,16 +282,30 @@
 				pageLength: 100,
 				paging: false,
 				info: false,
+                ordering: false,
 			});
             var t1 = $('#list1').DataTable({
 				pageLength: 100,
 				paging: false,
 				info: false,
+                ordering: false,
 			});
-			$('#tiTitle').attr('class','title active');
-			$('#tiContent').attr('class','content active');
-			$('#stiTitle').attr('class','title active');
-			$('#stiContent').attr('class','content active');
+            $('#vehiclePlate').dropdown({
+                allowAdditions: true,
+            });
+            $('#vehicleMake').dropdown({
+                allowAdditions: true,
+            });
+            $('#vehicleModel').dropdown({
+                allowAdditions: true,
+            });
+            $('#vehicleYear').dropdown();
+            $('#vehicleEngine').dropdown();
+            $('#vehicleType').dropdown();
+			$('#tsTitle').attr('class','title active');
+            $('#tsContent').attr('class','content active');
+            $('#stsTitle').attr('class','title active');
+            $('#stsContent').attr('class','content active');
 			$('#supplier.ui.dropdown').dropdown();
 			$('#product.ui.dropdown').dropdown({
 				onAdd:function(value,text,$addedChoice){

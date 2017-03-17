@@ -29,7 +29,7 @@
 				<div class="six wide field">
 					<div class="ui labeled input">
 						<div class="ui label">Php</div>
-						<input type="text" id="packageCost" name="promoCost" value="{{old('promoCost')}}" onkeypress="return validated(event,this.id)" data-content="Only numerical values are allowed" maxlength="8" placeholder="100">
+						<input style="text-align:right" type="text" id="packageCost" name="promoCost" value="{{old('promoCost')}}" onkeypress="return validated(event,this.id)" data-content="Only numerical values are allowed" maxlength="8" placeholder="100">
 					</div>
 				</div>
 			</div>
@@ -184,7 +184,7 @@
 				</div>
 			</div>
 			<hr>
-			<i>Note: All with <span>*</span> are required fields</i>
+			<i>Note: All with <span>(*)</span> are required fields</i>
 			<div style="float:right">
 				<a href="{{URL::to('/maintenance/promo')}}" type="reset" class="ui negative button"><i class="arrow left icon"></i>Back</a>
 				<button type="submit" class="ui green button"><i class="plus icon"></i>Save</button>
@@ -223,7 +223,7 @@
 		    	onAdd: function(value,text,$addedChoice){
 		    		var prod = $addedChoice.attr('title');
 					var cost = $addedChoice.attr('id');
-		    		$("#qty"+prod).append('<div id="'+value+'"><label id="'+value+'">'+text+'</label><div class="ui right labeled input"><input id="'+value+'" title="'+cost+'" type="text" name="qty[]" required onchange="totalProd(this.title,this.value,this.id)" onkeypress="return validate(event,this.id)" maxlength="3" data-content="Only numerical values are allowed"><div class="ui label">pieces</div></div></div>');
+		    		$("#qty"+prod).append('<div id="'+value+'"><label id="'+value+'">'+text+'</label><div class="ui right labeled input"><input style="text-align:right" id="'+value+'" title="'+cost+'" type="text" name="qty[]" required onchange="totalProd(this.title,this.value,this.id)" onkeypress="return validate(event,this.id)" maxlength="3" data-content="Only numerical values are allowed"><div class="ui label">pieces</div></div></div>');
 					$("#qty"+prod).append('<input type="hidden" id="total'+value+'" value="0">');
 		    	},
 		    	onRemove: function(value, text, $removedChoice){
@@ -238,7 +238,7 @@
 		    	onAdd: function(value,text,$addedChoice){
 		    		var prod = $addedChoice.attr('title');
 					var cost = $addedChoice.attr('id');
-		    		$("#freeQty"+prod).append('<div id="'+value+'"><label id="'+value+'">'+text+'</label><div class="ui right labeled input"><input id="free'+value+'" title="'+cost+'" type="text" name="freeqty[]" required onchange="totalProd(this.title,this.value,this.id)" onkeypress="return validate(event,this.id)" maxlength="3" data-content="Only numerical values are allowed"><div class="ui label">pieces</div></div></div>');
+		    		$("#freeQty"+prod).append('<div id="'+value+'"><label id="'+value+'">'+text+'</label><div class="ui right labeled input"><input style="text-align:right" id="free'+value+'" title="'+cost+'" type="text" name="freeqty[]" required onchange="totalProd(this.title,this.value,this.id)" onkeypress="return validate(event,this.id)" maxlength="3" data-content="Only numerical values are allowed"><div class="ui label">pieces</div></div></div>');
 					$("#freeQty"+prod).append('<input type="hidden" id="totalfree'+value+'" value="0">');
 		    	},
 		    	onRemove: function(value, text, $removedChoice){

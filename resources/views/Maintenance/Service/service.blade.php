@@ -129,7 +129,7 @@
 													<label>Price<span>*</span></label>
 													<div class="ui labeled input">
 														<div class="ui label">P</div>
-														<input type="text" id="editServicePrice" name="editServicePrice" value="{{ $serv->servicePrice }}" onkeypress="return validated(event,this.id)" data-content="Only numerical values are allowed" placeholder="Price" maxlength="8">
+														<input style="text-align:right" type="text" id="editServicePrice" name="editServicePrice" value="{{ $serv->servicePrice }}" onkeypress="return validated(event,this.id)" data-content="Only numerical values are allowed" placeholder="Price" maxlength="8">
 													</div>
 												</div>
 												<div class="field">
@@ -157,7 +157,7 @@
 									</div>
 								</div>
 								<div class="actions">
-									<i>Note: All with <span>*</span> are required fields</i>
+									<i>Note: All with <span>(*)</span> are required fields</i>
 		        					<button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
 		        					<button type="submit" class="ui green button"><i class="write icon"></i>Update</button>
 		        				</div>
@@ -240,7 +240,7 @@
 								<label>Price<span>*</span></label>
 								<div class="ui labeled input">
 									<div class="ui label">P</div>
-									<input type="text" id="servicePrice" name="servicePrice" value="{{old('servicePrice')}}" onkeypress="return validated(event,this.id)" data-content="Only numerical values are allowed" placeholder="Price" maxlength="8">
+									<input style="text-align:right" type="text" id="servicePrice" name="servicePrice" value="{{old('servicePrice')}}" onkeypress="return validated(event,this.id)" data-content="Only numerical values are allowed" placeholder="Price" maxlength="8">
 								</div>
 							</div>
 							<div class="field">
@@ -265,7 +265,7 @@
 	    					</div>
 	    				</div>
 	    				<div class="actions">
-							<i>Note: All with <span>*</span> are required fields</i>
+							<i>Note: All with <span>(*)</span> are required fields</i>
 							<button type="reset" class="ui negative button"><i class="remove icon"></i>Close</button>
 							<button type="submit" class="ui green button"><i class="write icon"></i>Save</button>
 						</div>

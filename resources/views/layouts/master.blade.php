@@ -92,12 +92,13 @@
                     <div id="tsContent" class="content">
                         <div class="ui form">
                             <a href="{{URL::to('/transaction/inspect')}}" class="item">Inspect Vehicle</a>
-                            <a href="{{URL::to('/transaction/repair')}}" class="item">Repair/Customize Vehicle</a>
+                            <a href="{{URL::to('/transaction/estimate')}}" class="item">Estimate Cost</a>
                         </div>
                     </div>
                 </div>
-                <div class="item">
-                    <a class="title">Payments and Collections</a>
+                <div class="ui form">
+                    <a href="{{URL::to('/maintenance/job')}}" class="item">Job Order</a>
+                    <a href="{{URL::to('/maintenance/payment')}}" class="item">Payments and Collections</a>
                 </div>
             </div>
         </div>
@@ -174,7 +175,7 @@
                     <div id="stiContent" class="content">
                         <div class="ui form">
                             <a href="{{URL::to('/transaction/order-supply')}}" class="item">Order Supplies</a>
-                            <a href="" class="item">Receive Deliveries</a>
+                            <a href="{{URL::to('/transaction/receive-delivery')}}" class="item">Receive Deliveries</a>
                         </div>
                     </div>
                 </div>
@@ -183,12 +184,12 @@
                     <div id="stsContent" class="content">
                         <div class="ui form">
                             <a href="{{URL::to('/transaction/inspect')}}" class="item">Inspect Vehicle</a>
-                            <a href="" class="item">Repair/Customize Vehicle</a>
+                            <a href="{{URL::to('/transaction/estimate')}}" class="item">Estimate Cost</a>
                         </div>
                     </div>
                 </div>
-                <div class="item">
-                    <a class="title">Payments and Collections</a>
+                <div class="ui form">
+                    <a href="{{URL::to('/maintenance/package')}}" class="item">Payments and Collections</a>
                 </div>
             </div>
         </div>

@@ -106,7 +106,7 @@
 									</div>
 								</div>
 								<div class="actions">
-									<i>Note: All with <span>*</span> are required fields</i>
+									<i>Note: All with <span>(*)</span> are required fields</i>
 		        					<button type="reset" class="ui negative button"><i class="remove icon"></i>Clear</button>
 		        					<button type="submit" class="ui green button"><i class="write icon"></i>Update</button>
 		        				</div>
@@ -176,7 +176,7 @@
 	    					</div>
 	    				</div>
 	    				<div class="actions">
-	    					<i>Note: All with <span>*</span> are required fields</i>
+	    					<i>Note: All with <span>(*)</span> are required fields</i>
 	    					<button type="reset" class="ui negative button"><i class="remove icon"></i>Clear</button>
 	    					<button type="submit" class="ui green button"><i class="plus icon"></i>Save</button>
 	    				</div>

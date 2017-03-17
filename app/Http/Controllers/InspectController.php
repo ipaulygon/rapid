@@ -21,19 +21,31 @@ class InspectController extends Controller
     }
 
     public function index(){
-        $inspect_max = \DB::table('inspect_header')->count('inspectHId');
-        $inspect_max = $inspect_max + 1;
-        $newId = 'INSPECT'.str_pad($inspect_max, 6, '0', STR_PAD_LEFT); 
     	$inspect = InspectHeader::with('details')->get();
         $vehicle = Vehicle::where('vehicleIsActive','=',1)->get();
         $make = VehicleMake::get();
         $model = VehicleModel::get();
         $tech = Technician::where('techIsActive','=',1)->get();
         $inspectType = InspectType::where('inspectTypeIsActive','=',1)->with('item')->get();
-    	return view('Transaction.inspect',compact('inspect','newId','vehicle','make','model','inspectType','tech'));
+    	return view('Transaction.inspect',compact('inspect','vehicle','make','model','inspectType','tech'));
+    }
+
+    public function createForm(){
+        $inspect_max = \DB::table('inspect_header')->count('inspectHId');
+        $inspect_max = $inspect_max + 1;
+        $newId = 'INSPECT'.str_pad($inspect_max, 6, '0', STR_PAD_LEFT);
+        $inspect = InspectHeader::with('details')->get();
+        $vehicle = Vehicle::where('vehicleIsActive','=',1)->get();
+        $make = VehicleMake::get();
+        $model = VehicleModel::get();
+        $tech = Technician::where('techIsActive','=',1)->get();
+        $inspectType = InspectType::where('inspectTypeIsActive','=',1)->with('item')->get();
+        return view('Transaction.inspect-form',compact('inspect','newId','vehicle','make','model','inspectType','tech'));
     }
 
     public function create(Request $request){
+        \Session::flash('flash_message','Inspection successfully added.');
+        return redirect('transaction/inspect');
         $vehiclePlateId = trim($request->input('vehiclePlateId'));
         if($vehiclePlateId=='' || $vehiclePlateId==null){
             $vehicleMakeId = trim($request->input('vehicleMakeId'));

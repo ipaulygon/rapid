@@ -12,7 +12,7 @@ class EstimateHeader extends Model
 	protected $fillable = array(
 								'estimateHId',
 								'estimateHVehicleId',
-								'estimateHCustomerId',
+								'estimateCustomerId',
 								//
 								);
 	public function vehicle(){

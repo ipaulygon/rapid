@@ -9,7 +9,7 @@ class DeliveryOrder extends Model
     protected $table = 'delivery_order';
 	protected $fillable = array(
 								'deliveryOId',
-								'deliveryOSupplierId',
+								'deliveryOrderId',
 								'deliveryOHeaderId',
 								'deliveryOIsActive'
 								//
@@ -17,7 +17,7 @@ class DeliveryOrder extends Model
 	public function header(){
 		return $this->belongsTo('App\DeliveryHeader','deliveryOHeaderId');
 	}
-	public function supplier(){
-		return $this->belongsTo('App\Supplier','deliveryOSupplier');
+	public function order(){
+		return $this->belongsTo('App\OrderSupplyHeader','deliveryOrderId');
 	}
 }
