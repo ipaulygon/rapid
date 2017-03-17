@@ -78,8 +78,7 @@
 					<td>{{$delivery->deliveryHId}}</td>
 					<td>{{$delivery->supplier->supplierName}}</td>
 					<td>
-						<a href="delivery-supply-pdf/{{$delivery->deliveryHId}}" class="ui blue basic circular icon button" data-tooltip="View PDF" data-inverted="" name="{{$delivery->deliveryHId }}"><i class="eye icon"></i></a>
-						<a href="delivery-supply-form/{{$delivery->deliveryHId}}" class="ui primary basic circular icon button" data-tooltip="Update Record" data-inverted=""><i class="write icon"></i></a>
+						<a href="receive-delivery-pdf/{{$delivery->deliveryHId}}" class="ui secondary basic circular icon button" data-tooltip="View PDF" data-inverted="" name="{{$delivery->deliveryHId }}"><i class="eye icon"></i></a>
 					</td>
 				</tr>
 			@endforeach
@@ -91,7 +90,11 @@
 @section('scripts')
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$('#tiTitle').attr('class','title active');
+			$('#tTitle').attr('class','title header active');
+$('#tContent').attr('class','content active');
+$('#stTitle').attr('class','title header active');
+$('#stContent').attr('class','content active');
+$('#tiTitle').attr('class','title active');
 			$('#tiContent').attr('class','content active');
 			$('#stiTitle').attr('class','title active');
 			$('#stiContent').attr('class','content active');

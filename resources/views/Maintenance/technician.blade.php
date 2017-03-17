@@ -152,7 +152,15 @@
 							    							<div class="menu" tabindex="-1">
 							    								@foreach($skills as $skill)
 							    									@if($skill->serviceIsActive==1)
-							    										<div class="item" data-value="{{ $skill->serviceId }}">{{ $skill->serviceName }}</div>
+						    											<?php 
+							    											$size = "";
+							    											if($skill->serviceSize==1){
+							    												$size="Sedan";
+							    											}else{
+							    												$size="Large Vehicle";
+							    											}
+							    										?>
+							    										<div class="item" data-value="{{ $skill->serviceId }}">{{ $skill->serviceName }} - {{$size}}</div>
 							    									@endif
 							    								@endforeach
 							    							</div>
@@ -286,7 +294,15 @@
 		    							<div class="menu" tabindex="-1">
 		    								@foreach($skills as $skill)
 		    									@if($skill->serviceIsActive==1)
-		    										<div class="item" data-value="{{ $skill->serviceId }}">{{ $skill->serviceName }}</div>
+		    										<?php 
+		    											$size = "";
+		    											if($skill->serviceSize==1){
+		    												$size="Sedan";
+		    											}else{
+		    												$size="Large Vehicle";
+		    											}
+		    										?>
+		    										<div class="item" data-value="{{ $skill->serviceId }}">{{ $skill->serviceName }} - {{$size}}</div>
 		    									@endif
 		    								@endforeach
 		    							</div>
@@ -310,6 +326,10 @@
 @section('scripts')
 	<script type="text/javascript">
 		$(document).ready(function(){
+			$('#mTitle').attr('class','title header active');
+			$('#mContent').attr('class','content active');
+			$('#smTitle').attr('class','title header active');
+			$('#smContent').attr('class','content active');
 		    $('#listType').DataTable();
 		    $('.ui.dropdown').dropdown();
 		    $('.ui.form').form({

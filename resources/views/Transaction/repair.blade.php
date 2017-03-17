@@ -55,7 +55,11 @@
 @section('scripts')
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$('#tsTitle').attr('class','title active');
+			$('#tTitle').attr('class','title header active');
+$('#tContent').attr('class','content active');
+$('#stTitle').attr('class','title header active');
+$('#stContent').attr('class','content active');
+$('#tsTitle').attr('class','title active');
 			$('#tsContent').attr('class','content active');
 			$('#stsTitle').attr('class','title active');
 			$('#stsContent').attr('class','content active');

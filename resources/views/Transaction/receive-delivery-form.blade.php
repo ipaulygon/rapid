@@ -106,7 +106,11 @@
 				info: false,
 				ordering: false,
 			});
-			$('#tiTitle').attr('class','title active');
+			$('#tTitle').attr('class','title header active');
+$('#tContent').attr('class','content active');
+$('#stTitle').attr('class','title header active');
+$('#stContent').attr('class','content active');
+$('#tiTitle').attr('class','title active');
 			$('#tiContent').attr('class','content active');
 			$('#stiTitle').attr('class','title active');
 			$('#stiContent').attr('class','content active');

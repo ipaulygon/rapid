@@ -141,6 +141,7 @@ Route::get('transaction/receive-delivery-form','ReceiveDeliveryController@create
 Route::post('transaction/receive-delivery/create','ReceiveDeliveryController@create');
 Route::post('transaction/receive-delivery/supplier','ReceiveDeliveryController@supplier');
 Route::post('transaction/receive-delivery/order','ReceiveDeliveryController@order');
+Route::get('transaction/receive-delivery-pdf/{id}','ReceiveDeliveryController@view');
 //Inspect
 Route::get('transaction/inspect','InspectController@index');
 Route::get('transaction/inspect-form','InspectController@createForm');

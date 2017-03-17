@@ -39,66 +39,74 @@
         </div>
         <a href="{{URL::to('/dashboard')}}" class="item">Dashboard</a>
         <!--Maintenance-->
-        <div class="item">
-            <div class="header">Maintenance</div>
-            <div class="ui vertical accordion inverted fluid">
-                <div class="item">
-                    <a id="miTitle" class="title"><i class="dropdown icon"></i>Inventory</a>
-                    <div id="miContent" class="content">
+        <div class="ui vertical accordion inverted fluid">
+            <div style="border-top: 1px solid grey;border-bottom: 1px solid grey;" class="item">
+                <div id="mTitle" class="title header">Maintenance</div>
+                <div id="mContent" style="margin-top: -2em" class="content">
+                    <div class="accordion">
+                        <div class="item">
+                            <a id="miTitle" class="title"><i class="dropdown icon"></i>Inventory</a>
+                            <div id="miContent" class="content">
+                                <div class="ui form">
+                                    <a href="{{URL::to('/maintenance/supplier')}}" class="item">Supplier</a>
+                                    <a href="{{URL::to('/maintenance/product-brand')}}" class="item">Product Brand</a>
+                                    <a href="{{URL::to('/maintenance/product-type')}}" class="item">Product Type</a>
+                                    <a href="{{URL::to('/maintenance/product-unit')}}" class="item">Product UOM</a>
+                                    <a href="{{URL::to('/maintenance/product-variance')}}" class="item">Product Variances</a>
+                                    <a href="{{URL::to('/maintenance/product')}}" class="item">Product</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <a id="msTitle" class="title"><i class="dropdown icon"></i>Car Care</a>
+                            <div id="msContent" class="content">
+                                <div class="ui form">
+                                    <a href="{{URL::to('/maintenance/service-category')}}" class="item">Service Category</a>
+                                    <a href="{{URL::to('/maintenance/service')}}" class="item">Service</a>
+                                    <a href="{{URL::to('/maintenance/inspect-type')}}" class="item">Inspection Type</a>
+                                    <a href="{{URL::to('/maintenance/inspect-item')}}" class="item">Inspection Item</a>
+                                </div>
+                            </div>
+                        </div>
                         <div class="ui form">
-                            <a href="{{URL::to('/maintenance/supplier')}}" class="item">Supplier</a>
-                            <a href="{{URL::to('/maintenance/product-brand')}}" class="item">Product Brand</a>
-                            <a href="{{URL::to('/maintenance/product-type')}}" class="item">Product Type</a>
-                            <a href="{{URL::to('/maintenance/product-unit')}}" class="item">Product UOM</a>
-                            <a href="{{URL::to('/maintenance/product-variance')}}" class="item">Product Variances</a>
-                            <a href="{{URL::to('/maintenance/product')}}" class="item">Product</a>
+                            <a href="{{URL::to('/maintenance/package')}}" class="item">Package</a>
+                            <a href="{{URL::to('/maintenance/promo')}}" class="item">Promo</a>
+                            <a href="{{URL::to('/maintenance/discount')}}" class="item">Discount</a>
+                            <a href="{{URL::to('/maintenance/technician')}}" class="item">Technician</a>
                         </div>
                     </div>
-                </div>
-                <div class="item">
-                    <a id="msTitle" class="title"><i class="dropdown icon"></i>Car Care</a>
-                    <div id="msContent" class="content">
-                        <div class="ui form">
-                            <a href="{{URL::to('/maintenance/service-category')}}" class="item">Service Category</a>
-                            <a href="{{URL::to('/maintenance/service')}}" class="item">Service</a>
-                            <a href="{{URL::to('/maintenance/inspect-type')}}" class="item">Inspection Type</a>
-                            <a href="{{URL::to('/maintenance/inspect-item')}}" class="item">Inspection Item</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="ui form">
-                    <a href="{{URL::to('/maintenance/package')}}" class="item">Package</a>
-                    <a href="{{URL::to('/maintenance/promo')}}" class="item">Promo</a>
-                    <a href="{{URL::to('/maintenance/discount')}}" class="item">Discount</a>
-                    <a href="{{URL::to('/maintenance/technician')}}" class="item">Technician</a>
                 </div>
             </div>
         </div>
         <!--Transaction-->
-        <div class="item">
-            <div class="header">Transaction</div>
-            <div class="ui vertical accordion inverted fluid">
-                <div class="item">
-                    <a id="tiTitle" class="title"><i class="dropdown icon"></i>Inventory</a>
-                    <div id="tiContent" class="content">
+        <div class="ui vertical accordion inverted fluid">
+            <div style="border-top: 1px solid grey;border-bottom: 1px solid grey;" class="item">
+                <div id="tTitle" class="title header">Transaction</div>
+                <div id="tContent" style="margin-top: -2em" class="content">
+                    <div class="accordion">
+                        <div class="item">
+                            <a id="tiTitle" class="title"><i class="dropdown icon"></i>Inventory</a>
+                            <div id="tiContent" class="content">
+                                <div class="ui form">
+                                    <a href="{{URL::to('/transaction/order-supply')}}" class="item">Order Supplies</a>
+                                    <a href="{{URL::to('/transaction/receive-delivery')}}" class="item">Receive Deliveries</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <a id="tsTitle" class="title"><i class="dropdown icon"></i>Car Care</a>
+                            <div id="tsContent" class="content">
+                                <div class="ui form">
+                                    <a href="{{URL::to('/transaction/inspect')}}" class="item">Inspect Vehicle</a>
+                                    <a href="{{URL::to('/transaction/estimate')}}" class="item">Estimate Cost</a>
+                                </div>
+                            </div>
+                        </div>
                         <div class="ui form">
-                            <a href="{{URL::to('/transaction/order-supply')}}" class="item">Order Supplies</a>
-                            <a href="{{URL::to('/transaction/receive-delivery')}}" class="item">Receive Deliveries</a>
+                            <a href="{{URL::to('/transaction/job')}}" class="item">Job Order</a>
+                            <a href="{{URL::to('/transaction/payment')}}" class="item">Payments and Collections</a>
                         </div>
                     </div>
-                </div>
-                <div class="item">
-                    <a id="tsTitle" class="title"><i class="dropdown icon"></i>Car Care</a>
-                    <div id="tsContent" class="content">
-                        <div class="ui form">
-                            <a href="{{URL::to('/transaction/inspect')}}" class="item">Inspect Vehicle</a>
-                            <a href="{{URL::to('/transaction/estimate')}}" class="item">Estimate Cost</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="ui form">
-                    <a href="{{URL::to('/transaction/job')}}" class="item">Job Order</a>
-                    <a href="{{URL::to('/transaction/payment')}}" class="item">Payments and Collections</a>
                 </div>
             </div>
         </div>
@@ -116,86 +124,91 @@
                 </div>
             </div>
         </div>
-        <div class="ui form">
-            <a class="item" href="{{ url('/logout') }}"
-                onclick="event.preventDefault();
-                         document.getElementById('logout-form').submit();">
-                Logout
-            </a>
-            <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                {{ csrf_field() }}
-            </form>
-        </div>
+        <a class="item" href="{{ url('/logout') }}"
+            onclick="event.preventDefault();
+                     document.getElementById('logout-form').submit();">
+            Logout
+        </a>
+        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+            {{ csrf_field() }}
+        </form>
     </div>
     <div class="ui vertical inverted sidebar large menu" id="tokhang">
+        <a href="{{URL::to('/dashboard')}}" class="item">Dashboard</a>
         <!--Maintenance-->
-        <div class="item">
-            <div class="header">Maintenance</div>
-            <div class="ui vertical accordion inverted fluid">
-                <div class="item">
-                    <a id="smiTitle" class="title"><i class="dropdown icon"></i>Inventory</a>
-                    <div id="smiContent" class="content">
+        <div class="ui vertical accordion inverted fluid">
+            <div style="border-top: 1px solid grey;border-bottom: 1px solid grey;" class="item">
+                <div id="smTitle" class="title header">Maintenance</div>
+                <div id="smContent" style="margin-top: -2em" class="content">
+                    <div class="accordion">
+                        <div class="item">
+                            <a id="smiTitle" class="title"><i class="dropdown icon"></i>Inventory</a>
+                            <div id="smiContent" class="content">
+                                <div class="ui form">
+                                    <a href="{{URL::to('/maintenance/supplier')}}" class="item">Supplier</a>
+                                    <a href="{{URL::to('/maintenance/product-brand')}}" class="item">Product Brand</a>
+                                    <a href="{{URL::to('/maintenance/product-type')}}" class="item">Product Type</a>
+                                    <a href="{{URL::to('/maintenance/product-unit')}}" class="item">Product UOM</a>
+                                    <a href="{{URL::to('/maintenance/product-variance')}}" class="item">Product Variances</a>
+                                    <a href="{{URL::to('/maintenance/product')}}" class="item">Product</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <a id="smsTitle" class="title"><i class="dropdown icon"></i>Car Care</a>
+                            <div id="smsContent" class="content">
+                                <div class="ui form">
+                                    <a href="{{URL::to('/maintenance/service-category')}}" class="item">Service Category</a>
+                                    <a href="{{URL::to('/maintenance/service')}}" class="item">Service</a>
+                                    <a href="{{URL::to('/maintenance/inspect-type')}}" class="item">Inspection Type</a>
+                                    <a href="{{URL::to('/maintenance/inspect-item')}}" class="item">Inspection Item</a>
+                                </div>
+                            </div>
+                        </div>
                         <div class="ui form">
-                            <a href="{{URL::to('/maintenance/supplier')}}" class="item">Supplier</a>
-                            <a href="{{URL::to('/maintenance/product-brand')}}" class="item">Product Brand</a>
-                            <a href="{{URL::to('/maintenance/product-type')}}" class="item">Product Type</a>
-                            <a href="{{URL::to('/maintenance/product-unit')}}" class="item">Product UOM</a>
-                            <a href="{{URL::to('/maintenance/product-variance')}}" class="item">Product Variances</a>
-                            <a href="{{URL::to('/maintenance/product')}}" class="item">Product</a>
+                            <a href="{{URL::to('/maintenance/package')}}" class="item">Package</a>
+                            <a href="{{URL::to('/maintenance/promo')}}" class="item">Promo</a>
+                            <a href="{{URL::to('/maintenance/discount')}}" class="item">Discount</a>
+                            <a href="{{URL::to('/maintenance/technician')}}" class="item">Technician</a>
                         </div>
                     </div>
-                </div>
-                <div class="item">
-                    <a id="smsTitle" class="title"><i class="dropdown icon"></i>Car Care</a>
-                    <div id="smsContent" class="content">
-                        <div class="ui form">
-                            <a href="{{URL::to('/maintenance/service-category')}}" class="item">Service Category</a>
-                            <a href="{{URL::to('/maintenance/service')}}" class="item">Service</a>
-                            <a href="{{URL::to('/maintenance/inspect-type')}}" class="item">Inspection Type</a>
-                            <a href="{{URL::to('/maintenance/inspect-item')}}" class="item">Inspection Item</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="ui form">
-                    <a href="{{URL::to('/maintenance/package')}}" class="item">Package</a>
-                    <a href="{{URL::to('/maintenance/promo')}}" class="item">Promo</a>
-                    <a href="{{URL::to('/maintenance/discount')}}" class="item">Discount</a>
-                    <a href="{{URL::to('/maintenance/technician')}}" class="item">Technician</a>
                 </div>
             </div>
         </div>
         <!--Transaction-->
-        <div class="item">
-            <div class="header">Transaction</div>
-            <div class="ui vertical accordion inverted">
-                <div class="item">
-                    <a id="stiTitle" class="title"><i class="dropdown icon"></i>Inventory</a>
-                    <div id="stiContent" class="content">
+        <div class="ui vertical accordion inverted fluid">
+            <div style="border-top: 1px solid grey;border-bottom: 1px solid grey;" class="item">
+                <div id="stTitle" class="title header">Transaction</div>
+                <div id="stContent" style="margin-top: -2em" class="content">
+                    <div class="accordion">
+                        <div class="item">
+                            <a id="stiTitle" class="title"><i class="dropdown icon"></i>Inventory</a>
+                            <div id="stiContent" class="content">
+                                <div class="ui form">
+                                    <a href="{{URL::to('/transaction/order-supply')}}" class="item">Order Supplies</a>
+                                    <a href="{{URL::to('/transaction/receive-delivery')}}" class="item">Receive Deliveries</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <a id="stsTitle" class="title"><i class="dropdown icon"></i>Car Care</a>
+                            <div id="stsContent" class="content">
+                                <div class="ui form">
+                                    <a href="{{URL::to('/transaction/inspect')}}" class="item">Inspect Vehicle</a>
+                                    <a href="{{URL::to('/transaction/estimate')}}" class="item">Estimate Cost</a>
+                                </div>
+                            </div>
+                        </div>
                         <div class="ui form">
-                            <a href="{{URL::to('/transaction/order-supply')}}" class="item">Order Supplies</a>
-                            <a href="{{URL::to('/transaction/receive-delivery')}}" class="item">Receive Deliveries</a>
+                            <a href="{{URL::to('/transaction/job')}}" class="item">Job Order</a>
+                            <a href="{{URL::to('/transaction/payment')}}" class="item">Payments and Collections</a>
                         </div>
                     </div>
-                </div>
-                <div class="item">
-                    <a id="stsTitle" class="title"><i class="dropdown icon"></i>Car Care</a>
-                    <div id="stsContent" class="content">
-                        <div class="ui form">
-                            <a href="{{URL::to('/transaction/inspect')}}" class="item">Inspect Vehicle</a>
-                            <a href="{{URL::to('/transaction/estimate')}}" class="item">Estimate Cost</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="ui form">
-                    <a href="{{URL::to('/transaction/job')}}" class="item">Job Order</a>
-                    <a href="{{URL::to('/transaction/payment')}}" class="item">Payments and Collections</a>
                 </div>
             </div>
         </div>
         <!--Queries-->
-        <div class="item">
-            <div class="header">Queries</div>
-        </div>
+        <a href="{{URL::to('/queries')}}" class="item">Queries</a>
         <!--Reports-->
         <div class="item">
             <div class="header">Reports</div>
@@ -208,16 +221,14 @@
                 </div>
             </div>
         </div>
-        <div class="ui form">
-            <a class="item" href="{{ url('/logout') }}"
-                onclick="event.preventDefault();
-                         document.getElementById('logout-form').submit();">
-                Logout
-            </a>
-            <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                {{ csrf_field() }}
-            </form>
-        </div>
+        <a class="item" href="{{ url('/logout') }}"
+            onclick="event.preventDefault();
+                     document.getElementById('logout-form').submit();">
+            Logout
+        </a>
+        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+            {{ csrf_field() }}
+        </form>
     </div>
     <div id="main-content" class="pusher">
         <div class="ui inverted fixed top menu" id="top-menu">

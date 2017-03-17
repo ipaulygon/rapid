@@ -191,6 +191,10 @@
 @section('scripts')
 	<script type="text/javascript">
 		$(document).ready(function(){
+			$('#mTitle').attr('class','title header active');
+			$('#mContent').attr('class','content active');
+			$('#smTitle').attr('class','title header active');
+			$('#smContent').attr('class','content active');
 		    $('#list').DataTable();
 		    $('.ui.form').form({
 			    fields: {

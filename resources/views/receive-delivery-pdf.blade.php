@@ -50,18 +50,18 @@
 				</td>
 			</tr>
 		</table>
-		<center><h3>PURCHASE ORDER</h3></center>
+		<center><h3>DELIVERY</h3></center>
 		<?php
 			$total = 0;
-			$created = new DateTime($order[0]->created_at);
+			$created = new DateTime($delivery->created_at);
 			$created = $created->format("F d, Y");
 		?>
 		<table width="100%">
 			<tr height="10%">
-				<td width="15%">
-					No. {{$order[0]->purchaseHId}}
+				<td width="20%">
+					No. {{$delivery->deliveryHId}}
 				</td>
-				<td width="60%">
+				<td width="55%">
 					
 				</td>
 				<td width="25%">
@@ -69,46 +69,23 @@
 				</td>
 			</tr>
 		</table>
-		<h4>Supplier: {{$order[0]->supplier->supplierName}}</h4>
-		<p>Description: {{$order[0]->purchaseHDesc}}</p>
+		<h4>Supplier: {{$delivery->supplier->supplierName}}</h4>
 		<table width="100%">
 			<thead>
 				<tr>
-					<th class="td">Quantity</th>
 					<th class="td">Product</th>
 					<th class="td">Description</th>
-					<th class="td">Unit Price(PhP)</th>
-					<th class="td">Total Cost(PhP)</th>
+					<th class="td">Received</th>
 				</tr>
 			</thead>
 			<tbody>
-				@foreach($order[0]->detail as $prods)
+				@foreach($delivery->detail as $prods)
 					<tr>
-						<td style="text-align: right" class="td">{{$prods->purchaseDQty}}</td>
 						<td class="td">{{$prods->variance->product->brand->brandName}} - {{$prods->variance->product->productName}}| {{$prods->variance->variance->varianceSize}} - {{$prods->variance->variance->unit->unitName}}| {{$prods->variance->product->types->typeName}}</td>
-						<td class="td">{{$prods->purchaseDRemarks}}</td>
-						<?php
-							$cost = number_format($prods->variance->pvCost,2);
-						?>
-						<td style="text-align: right" class="td">{{$cost}}</td>
-						<?php
-							$totalCost = $prods->variance->pvCost*$prods->purchaseDQty;
-							$total += $totalCost;
-							$costs = number_format($totalCost,2);
-						?>
-						<td style="text-align: right" class="td">{{$costs}}</td>
+						<td class="td">{{$prods->deliveryDRemarks}}</td>
+						<td style="text-align: right" class="td">{{$prods->deliveryDQty}}</td>
 					</tr>
 				@endforeach
-				<?php 
-					$price = number_format($total,2);
-				?>
-				<tr>
-					<td class="td"><span style="font-weight: bold">Total Cost:</span></td>
-					<td class="td"></td>
-					<td class="td"></td>
-					<td class="td"></td>
-					<td style="text-align: right" class="td"><span style="font-weight: bold">{{$price}}</span></td>
-				</tr>
 			</tbody>
 		</table>
 	</body>  

@@ -53,6 +53,10 @@
 @section('scripts')
 	<script type="text/javascript">
 		$(document).ready(function(){
+			$('#tTitle').attr('class','title header active');
+			$('#tContent').attr('class','content active');
+			$('#stTitle').attr('class','title header active');
+			$('#stContent').attr('class','content active');
 		    $('#listType').DataTable();
 		});
 		function modal(open){

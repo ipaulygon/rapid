@@ -80,7 +80,7 @@
 					<td>{{$order->supplier->supplierName}}</td>
 					<td>{{$order->purchaseHDesc}}</td>
 					<td>
-						<a href="order-supply-pdf/{{$order->purchaseHId}}" class="ui blue basic circular icon button" data-tooltip="View PDF" data-inverted="" name="{{$order->purchaseHId }}"><i class="eye icon"></i></a>
+						<a href="order-supply-pdf/{{$order->purchaseHId}}" class="ui secondary basic circular icon button" data-tooltip="View PDF" data-inverted="" name="{{$order->purchaseHId }}"><i class="eye icon"></i></a>
 						<a href="order-supply-form/{{$order->purchaseHId}}" class="ui primary basic circular icon button" data-tooltip="Update Record" data-inverted=""><i class="write icon"></i></a>
 					</td>
 				</tr>
@@ -93,7 +93,11 @@
 @section('scripts')
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$('#tiTitle').attr('class','title active');
+			$('#tTitle').attr('class','title header active');
+$('#tContent').attr('class','content active');
+$('#stTitle').attr('class','title header active');
+$('#stContent').attr('class','content active');
+$('#tiTitle').attr('class','title active');
 			$('#tiContent').attr('class','content active');
 			$('#stiTitle').attr('class','title active');
 			$('#stiContent').attr('class','content active');

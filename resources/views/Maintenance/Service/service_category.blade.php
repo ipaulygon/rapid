@@ -189,7 +189,11 @@
 @section('scripts')
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$('#msTitle').attr('class','title active');
+			$('#mTitle').attr('class','title header active');
+$('#mContent').attr('class','content active');
+$('#smTitle').attr('class','title header active');
+$('#smContent').attr('class','content active');
+$('#msTitle').attr('class','title active');
 			$('#msContent').attr('class','content active');
 			$('#smsTitle').attr('class','title active');
 			$('#smsContent').attr('class','content active');

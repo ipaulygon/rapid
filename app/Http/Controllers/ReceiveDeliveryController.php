@@ -64,7 +64,7 @@ class ReceiveDeliveryController extends Controller
                     'deliveryHDId' => $id,
                     'deliveryDVarianceId' => $var[$x],
                     'deliveryDQty' => $qty,
-                    'deliveryDRemarks' => $id
+                    'deliveryDRemarks' => $orders
                 ));
                 $deliveryDetail->save();
                 $detail = OrderSupplyDetail::where('purchaseHDId','=',$orders)->where('purchaseDVarianceId','=',$var[$x])->first();
@@ -88,4 +88,11 @@ class ReceiveDeliveryController extends Controller
         $data = OrderSupplyDetail::with('variance.product.types')->with('variance.product.brand')->with('variance.variance.unit')->where('purchaseHDId','=',$poId)->get();
         return \Response::json(array('data'=>$data));
     }
+
+    public function view($id){
+        $delivery = DeliveryHeader::with('supplier')->with('detail.variance.product.types')->with('detail.variance.product.brand')->with('detail.variance.variance.unit')->where('deliveryHId','=',$id)->first();
+        $pdf = PDF::loadView('receive-delivery-pdf',compact('delivery'));
+        return $pdf->stream();
+    }
+
 }

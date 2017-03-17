@@ -111,6 +111,10 @@
 @section('scripts')
 	<script type="text/javascript">
 		$(document).ready(function(){
+			$('#mTitle').attr('class','title header active');
+			$('#mContent').attr('class','content active');
+			$('#smTitle').attr('class','title header active');
+			$('#smContent').attr('class','content active');
 		    $('#serv.ui.dropdown').dropdown({
 				onAdd: function(value,text,$addedChoice){
 					var cost = $addedChoice.attr("id");
