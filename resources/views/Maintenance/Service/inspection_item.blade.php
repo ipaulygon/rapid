@@ -22,6 +22,23 @@
 		</script>
 	@endif
 
+	@if(Session::has('error_message'))
+ 		<div class="ui small basic modal" style="text-align:center" id="error_message">
+ 			<div class="ui icon header">
+ 				<i class="remove icon"></i>
+ 				Failed
+ 			</div>
+ 			<div class="content">
+ 				<em>{!! session('error_message') !!}</em>
+ 			</div>
+ 		</div>
+ 		<script type="text/javascript">
+ 			$(document).ready(function (){
+ 				$('#error_message').modal('show');
+ 			});
+ 		</script>
+ 	@endif
+
 	@if(Session::has('new_error'))
 		<script type="text/javascript">
 			$(document).ready(function (){
@@ -93,7 +110,7 @@
 					        						<label>Inspect Item<span>*</span></label>
 					        					</div>
 					        					<div class="six wide field">
-					        						<input maxlength="255" type="text" name="editInspectItemName" value="{{ $inspectItem->inspectItemName }}" placeholder="Inspect Item">
+					        						<input maxlength="140" type="text" name="editInspectItemName" value="{{ $inspectItem->inspectItemName }}" placeholder="Inspect Item">
 					        					</div>
 					        					<div class="two wide field">
 					                                <label>Inspection Type<span>*</span></label>
@@ -118,7 +135,7 @@
 					        						<label>Description</label>
 					        					</div>
 					        					<div class="fourteen wide field">
-					        						<textarea maxlength="255" type="text" name="editInspectItemDesc" placeholder="Description">{{ $inspectItem->inspectItemDesc }}</textarea>
+					        						<textarea maxlength="140" type="text" name="editInspectItemDesc" placeholder="Description">{{ $inspectItem->inspectItemDesc }}</textarea>
 					        					</div>
 					        				</div>
 										</div>
@@ -150,7 +167,7 @@
 								</div>
 								<div class="actions">
 			        				<button type="submit" class="ui negative button"><i class="trash icon"></i>Deactivate</button>
-			        				<button type="reset" class="ui primary button"><i class="remove icon"></i>Cancel</button>
+			        				<button type="reset" class="ui positive button"><i class="arrow left icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
 						</div>
@@ -182,7 +199,7 @@
                                 <label>Inspection Item<span>*</span></label>
                             </div>
                             <div class="six wide field">
-                                <input maxlength="255" type="text" name="inspectItemName" placeholder="Inspection Item" value="{{old('inspectItemName')}}">
+                                <input maxlength="140" type="text" name="inspectItemName" placeholder="Inspection Item" value="{{old('inspectItemName')}}">
                             </div>
                             <div class="two wide field">
                                 <label>Inspection Type<span>*</span></label>
@@ -207,7 +224,7 @@
                                 <label>Description</label>
                             </div>
                             <div class="fourteen wide field">
-                                <textarea maxlength="255" type="text" name="inspectItemDesc" placeholder="Description">{{old('inspectItemDesc')}}</textarea>
+                                <textarea maxlength="140" type="text" name="inspectItemDesc" placeholder="Description">{{old('inspectItemDesc')}}</textarea>
                             </div>
                         </div>
                         <div class="actions">

@@ -57,7 +57,7 @@
 					<label>Product<span>*</span></label>
 				</div>
 				<div class="fourteen wide field">
-					<input maxlength="255" type="text" name="productName" placeholder="Product" value="{{old('productName')}}">
+					<input maxlength="140" type="text" name="productName" placeholder="Product" value="{{old('productName')}}">
 				</div>
 			</div>
 			<div class="inline fields">
@@ -65,7 +65,7 @@
 					<label>Description</label>
 				</div>
 				<div class="fourteen wide field">
-					<textarea maxlength="255" type="text" name="productDesc" placeholder="Description" rows="3">{{old('productDesc')}}</textarea>
+					<textarea maxlength="140" type="text" name="productDesc" placeholder="Description" rows="3">{{old('productDesc')}}</textarea>
 				</div>
 			</div>
 			<div class="three fields">

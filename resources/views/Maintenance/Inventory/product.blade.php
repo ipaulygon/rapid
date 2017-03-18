@@ -22,6 +22,23 @@
 		</script>
 	@endif
 
+	@if(Session::has('error_message'))
+ 		<div class="ui small basic modal" style="text-align:center" id="error_message">
+ 			<div class="ui icon header">
+ 				<i class="remove icon"></i>
+ 				Failed
+ 			</div>
+ 			<div class="content">
+ 				<em>{!! session('error_message') !!}</em>
+ 			</div>
+ 		</div>
+ 		<script type="text/javascript">
+ 			$(document).ready(function (){
+ 				$('#error_message').modal('show');
+ 			});
+ 		</script>
+ 	@endif
+
 	<!--Errors-->	
 	@if($errors->any())
 		<div class="ui small basic modal" style="text-align:center" id="error">
@@ -134,7 +151,7 @@
 								</div>
 								<div class="actions">
 			        				<button type="submit" class="ui negative button"><i class="trash icon"></i>Deactivate</button>
-			        				<button type="reset" class="ui primary button"><i class="remove icon"></i>Cancel</button>
+			        				<button type="reset" class="ui positive button"><i class="arrow left icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
 						</div>

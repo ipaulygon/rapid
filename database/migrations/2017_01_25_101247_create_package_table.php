@@ -18,7 +18,7 @@ class CreatePackageTable extends Migration
             $table->string('packageId');
             $table->string('packageName');
             $table->text('packageDesc')->nullable();
-            $table->float('packageCost',8,2)->nullable();
+            $table->double('packageCost',10,2)->nullable();
             $table->boolean('packageIsActive');
             $table->timestamps();
             $table->primary('packageId');

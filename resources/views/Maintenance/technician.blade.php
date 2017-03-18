@@ -22,6 +22,23 @@
 		</script>
 	@endif
 
+	@if(Session::has('error_message'))
+ 		<div class="ui small basic modal" style="text-align:center" id="error_message">
+ 			<div class="ui icon header">
+ 				<i class="remove icon"></i>
+ 				Failed
+ 			</div>
+ 			<div class="content">
+ 				<em>{!! session('error_message') !!}</em>
+ 			</div>
+ 		</div>
+ 		<script type="text/javascript">
+ 			$(document).ready(function (){
+ 				$('#error_message').modal('show');
+ 			});
+ 		</script>
+ 	@endif
+
 	@if(Session::has('new_error'))
 		<script type="text/javascript">
 			$(document).ready(function (){
@@ -108,39 +125,39 @@
 													<div class="three fields">
 														<div class="field">
 															<label>First Name<span>*</span></label>
-															<input maxlength="255" type="text" name="editTechFirst" placeholder="John" value="{{$tech->techFirst}}">
+															<input maxlength="140" type="text" name="editTechFirst" placeholder="John" value="{{$tech->techFirst}}">
 														</div>
 														<div class="field">
 															<label>Middle Name</label>
-															<input maxlength="255" type="text" name="editTechMiddle" placeholder="Cena" value="{{$tech->techMiddle}}">
+															<input maxlength="140" type="text" name="editTechMiddle" placeholder="Cena" value="{{$tech->techMiddle}}">
 														</div>
 														<div class="field">
 															<label>Last Name<span>*</span></label>
-															<input maxlength="255" type="text" name="editTechLast" placeholder="Doe" value="{{$tech->techLast}}">
+															<input maxlength="140" type="text" name="editTechLast" placeholder="Doe" value="{{$tech->techLast}}">
 														</div>
 													</div>
 													<div class="three fields">
 														<div class="field">
 															<label>Street/Block<span>*</span></label>
-															<input maxlength="255" type="text" name="editStreet" placeholder="Baker St." value="{{$tech->techStreet}}">
+															<input maxlength="140" type="text" name="editStreet" placeholder="Baker St." value="{{$tech->techStreet}}">
 														</div>
 														<div class="field">
 															<label>Brgy./Subd<span>*</span></label>
-															<input maxlength="255" type="text" name="editBrgy" placeholder="Brgy. 546" value="{{$tech->techBrgy}}">
+															<input maxlength="140" type="text" name="editBrgy" placeholder="Brgy. 546" value="{{$tech->techBrgy}}">
 														</div>
 														<div class="field">
 															<label>City<span>*</span></label>
-															<input maxlength="255" type="text" name="editCity" placeholder="Manila City" value="{{$tech->techCity}}">
+															<input maxlength="140" type="text" name="editCity" placeholder="Manila City" value="{{$tech->techCity}}">
 														</div>
 													</div>
 													<div class="two fields">
 														<div class="field">
 															<label>Contact No.<span>*</span></label>
-															<input maxlength="255" type="text" name="editTechContact" placeholder="Contact No." value="{{$tech->techContact}}">
+															<input maxlength="140" type="text" name="editTechContact" placeholder="Contact No." value="{{$tech->techContact}}">
 														</div>
 														<div class="field">
 															<label>Email</label>
-															<input maxlength="255" type="email" name="editTechEmail" placeholder="Email" value="{{$tech->techEmail}}">
+															<input maxlength="140" type="email" name="editTechEmail" placeholder="Email" value="{{$tech->techEmail}}">
 														</div>
 													</div>
 													<div class="field">
@@ -208,7 +225,7 @@
 								</div>
 								<div class="actions">
 			        				<button type="submit" class="ui negative button"><i class="trash icon"></i>Deactivate</button>
-			        				<button type="reset" class="ui primary button"><i class="remove icon"></i>Cancel</button>
+			        				<button type="reset" class="ui positive button"><i class="arrow left icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
 						</div>
@@ -250,39 +267,39 @@
 								<div class="three fields">
 									<div class="field">
 										<label>First Name<span>*</span></label>
-										<input maxlength="255" type="text" name="techFirst" placeholder="John" value="{{old('techFirst')}}">
+										<input maxlength="140" type="text" name="techFirst" placeholder="John" value="{{old('techFirst')}}">
 									</div>
 									<div class="field">
 										<label>Middle Name</label>
-										<input maxlength="255" type="text" name="techMiddle" placeholder="Cena" value="{{old('techMiddle')}}">
+										<input maxlength="140" type="text" name="techMiddle" placeholder="Cena" value="{{old('techMiddle')}}">
 									</div>
 									<div class="field">
 										<label>Last Name<span>*</span></label>
-										<input maxlength="255" type="text" name="techLast" placeholder="Doe" value="{{old('techLast')}}">
+										<input maxlength="140" type="text" name="techLast" placeholder="Doe" value="{{old('techLast')}}">
 									</div>
 								</div>
 								<div class="three fields">
 									<div class="field">
 										<label>Street/Block<span>*</span></label>
-										<input maxlength="255" type="text" name="street" placeholder="Baker St." value="{{old('street')}}">
+										<input maxlength="140" type="text" name="street" placeholder="Baker St." value="{{old('street')}}">
 									</div>
 									<div class="field">
 										<label>Brgy./Subd<span>*</span></label>
-										<input maxlength="255" type="text" name="brgy" placeholder="Brgy. 546" value="{{old('brgy')}}">
+										<input maxlength="140" type="text" name="brgy" placeholder="Brgy. 546" value="{{old('brgy')}}">
 									</div>
 									<div class="field">
 										<label>City<span>*</span></label>
-										<input maxlength="255" type="text" name="city" placeholder="Manila City" value="{{old('city')}}">
+										<input maxlength="140" type="text" name="city" placeholder="Manila City" value="{{old('city')}}">
 									</div>
 								</div>
 								<div class="two fields">
 									<div class="field">
 										<label>Contact No.<span>*</span></label>
-										<input maxlength="255" type="text" name="techContact" placeholder="0905xxxxxxx" value="{{old('techContact')}}">
+										<input maxlength="140" type="text" name="techContact" placeholder="0905xxxxxxx" value="{{old('techContact')}}">
 									</div>
 									<div class="field">
 										<label>Email</label>
-										<input maxlength="255" type="text" name="techEmail" placeholder="example@yahoo.com" value="{{old('techEmail')}}">
+										<input maxlength="140" type="text" name="techEmail" placeholder="example@yahoo.com" value="{{old('techEmail')}}">
 									</div>
 								</div>
 								<div class="field">

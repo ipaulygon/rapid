@@ -21,6 +21,23 @@
 		</script>
 	@endif
 
+	@if(Session::has('error_message'))
+ 		<div class="ui small basic modal" style="text-align:center" id="error_message">
+ 			<div class="ui icon header">
+ 				<i class="remove icon"></i>
+ 				Failed
+ 			</div>
+ 			<div class="content">
+ 				<em>{!! session('error_message') !!}</em>
+ 			</div>
+ 		</div>
+ 		<script type="text/javascript">
+ 			$(document).ready(function (){
+ 				$('#error_message').modal('show');
+ 			});
+ 		</script>
+ 	@endif
+
 	<h2>Data Activation</h2>
 	<hr><br>
 	<div class="ui secondary pointing menu">

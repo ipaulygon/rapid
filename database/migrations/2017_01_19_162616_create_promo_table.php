@@ -20,7 +20,7 @@ class CreatePromoTable extends Migration
             $table->text('promoDesc')->nullable();
             $table->date('promoStart')->nullable();
             $table->date('promoEnd')->nullable();
-            $table->float('promoCost',8,2)->nullable();
+            $table->double('promoCost',10,2)->nullable();
             $table->integer('promoSupplies')->nullable();
             $table->boolean('promoIsActive');
             $table->integer('promoType');

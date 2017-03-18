@@ -22,6 +22,23 @@
 		</script>
 	@endif
 
+	@if(Session::has('error_message'))
+ 		<div class="ui small basic modal" style="text-align:center" id="error_message">
+ 			<div class="ui icon header">
+ 				<i class="remove icon"></i>
+ 				Failed
+ 			</div>
+ 			<div class="content">
+ 				<em>{!! session('error_message') !!}</em>
+ 			</div>
+ 		</div>
+ 		<script type="text/javascript">
+ 			$(document).ready(function (){
+ 				$('#error_message').modal('show');
+ 			});
+ 		</script>
+ 	@endif
+
 	@if(Session::has('new_error'))
 		<script type="text/javascript">
 			$(document).ready(function (){
@@ -91,7 +108,7 @@
 					        						<label>Discount<span>*</span></label>
 					        					</div>
 					        					<div class="fourteen wide field">
-					        						<input maxlength="255" type="text" name="editDiscountName" value="{{ $discount->discountName }}" placeholder="Product Type">
+					        						<input maxlength="140" type="text" name="editDiscountName" value="{{ $discount->discountName }}" placeholder="Product Type">
 					        					</div>
 					        				</div>
 					        				<div class="inline fields">
@@ -132,7 +149,7 @@
 								</div>
 								<div class="actions">
 			        				<button type="submit" class="ui negative button"><i class="trash icon"></i>Deactivate</button>
-			        				<button type="reset" class="ui primary button"><i class="remove icon"></i>Cancel</button>
+			        				<button type="reset" class="ui positive button"><i class="arrow left icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
 						</div>
@@ -164,7 +181,7 @@
 	    						<label>Discount<span>*</span></label>
 	    					</div>
 	    					<div class="fourteen wide field">
-	    						<input maxlength="255" type="text" name="discountName" placeholder="Discount" value="{{old('discountName')}}">
+	    						<input maxlength="140" type="text" name="discountName" placeholder="Discount" value="{{old('discountName')}}">
 	    					</div>
 	    				</div>
 	    				<div class="inline fields">

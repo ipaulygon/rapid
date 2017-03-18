@@ -16,7 +16,7 @@ class CreatePromoCostTable extends Migration
         Schema::create('promo_cost', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->string('prId');
-            $table->float('prCost',8,2);
+            $table->double('prCost',10,2);
             $table->timestamps();
             $table->primary(['prId','prCost','created_at']);
             $table->foreign('prId')

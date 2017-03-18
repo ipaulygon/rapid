@@ -4366,7 +4366,7 @@ input::selection {
 
 .ui.positive.buttons .button,
 .ui.positive.button {
-  background-color: #198f35/*#21BA45*/ /*green*/;
+  background-color: #2185D0/*#198f35*//*#21BA45*/ /*green*/;
   color: #FFFFFF;
   text-shadow: none;
   background-image: none;
@@ -4378,21 +4378,21 @@ input::selection {
 
 .ui.positive.buttons .button:hover,
 .ui.positive.button:hover {
-  background-color: #16ab39;
+  background-color: #1678c2/*#16ab39*/;
   color: #FFFFFF;
   text-shadow: none;
 }
 
 .ui.positive.buttons .button:focus,
 .ui.positive.button:focus {
-  background-color: #0ea432;
+  background-color: #0d71bb/*#0ea432*/;
   color: #FFFFFF;
   text-shadow: none;
 }
 
 .ui.positive.buttons .button:active,
 .ui.positive.button:active {
-  background-color: #198f35;
+  background-color: #1a69a4/*#198f35*/;
   color: #FFFFFF;
   text-shadow: none;
 }

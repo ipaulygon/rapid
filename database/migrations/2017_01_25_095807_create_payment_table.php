@@ -16,7 +16,7 @@ class CreatePaymentTable extends Migration
         Schema::create('payment', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->string('paymentInvoiceId');
-            $table->float('paymentPaid',8,2);
+            $table->double('paymentPaid',10,2);
             $table->timestamps();
             $table->primary('paymentInvoiceId');
             $table->foreign('paymentInvoiceId')

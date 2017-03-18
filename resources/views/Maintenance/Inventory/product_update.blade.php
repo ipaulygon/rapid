@@ -65,7 +65,7 @@
 					<label>Product<span>*</span></label>
 				</div>
 				<div class="fourteen wide field">
-					<input maxlength="255" type="text" name="editProductName" value="{{$product[0]->productName}}" placeholder="Product">
+					<input maxlength="140" type="text" name="editProductName" value="{{$product[0]->productName}}" placeholder="Product">
 				</div>
 			</div>
 			<div class="inline fields">
@@ -73,7 +73,7 @@
 					<label>Description</label>
 				</div>
 				<div class="fourteen wide field">
-					<textarea maxlength="255" type="text" name="editProductDesc" placeholder="Description" rows="3">{{$product[0]->productDesc}}</textarea>
+					<textarea maxlength="140" type="text" name="editProductDesc" placeholder="Description" rows="3">{{$product[0]->productDesc}}</textarea>
 				</div>
 			</div>
 			<div class="three fields">

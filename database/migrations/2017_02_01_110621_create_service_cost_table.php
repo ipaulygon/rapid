@@ -16,7 +16,7 @@ class CreateServiceCostTable extends Migration
         Schema::create('service_cost', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->string('scId');
-            $table->float('scCost',8,2);
+            $table->double('scCost',10,2);
             $table->timestamps();
             $table->primary(['scId','scCost','created_at']);
             $table->foreign('scId')

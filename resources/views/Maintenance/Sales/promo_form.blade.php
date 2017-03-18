@@ -21,7 +21,7 @@
 					<label>Promo<span>*</span></label>
 				</div>
 				<div class="six wide field">
-					<input maxlength="255" type="text" name="promoName" placeholder="Promo" value="{{old('promoName')}}">
+					<input maxlength="140" type="text" name="promoName" placeholder="Promo" value="{{old('promoName')}}">
 				</div>
 				<div class="two wide field">
 					<label>Price<span>*</span></label>
@@ -38,7 +38,7 @@
 					<label>Description</label>
 				</div>
 				<div class="six wide field">
-					<textarea maxlength="255" type="text" name="promoDesc" placeholder="Description" rows="2">{{old('promoDesc')}}</textarea>
+					<textarea maxlength="140" type="text" name="promoDesc" placeholder="Description" rows="2">{{old('promoDesc')}}</textarea>
 				</div>
 				<div class="two wide field">
 					<label>Total Cost of Items:</label>
@@ -87,7 +87,7 @@
 			</div>
 			<div class="inline fields">
 				<div class="two wide field">
-					<label>Start Date<span>*</span></label>
+					<label>Start Date</label>
 				</div>
 				<div class="six wide field">
 					<input id="start" type="hidden" name="promoStart">

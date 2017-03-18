@@ -29,7 +29,7 @@
 					<label>Package<span>*</span></label>
 				</div>
 				<div class="six wide field">
-					<input maxlength="255" type="text" name="editPackageName" value="{{ $package[0]->packageName }}" placeholder="Package">
+					<input maxlength="140" type="text" name="editPackageName" value="{{ $package[0]->packageName }}" placeholder="Package">
 				</div>
 				<div class="two wide field">
 					<label>Price<span>*</span></label>
@@ -46,7 +46,7 @@
 					<label>Description</label>
 				</div>
 				<div class="six wide field">
-					<textarea maxlength="255" type="text" name="editPackageDesc" placeholder="Description" rows="2">{{ $package[0]->packageDesc }}</textarea>
+					<textarea maxlength="140" type="text" name="editPackageDesc" placeholder="Description" rows="2">{{ $package[0]->packageDesc }}</textarea>
 				</div>
 				<div class="two wide field">
 					<label>Total Cost of Items:</label>

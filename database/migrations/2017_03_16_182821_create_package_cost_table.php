@@ -16,7 +16,7 @@ class CreatePackageCostTable extends Migration
         Schema::create('package_cost', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->string('pkId');
-            $table->float('pkCost',8,2);
+            $table->double('pkCost',10,2);
             $table->timestamps();
             $table->primary(['pkId','pkCost','created_at']);
             $table->foreign('pkId')

@@ -19,7 +19,7 @@ class CreateServiceTable extends Migration
             $table->string('serviceCategoryId');
             $table->string('serviceName');
             $table->text('serviceDesc')->nullable();
-            $table->float('servicePrice', 8, 2);
+            $table->double('servicePrice',10,2);
             $table->tinyInteger('serviceSize');
             $table->boolean('serviceIsActive');
             $table->timestamps();

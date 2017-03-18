@@ -17,7 +17,7 @@ class CreateDiscountTable extends Migration
             $table->engine = 'InnoDB';
             $table->string('discountId');
             $table->string('discountName');
-            $table->float('discountRate', 8, 2);
+            $table->double('discountRate',10,2);
             $table->boolean('discountIsActive');
             $table->timestamps();
             $table->primary('discountId');

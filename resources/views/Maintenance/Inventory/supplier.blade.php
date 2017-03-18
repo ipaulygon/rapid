@@ -22,6 +22,23 @@
 		</script>
 	@endif
 
+	@if(Session::has('error_message'))
+ 		<div class="ui small basic modal" style="text-align:center" id="error_message">
+ 			<div class="ui icon header">
+ 				<i class="remove icon"></i>
+ 				Failed
+ 			</div>
+ 			<div class="content">
+ 				<em>{!! session('error_message') !!}</em>
+ 			</div>
+ 		</div>
+ 		<script type="text/javascript">
+ 			$(document).ready(function (){
+ 				$('#error_message').modal('show');
+ 			});
+ 		</script>
+ 	@endif
+
 	@if(Session::has('new_error'))
 		<script type="text/javascript">
 			$(document).ready(function (){
@@ -95,7 +112,7 @@
 					        						<label>Supplier<span>*</span></label>
 					        					</div>
 					        					<div class="fourteen wide field">
-					        						<input maxlength="255" type="text" name="editSupplierName" value="{{ $supplier->supplierName }}" placeholder="Supplier">
+					        						<input maxlength="140" type="text" name="editSupplierName" value="{{ $supplier->supplierName }}" placeholder="Supplier">
 					        					</div>
 					        				</div>
 					        				<div class="inline fields">
@@ -103,13 +120,13 @@
 						    						<label>Contact Person<span>*</span></label>
 						    					</div>
 						    					<div class="six wide field">
-						    						<input maxlength="255" type="text" name="editSupplierPerson" value="{{ $supplier->supplierPerson }}" placeholder="Contact Person">
+						    						<input maxlength="140" type="text" name="editSupplierPerson" value="{{ $supplier->supplierPerson }}" placeholder="Contact Person">
 						    					</div>
 						    					<div class="two wide field">
 						    						<label>Contact No.<span>*</span></label>
 						    					</div>
 						    					<div class="six wide field">
-						    						<input maxlength="255" type="text" name="editSupplierContact" value="{{ $supplier->supplierContact }}" placeholder="Contact No.">
+						    						<input maxlength="140" type="text" name="editSupplierContact" value="{{ $supplier->supplierContact }}" placeholder="Contact No.">
 						    					</div>
 						    				</div>
 					        				<div class="inline fields">
@@ -117,7 +134,7 @@
 					        						<label>Address</label>
 					        					</div>
 					        					<div class="fourteen wide field">
-					        						<textarea maxlength="255" type="text" name="editSupplierAddress" placeholder="Address">{{ $supplier->supplierAddress }}</textarea>
+					        						<textarea maxlength="140" type="text" name="editSupplierAddress" placeholder="Address">{{ $supplier->supplierAddress }}</textarea>
 					        					</div>
 					        				</div>
 										</div>
@@ -142,16 +159,15 @@
 										<input type="hidden" name="delSupplierId" value="{{ $supplier->supplierId }}">
 										<p>
 											<label>Supplier: {{$supplier->supplierName}}</label><br>
-											<label>Contact Person: {{$supplier->supplierPerson}}</label>
-											<label>Contact No: {{$supplier->supplierContact}}</label>
-											<label></label>
-											<label>Address: {{$supplier->supplierAddress}}</label>
+											<label>Contact Person: {{$supplier->supplierPerson}}</label><br>
+											<label>Contact No: {{$supplier->supplierContact}}</label><br>
+											<label>Address: {{$supplier->supplierAddress}}</label><br>
 										</p>
 									</div>
 								</div>
 								<div class="actions">
 			        				<button type="submit" class="ui negative button"><i class="trash icon"></i>Deactivate</button>
-			        				<button type="reset" class="ui primary button"><i class="remove icon"></i>Cancel</button>
+			        				<button type="reset" class="ui positive button"><i class="arrow left icon"></i>Cancel</button>
 			        			</div>
 							{!! Form::close() !!}
 						</div>
@@ -183,7 +199,7 @@
 	    						<label>Supplier<span>*</span></label>
 	    					</div>
 	    					<div class="fourteen wide field">
-	    						<input maxlength="255" type="text" name="supplierName" value="{{old('supplierName')}}" placeholder="Supplier">
+	    						<input maxlength="140" type="text" name="supplierName" value="{{old('supplierName')}}" placeholder="Supplier">
 	    					</div>
 	    				</div>
 	    				<div class="inline fields">
@@ -191,13 +207,13 @@
 	    						<label>Contact Person<span>*</span></label>
 	    					</div>
 	    					<div class="six wide field">
-	    						<input maxlength="255" type="text" name="supplierPerson" value="{{old('supplierPerson')}}" placeholder="Contact Person">
+	    						<input maxlength="140" type="text" name="supplierPerson" value="{{old('supplierPerson')}}" placeholder="Contact Person">
 	    					</div>
 	    					<div class="two wide field">
 	    						<label>Contact No.<span>*</span></label>
 	    					</div>
 	    					<div class="six wide field">
-	    						<input maxlength="255" type="text" name="supplierContact" value="{{old('supplierContact')}}"  placeholder="Contact No.">
+	    						<input maxlength="140" type="text" name="supplierContact" value="{{old('supplierContact')}}"  placeholder="Contact No.">
 	    					</div>
 	    				</div>
 	    				<div class="inline fields">
@@ -205,7 +221,7 @@
 	    						<label>Address</label>
 	    					</div>
 	    					<div class="fourteen wide field">
-	    						<textarea maxlength="255" type="text" name="supplierAddress" placeholder="Address" rows="2">{{old('supplierAddress')}}</textarea>
+	    						<textarea maxlength="140" type="text" name="supplierAddress" placeholder="Address" rows="2">{{old('supplierAddress')}}</textarea>
 	    					</div>
 	    				</div>
 	    				<div class="actions">
