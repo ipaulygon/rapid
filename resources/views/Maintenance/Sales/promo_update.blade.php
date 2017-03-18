@@ -37,7 +37,7 @@
 				<div class="six wide field">
 					<div class="ui labeled input">
 						<div class="ui label">Php</div>
-						<input style="text-align:right" type="text" name="editPromoCost" value="{{ $promo[0]->promoCost }}" placeholder="100">
+						<input style="text-align:right" type="text" name="editPromoCost" value="{{ $promo[0]->promoCost }}" placeholder="Price">
 					</div>
 				</div>
 			</div>

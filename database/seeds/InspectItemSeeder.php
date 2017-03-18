@@ -19,6 +19,34 @@ class InspectItemSeeder extends Seeder
 				'inspectItemDesc' => '',
 				'inspectItemIsActive' => 1,
             ),
+            array(
+                'inspectItemId' => 'INSITEM0002',
+                'inspectItemTypeId' => 'INSTYP002',
+                'inspectItemName' => 'Left Front Tire',
+                'inspectItemDesc' => '',
+                'inspectItemIsActive' => 1,
+            ),
+            array(
+                'inspectItemId' => 'INSITEM0003',
+                'inspectItemTypeId' => 'INSTYP002',
+                'inspectItemName' => 'Left Rear Tire',
+                'inspectItemDesc' => '',
+                'inspectItemIsActive' => 1,
+            ),
+            array(
+                'inspectItemId' => 'INSITEM0004',
+                'inspectItemTypeId' => 'INSTYP002',
+                'inspectItemName' => 'Right Front Tire',
+                'inspectItemDesc' => '',
+                'inspectItemIsActive' => 1,
+            ),
+            array(
+                'inspectItemId' => 'INSITEM0005',
+                'inspectItemTypeId' => 'INSTYP002',
+                'inspectItemName' => 'Right Rear Tire',
+                'inspectItemDesc' => '',
+                'inspectItemIsActive' => 1,
+            ),
         );
         DB::table('inspect_item')->insert($inspectItem);
     }

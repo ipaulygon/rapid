@@ -77,17 +77,18 @@ class PromoController extends Controller
             \Session::flash('new_error','Error');
             return Redirect::back()->withErrors($validator)->withInput();
         }
+        $dateNow = date("Y-m-d");
         $promoStart = trim($request->input('promoStart'));
         $promoEnd = trim($request->input('promoEnd'));
         $promoSupplies = trim($request->input('promoSupplies'));
         if($promoStart=='' || $promoStart==null){
-            $promoStart = null;
+            $promoStart = $dateNow;
         }
         if($promoEnd=='' || $promoEnd==null){
-            $promoEnd = null;
+            $promoEnd = $dateNow;
         }
         if($promoSupplies=='' || $promoSupplies==null){
-            $promoSupplies = null;
+            $promoSupplies = 0;
         }
         $promo = Promo::create(array(
                 'promoId' => $request->input('promoId'),

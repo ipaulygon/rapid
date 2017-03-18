@@ -37,7 +37,7 @@
 				<div class="six wide field">
 					<div class="ui labeled input">
 						<div class="ui label">Php</div>
-						<input style="text-align:right" type="text" id="editPackageCost" name="editPackageCost" onkeypress="return validated(event,this.id)" data-content="Only numerical values are allowed" maxlength="8" value="{{ $package[0]->packageCost }}" placeholder="100">
+						<input style="text-align:right" type="text" id="editPackageCost" name="editPackageCost" onkeypress="return validated(event,this.id)" data-content="Only numerical values are allowed" maxlength="8" value="{{ $package[0]->packageCost }}" placeholder="Price">
 					</div>
 				</div>
 			</div>
